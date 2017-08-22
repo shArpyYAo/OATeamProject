@@ -1,0 +1,38 @@
+/* 首页样式 */
+
+/* 标签样式重置 */
+body, div{ padding: 0; margin: 0; }
+li { list-style-type: none; } /* li标签去点 */
+a { text-decoration-line: none; } /* 正常情况下不显示a标签下划线 */
+a:hover { text-decoration-line: underline; } /* 鼠标覆盖情况下显示a标签下划线 */
+
+/* 去除浮动 */
+.clear { zoom: 1; }
+.clear:after { content: ''; display: block; clear: both; }
+
+.header { 
+	background: #fff url(http://i0.hdslb.com/bfs/archive/17759bd2d61eb97e992642f79a15ddabd015d0dc.png); 
+	height: 300px; 
+	-webkit-box-shadow: 1px 1px 20px rgba(0,0,0, 0.1); 
+}
+.header .header-link {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 300px;
+}
+.header .header-mask {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 42px;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+.header .header-center {
+	position: relative;
+	height: 300px;
+	width: 980px;
+	margin: 0 auto;
+}

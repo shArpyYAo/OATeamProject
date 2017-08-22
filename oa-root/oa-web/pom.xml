@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>z_tknight.oa</groupId>
+		<artifactId>oa-root</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<packaging>war</packaging>
+	<artifactId>oa-web</artifactId>
+	<name>oa-web</name>
+	<properties>
+		<!--指定Maven用什么编码来读取源码及文档 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!--指定Maven用什么编码来呈现站点的HTML文件 -->
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+	<dependencies>
+		<!-- 核心模块(业务逻辑) -->
+		<dependency>
+			<groupId>z_tknight.oa</groupId>
+			<artifactId>oa-service</artifactId>
+		</dependency>
+		<!-- SpringMVC 基础组件 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<!-- SpringMVC 组件 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<!-- Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- JSP -->
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- JSTL -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
+</project>

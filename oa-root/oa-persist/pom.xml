@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>z_tknight.oa</groupId>
+		<artifactId>oa-root</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<packaging>jar</packaging>
+	<artifactId>oa-persist</artifactId>
+	<name>oa-persist</name>
+	<properties>
+		<!--指定Maven用什么编码来读取源码及文档 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencies>
+		<!-- 公共模块 -->
+		<dependency>
+			<groupId>z_tknight.oa</groupId>
+			<artifactId>oa-commons</artifactId>
+		</dependency>
+		<!-- 数据模型模块 -->
+		<dependency>
+			<groupId>z_tknight.oa</groupId>
+			<artifactId>oa-model</artifactId>
+		</dependency>
+		<!-- MySQL 驱动 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- Apache DBCP 数据库连接池 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+		</dependency>
+		<!-- Mybatis ORM框架 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
+		<!-- Spring Mybatis 框架整合包 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+		</dependency>
+		<!-- Aspectjweaver 切面编程包 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+		</dependency>
+		<!-- Spring 核心包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<!-- Spring Aspectj 框架整合包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+		</dependency>
+		<!-- Spring 测试包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- Spring-ORM 框架兼容包 -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+			</dependency>
+	</dependencies>
+</project>

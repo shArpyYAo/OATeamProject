@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/aop 
+			http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+			http://www.springframework.org/schema/mvc 
+			http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!-- ====================================================================================== -->
+	<!-- AOP切面编程配置 -->
+	<!-- ====================================================================================== -->
+	
+	<!-- 启用AOP -->
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+	<!-- ====================================================================================== -->
+	<!-- 扫描controller类 -->
+	<!-- ====================================================================================== -->
+
+	<!-- 配置扫描的包 -->
+	<context:component-scan base-package="z_tknight.oa.web" />
+
+	<!-- 注解驱动 -->
+	<mvc:annotation-driven />
+
+	<!-- ====================================================================================== -->
+	<!-- 静态资源处理器 -->
+	<!-- ====================================================================================== -->
+
+	<!-- 访问静态资源 -->
+	<mvc:default-servlet-handler />
+
+	<!-- ====================================================================================== -->
+	<!-- 视图解析器 -->
+	<!-- ====================================================================================== -->
+
+	<!-- 视图解析器 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+</beans>

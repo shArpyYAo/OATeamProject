@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>z_tknight.oa</groupId>
+		<artifactId>oa-root</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<packaging>jar</packaging>
+	<artifactId>oa-service</artifactId>
+	<name>oa-service</name>
+	<properties>
+		<!--指定Maven用什么编码来读取源码及文档 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencies>
+		<!-- 持久层模块 -->
+		<dependency>
+			<groupId>z_tknight.oa</groupId>
+			<artifactId>oa-persist</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+	</dependencies>
+</project>
