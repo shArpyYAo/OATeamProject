@@ -62,14 +62,14 @@ create table t_list_order (														/* 【列表顺序表】 */
 	order_no int(4) not null auto_increment comment '顺序编号',					/* 顺序编号 */
     board_no int(4) not null comment '看板编号',								/* 看板编号 */
 	list_order text not null comment '列表顺序',								/* 列表顺序 */
-    primary key(order_no)													/* 主键 */
+    primary key(order_no)														/* 主键 */
 ) comment = '列表顺序表';
 
 create table t_card_order (														/* 【卡片顺序表】 */
 	order_no int(4) not null auto_increment comment '顺序编号',					/* 顺序编号 */
     list_no int(4) not null comment '列表编号',									/* 列表编号 */
 	card_order text not null comment '卡片顺序',								/* 卡片顺序 */
-    primary key(order_no)													/* 主键 */
+    primary key(order_no)														/* 主键 */
 ) comment = '卡片顺序表';
 
 # ======================================================================================================== #
@@ -196,7 +196,7 @@ create table t_card_history (													/* 【卡片历史信息表】 */
 	to_card_title varchar(4000) not null comment '操作后卡片内容',				/* 操作后卡片内容 */
 	board_space_no int(4) not null comment '所属看板空间编号',					/* 所属看板空间编号 */
 	board_no int(4) not null comment '所属看板编号',							/* 所属看板编号 */
-    primary key(history_no)												/* 主键 */
+    primary key(history_no)														/* 主键 */
 ) comment = '卡片历史信息表';
 
 create table t_user_notice (													/* 【用户通知表】 */
