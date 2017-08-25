@@ -168,6 +168,13 @@ create table t_tag (															/* 【标签信息表】 */
     primary key(tag_no)															/* 主键 */
 ) comment = '标签信息表';
 
+create table t_comment (														/* 【评论信息表】 */
+	comment_id int(4) not null auto_increment comment '评论编号',				/* 评论编号 */
+    comment varchar(20) not null comment '评论内容',							/* 评论内容 */
+	card_no int(4) not null comment '所属卡片编号',								/* 所属卡片编号 */
+    primary key(comment_id)														/* 主键 */
+) comment = '评论信息表';
+
 # ======================================================================================================== #
 # 日志表
 # ======================================================================================================== #
