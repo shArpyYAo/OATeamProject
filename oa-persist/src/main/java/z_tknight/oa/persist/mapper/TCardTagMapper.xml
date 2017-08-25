@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="z_tknight.oa.persist.mapper.TCardTagMapper" >
+
+	<!-- pojo类属性和对应表的结果集映射关系 -->
+	<resultMap id="BaseResultMap" type="z_tknight.oa.model.entity.TCardTag">
+		<id column="relation_no" property="relationNo" jdbcType="INTEGER" />
+		<result column="card_no" property="cardNo" jdbcType="INTEGER" />
+		<result column="tag_no" property="tagNo" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 条件从句 -->
+	<sql id="Example_Where_Clause">
+		<where>
+			<!-- 读取criteria列表集合中的元素 -->
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<!-- 判断criteria是否有条件 -->
+				<if test="criteria.valid">
+					<!-- 设置前后缀包裹，以and分隔 -->
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<!-- 遍历每一个criteria中的List<Criterion>自定义条件列表集合 -->
+						<foreach collection="criteria.criteria" item="criterion">
+							<!-- 有选择的插入，相当于switch -->
+							<choose>
+								<!-- 无数值数据，用于field is null和field is not null -->
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<!-- 单一数据 -->
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<!-- 两个数据，用于between和not between语句 -->
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<!-- 用于in和not in -->
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- 条件从句 -->
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<!-- 读取criteria列表集合中的元素 -->
+			<foreach collection="example.oredCriteria" item="criteria" separator="or">
+				<!-- 判断criteria是否有条件 -->
+				<if test="criteria.valid">
+					<!-- 设置前后缀包裹，以and分隔 -->
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<!-- 遍历每一个criteria中的List<Criterion>自定义条件列表集合 -->
+						<foreach collection="criteria.criteria" item="criterion">
+							<!-- 有选择的插入，相当于switch -->
+							<choose>
+								<!-- 无数值数据，用于field is null和field is not null -->
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<!-- 单一数据 -->
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<!-- 两个数据，用于between和not between语句 -->
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<!-- 用于in和not in -->
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<sql id="Base_Column_List">
+		relation_no,
+		card_no,
+		tag_no
+	</sql>
+	<!-- 统计符合自定义条件的数据个数 -->
+	<select id="countByExample" parameterType="z_tknight.oa.model.entity.TCardTagExample"
+		resultType="java.lang.Integer">
+		select count(*) from t_card_tag
+		<!-- _parameter代表的时传入参数 -->
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<!-- 自定义条件删除数据 -->
+	<delete id="deleteByExample" parameterType="z_tknight.oa.model.entity.TCardTagExample">
+		delete from t_card_tag
+		<!-- _parameter代表的时传入参数 -->
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+
+	<!-- 根据主键删除单条数据 -->
+	<delete id="deleteByPrimaryKey">
+		delete from t_card_tag
+		<!-- 传入主键作为条件 -->
+		where
+		relation_no = #{relationNo, jdbcType=INTEGER} 
+	</delete>
+
+	<!-- 插入单条数据 -->
+	<insert id="insert" parameterType="z_tknight.oa.model.entity.TCardTag">
+		insert into t_card_tag (
+			relation_no,
+			card_no,
+			tag_no
+		)
+		values (
+			#{relationNo, jdbcType=INTEGER},
+			#{cardNo, jdbcType=INTEGER},
+			#{tagNo, jdbcType=INTEGER}
+		)
+	</insert>
+
+	<!-- 有选择的插入单条数据 -->
+	<insert id="insertSelective" parameterType="z_tknight.oa.model.entity.TCardTag">
+		insert into t_card_tag
+		<!-- 前缀为"("、后缀为")"、去掉最后一个"," -->
+		<!-- 插入属性 -->
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="relationNo != null">
+				relationNo,
+			</if>
+			<if test="cardNo != null">
+				cardNo,
+			</if>
+			<if test="tagNo != null">
+				tagNo,
+			</if>
+		</trim>
+		<!-- 插入内容 -->
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="relationNo != null">
+				#{relationNo, jdbcType=INTEGER},
+			</if>
+			<if test="cardNo != null">
+				#{cardNo, jdbcType=INTEGER},
+			</if>
+			<if test="tagNo != null">
+				#{tagNo, jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 查询符合自定义条件的数据 -->
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="z_tknight.oa.model.entity.TCardTagExample">
+		select
+		<!-- 判断是否使用distinct查询 -->
+		<if test="distinct">
+			distinct
+		</if>
+		<!-- 查询字段 -->
+		<include refid="Base_Column_List" />
+		from t_card_tag
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<!-- 判断是否指定排序从句 -->
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<!-- 根据主键查询单条数据 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_card_tag
+		<!-- #表示占位符、$表示拼接 -->
+		where
+		relation_no = #{relationNo, jdbcType=INTEGER} 
+	</select>
+
+	<!-- 自定义条件的有选择性的修改某些属性，可修改主键 -->
+	<update id="updateByExampleSelective">
+		update t_card_tag
+		<!-- 修改属性，可修改主键 -->
+		<set>
+			<if test="record.relationNo != null">
+				relationNo = #{record.relationNo, jdbcType=INTEGER},
+			</if>
+			<if test="record.cardNo != null">
+				cardNo = #{record.cardNo, jdbcType=INTEGER},
+			</if>
+			<if test="record.tagNo != null">
+				tagNo = #{record.tagNo, jdbcType=INTEGER},
+			</if>
+		</set>
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+
+	<!-- 自定义条件修改所有属性，可修改主键 -->
+	<update id="updateByExample">
+		update t_card_tag
+		<!-- 修改属性，可修改主键 -->
+		set
+		relationNo = #{relationNo, jdbcType=INTEGER},
+		cardNo = #{cardNo, jdbcType=INTEGER},
+		tagNo = #{tagNo, jdbcType=INTEGER}
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+
+	<!-- 通过主键有选择性的修改某该属性，不可以修改主键 -->
+	<update id="updateByPrimaryKeySelective" parameterType="z_tknight.oa.model.entity.TCardTag">
+		update t_card_tag
+		<!-- 修改属性，不可以修改主键 -->
+		<set>
+			<if test="cardNo != null">
+				cardNo = #{cardNo, jdbcType=INTEGER},
+			</if>
+			<if test="tagNo != null">
+				tagNo = #{tagNo, jdbcType=INTEGER},
+			</if>
+		</set>
+		<!-- 主键作为条件 -->
+		where
+		relation_no = #{relationNo, jdbcType=INTEGER} 
+	</update>
+
+	<!-- 通过主键修改属性，不可以修改主键 -->
+	<update id="updateByPrimaryKey" parameterType="z_tknight.oa.model.entity.TCardTag">
+		update t_card_tag
+		<!-- 修改属性，不可以修改主键 -->
+		set
+		cardNo = #{cardNo, jdbcType=INTEGER},
+		tagNo = #{tagNo, jdbcType=INTEGER}
+		<!-- 主键作为条件 -->
+		where
+		relation_no = #{relationNo, jdbcType=INTEGER} 
+	</update>
+</mapper>

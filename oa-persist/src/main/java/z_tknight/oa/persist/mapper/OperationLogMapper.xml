@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="z_tknight.oa.persist.mapper.OperationLogMapper" >
+
+	<!-- pojo类属性和对应表的结果集映射关系 -->
+	<resultMap id="BaseResultMap" type="z_tknight.oa.model.entity.OperationLog">
+		<id column="log_no" property="logNo" jdbcType="INTEGER" />
+		<result column="user_no" property="userNo" jdbcType="INTEGER" />
+		<result column="operation" property="operation" jdbcType="VARCHAR" />
+		<result column="exception" property="exception" jdbcType="VARCHAR" />
+		<result column="params" property="params" jdbcType="VARCHAR" />
+		<result column="ip" property="ip" jdbcType="VARCHAR" />
+		<result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
+		<result column="operation_time" property="operationTime" jdbcType="BIGINT" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="BIT" />
+	</resultMap>
+
+	<!-- 条件从句 -->
+	<sql id="Example_Where_Clause">
+		<where>
+			<!-- 读取criteria列表集合中的元素 -->
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<!-- 判断criteria是否有条件 -->
+				<if test="criteria.valid">
+					<!-- 设置前后缀包裹，以and分隔 -->
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<!-- 遍历每一个criteria中的List<Criterion>自定义条件列表集合 -->
+						<foreach collection="criteria.criteria" item="criterion">
+							<!-- 有选择的插入，相当于switch -->
+							<choose>
+								<!-- 无数值数据，用于field is null和field is not null -->
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<!-- 单一数据 -->
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<!-- 两个数据，用于between和not between语句 -->
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<!-- 用于in和not in -->
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- 条件从句 -->
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<!-- 读取criteria列表集合中的元素 -->
+			<foreach collection="example.oredCriteria" item="criteria" separator="or">
+				<!-- 判断criteria是否有条件 -->
+				<if test="criteria.valid">
+					<!-- 设置前后缀包裹，以and分隔 -->
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<!-- 遍历每一个criteria中的List<Criterion>自定义条件列表集合 -->
+						<foreach collection="criteria.criteria" item="criterion">
+							<!-- 有选择的插入，相当于switch -->
+							<choose>
+								<!-- 无数值数据，用于field is null和field is not null -->
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<!-- 单一数据 -->
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<!-- 两个数据，用于between和not between语句 -->
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<!-- 用于in和not in -->
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<sql id="Base_Column_List">
+		log_no,
+		user_no,
+		operation,
+		exception,
+		params,
+		ip,
+		begin_time,
+		operation_time,
+		url,
+		state
+	</sql>
+	<!-- 统计符合自定义条件的数据个数 -->
+	<select id="countByExample" parameterType="z_tknight.oa.model.entity.OperationLogExample"
+		resultType="java.lang.Integer">
+		select count(*) from operation_log
+		<!-- _parameter代表的时传入参数 -->
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<!-- 自定义条件删除数据 -->
+	<delete id="deleteByExample" parameterType="z_tknight.oa.model.entity.OperationLogExample">
+		delete from operation_log
+		<!-- _parameter代表的时传入参数 -->
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+
+	<!-- 根据主键删除单条数据 -->
+	<delete id="deleteByPrimaryKey">
+		delete from operation_log
+		<!-- 传入主键作为条件 -->
+		where
+		log_no = #{logNo, jdbcType=INTEGER} 
+	</delete>
+
+	<!-- 插入单条数据 -->
+	<insert id="insert" parameterType="z_tknight.oa.model.entity.OperationLog">
+		insert into operation_log (
+			log_no,
+			user_no,
+			operation,
+			exception,
+			params,
+			ip,
+			begin_time,
+			operation_time,
+			url,
+			state
+		)
+		values (
+			#{logNo, jdbcType=INTEGER},
+			#{userNo, jdbcType=INTEGER},
+			#{operation, jdbcType=VARCHAR},
+			#{exception, jdbcType=VARCHAR},
+			#{params, jdbcType=VARCHAR},
+			#{ip, jdbcType=VARCHAR},
+			#{beginTime, jdbcType=TIMESTAMP},
+			#{operationTime, jdbcType=BIGINT},
+			#{url, jdbcType=VARCHAR},
+			#{state, jdbcType=BIT}
+		)
+	</insert>
+
+	<!-- 有选择的插入单条数据 -->
+	<insert id="insertSelective" parameterType="z_tknight.oa.model.entity.OperationLog">
+		insert into operation_log
+		<!-- 前缀为"("、后缀为")"、去掉最后一个"," -->
+		<!-- 插入属性 -->
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="logNo != null">
+				logNo,
+			</if>
+			<if test="userNo != null">
+				userNo,
+			</if>
+			<if test="operation != null">
+				operation,
+			</if>
+			<if test="exception != null">
+				exception,
+			</if>
+			<if test="params != null">
+				params,
+			</if>
+			<if test="ip != null">
+				ip,
+			</if>
+			<if test="beginTime != null">
+				beginTime,
+			</if>
+			<if test="operationTime != null">
+				operationTime,
+			</if>
+			<if test="url != null">
+				url,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+		</trim>
+		<!-- 插入内容 -->
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="logNo != null">
+				#{logNo, jdbcType=INTEGER},
+			</if>
+			<if test="userNo != null">
+				#{userNo, jdbcType=INTEGER},
+			</if>
+			<if test="operation != null">
+				#{operation, jdbcType=VARCHAR},
+			</if>
+			<if test="exception != null">
+				#{exception, jdbcType=VARCHAR},
+			</if>
+			<if test="params != null">
+				#{params, jdbcType=VARCHAR},
+			</if>
+			<if test="ip != null">
+				#{ip, jdbcType=VARCHAR},
+			</if>
+			<if test="beginTime != null">
+				#{beginTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="operationTime != null">
+				#{operationTime, jdbcType=BIGINT},
+			</if>
+			<if test="url != null">
+				#{url, jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				#{state, jdbcType=BIT},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 查询符合自定义条件的数据 -->
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="z_tknight.oa.model.entity.OperationLogExample">
+		select
+		<!-- 判断是否使用distinct查询 -->
+		<if test="distinct">
+			distinct
+		</if>
+		<!-- 查询字段 -->
+		<include refid="Base_Column_List" />
+		from operation_log
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<!-- 判断是否指定排序从句 -->
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<!-- 根据主键查询单条数据 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from operation_log
+		<!-- #表示占位符、$表示拼接 -->
+		where
+		log_no = #{logNo, jdbcType=INTEGER} 
+	</select>
+
+	<!-- 自定义条件的有选择性的修改某些属性，可修改主键 -->
+	<update id="updateByExampleSelective">
+		update operation_log
+		<!-- 修改属性，可修改主键 -->
+		<set>
+			<if test="record.logNo != null">
+				logNo = #{record.logNo, jdbcType=INTEGER},
+			</if>
+			<if test="record.userNo != null">
+				userNo = #{record.userNo, jdbcType=INTEGER},
+			</if>
+			<if test="record.operation != null">
+				operation = #{record.operation, jdbcType=VARCHAR},
+			</if>
+			<if test="record.exception != null">
+				exception = #{record.exception, jdbcType=VARCHAR},
+			</if>
+			<if test="record.params != null">
+				params = #{record.params, jdbcType=VARCHAR},
+			</if>
+			<if test="record.ip != null">
+				ip = #{record.ip, jdbcType=VARCHAR},
+			</if>
+			<if test="record.beginTime != null">
+				beginTime = #{record.beginTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.operationTime != null">
+				operationTime = #{record.operationTime, jdbcType=BIGINT},
+			</if>
+			<if test="record.url != null">
+				url = #{record.url, jdbcType=VARCHAR},
+			</if>
+			<if test="record.state != null">
+				state = #{record.state, jdbcType=BIT},
+			</if>
+		</set>
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+
+	<!-- 自定义条件修改所有属性，可修改主键 -->
+	<update id="updateByExample">
+		update operation_log
+		<!-- 修改属性，可修改主键 -->
+		set
+		logNo = #{logNo, jdbcType=INTEGER},
+		userNo = #{userNo, jdbcType=INTEGER},
+		operation = #{operation, jdbcType=VARCHAR},
+		exception = #{exception, jdbcType=VARCHAR},
+		params = #{params, jdbcType=VARCHAR},
+		ip = #{ip, jdbcType=VARCHAR},
+		beginTime = #{beginTime, jdbcType=TIMESTAMP},
+		operationTime = #{operationTime, jdbcType=BIGINT},
+		url = #{url, jdbcType=VARCHAR},
+		state = #{state, jdbcType=BIT}
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+
+	<!-- 通过主键有选择性的修改某该属性，不可以修改主键 -->
+	<update id="updateByPrimaryKeySelective" parameterType="z_tknight.oa.model.entity.OperationLog">
+		update operation_log
+		<!-- 修改属性，不可以修改主键 -->
+		<set>
+			<if test="userNo != null">
+				userNo = #{userNo, jdbcType=INTEGER},
+			</if>
+			<if test="operation != null">
+				operation = #{operation, jdbcType=VARCHAR},
+			</if>
+			<if test="exception != null">
+				exception = #{exception, jdbcType=VARCHAR},
+			</if>
+			<if test="params != null">
+				params = #{params, jdbcType=VARCHAR},
+			</if>
+			<if test="ip != null">
+				ip = #{ip, jdbcType=VARCHAR},
+			</if>
+			<if test="beginTime != null">
+				beginTime = #{beginTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="operationTime != null">
+				operationTime = #{operationTime, jdbcType=BIGINT},
+			</if>
+			<if test="url != null">
+				url = #{url, jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				state = #{state, jdbcType=BIT},
+			</if>
+		</set>
+		<!-- 主键作为条件 -->
+		where
+		log_no = #{logNo, jdbcType=INTEGER} 
+	</update>
+
+	<!-- 通过主键修改属性，不可以修改主键 -->
+	<update id="updateByPrimaryKey" parameterType="z_tknight.oa.model.entity.OperationLog">
+		update operation_log
+		<!-- 修改属性，不可以修改主键 -->
+		set
+		userNo = #{userNo, jdbcType=INTEGER},
+		operation = #{operation, jdbcType=VARCHAR},
+		exception = #{exception, jdbcType=VARCHAR},
+		params = #{params, jdbcType=VARCHAR},
+		ip = #{ip, jdbcType=VARCHAR},
+		beginTime = #{beginTime, jdbcType=TIMESTAMP},
+		operationTime = #{operationTime, jdbcType=BIGINT},
+		url = #{url, jdbcType=VARCHAR},
+		state = #{state, jdbcType=BIT}
+		<!-- 主键作为条件 -->
+		where
+		log_no = #{logNo, jdbcType=INTEGER} 
+	</update>
+</mapper>

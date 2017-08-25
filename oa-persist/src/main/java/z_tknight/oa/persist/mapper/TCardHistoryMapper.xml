@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="z_tknight.oa.persist.mapper.TCardHistoryMapper" >
+
+	<!-- pojo类属性和对应表的结果集映射关系 -->
+	<resultMap id="BaseResultMap" type="z_tknight.oa.model.entity.TCardHistory">
+		<id column="history_no" property="historyNo" jdbcType="INTEGER" />
+		<result column="from_user_id" property="fromUserId" jdbcType="INTEGER" />
+		<result column="to_user_id" property="toUserId" jdbcType="INTEGER" />
+		<result column="from_list_name" property="fromListName" jdbcType="VARCHAR" />
+		<result column="to_list_name" property="toListName" jdbcType="VARCHAR" />
+		<result column="from_card_title" property="fromCardTitle" jdbcType="VARCHAR" />
+		<result column="to_card_title" property="toCardTitle" jdbcType="VARCHAR" />
+		<result column="board_space_no" property="boardSpaceNo" jdbcType="INTEGER" />
+		<result column="board_no" property="boardNo" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 条件从句 -->
+	<sql id="Example_Where_Clause">
+		<where>
+			<!-- 读取criteria列表集合中的元素 -->
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<!-- 判断criteria是否有条件 -->
+				<if test="criteria.valid">
+					<!-- 设置前后缀包裹，以and分隔 -->
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<!-- 遍历每一个criteria中的List<Criterion>自定义条件列表集合 -->
+						<foreach collection="criteria.criteria" item="criterion">
+							<!-- 有选择的插入，相当于switch -->
+							<choose>
+								<!-- 无数值数据，用于field is null和field is not null -->
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<!-- 单一数据 -->
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<!-- 两个数据，用于between和not between语句 -->
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<!-- 用于in和not in -->
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- 条件从句 -->
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<!-- 读取criteria列表集合中的元素 -->
+			<foreach collection="example.oredCriteria" item="criteria" separator="or">
+				<!-- 判断criteria是否有条件 -->
+				<if test="criteria.valid">
+					<!-- 设置前后缀包裹，以and分隔 -->
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<!-- 遍历每一个criteria中的List<Criterion>自定义条件列表集合 -->
+						<foreach collection="criteria.criteria" item="criterion">
+							<!-- 有选择的插入，相当于switch -->
+							<choose>
+								<!-- 无数值数据，用于field is null和field is not null -->
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<!-- 单一数据 -->
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<!-- 两个数据，用于between和not between语句 -->
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<!-- 用于in和not in -->
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<sql id="Base_Column_List">
+		history_no,
+		from_user_id,
+		to_user_id,
+		from_list_name,
+		to_list_name,
+		from_card_title,
+		to_card_title,
+		board_space_no,
+		board_no
+	</sql>
+	<!-- 统计符合自定义条件的数据个数 -->
+	<select id="countByExample" parameterType="z_tknight.oa.model.entity.TCardHistoryExample"
+		resultType="java.lang.Integer">
+		select count(*) from t_card_history
+		<!-- _parameter代表的时传入参数 -->
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<!-- 自定义条件删除数据 -->
+	<delete id="deleteByExample" parameterType="z_tknight.oa.model.entity.TCardHistoryExample">
+		delete from t_card_history
+		<!-- _parameter代表的时传入参数 -->
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+
+	<!-- 根据主键删除单条数据 -->
+	<delete id="deleteByPrimaryKey">
+		delete from t_card_history
+		<!-- 传入主键作为条件 -->
+		where
+		history_no = #{historyNo, jdbcType=INTEGER} 
+	</delete>
+
+	<!-- 插入单条数据 -->
+	<insert id="insert" parameterType="z_tknight.oa.model.entity.TCardHistory">
+		insert into t_card_history (
+			history_no,
+			from_user_id,
+			to_user_id,
+			from_list_name,
+			to_list_name,
+			from_card_title,
+			to_card_title,
+			board_space_no,
+			board_no
+		)
+		values (
+			#{historyNo, jdbcType=INTEGER},
+			#{fromUserId, jdbcType=INTEGER},
+			#{toUserId, jdbcType=INTEGER},
+			#{fromListName, jdbcType=VARCHAR},
+			#{toListName, jdbcType=VARCHAR},
+			#{fromCardTitle, jdbcType=VARCHAR},
+			#{toCardTitle, jdbcType=VARCHAR},
+			#{boardSpaceNo, jdbcType=INTEGER},
+			#{boardNo, jdbcType=INTEGER}
+		)
+	</insert>
+
+	<!-- 有选择的插入单条数据 -->
+	<insert id="insertSelective" parameterType="z_tknight.oa.model.entity.TCardHistory">
+		insert into t_card_history
+		<!-- 前缀为"("、后缀为")"、去掉最后一个"," -->
+		<!-- 插入属性 -->
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="historyNo != null">
+				historyNo,
+			</if>
+			<if test="fromUserId != null">
+				fromUserId,
+			</if>
+			<if test="toUserId != null">
+				toUserId,
+			</if>
+			<if test="fromListName != null">
+				fromListName,
+			</if>
+			<if test="toListName != null">
+				toListName,
+			</if>
+			<if test="fromCardTitle != null">
+				fromCardTitle,
+			</if>
+			<if test="toCardTitle != null">
+				toCardTitle,
+			</if>
+			<if test="boardSpaceNo != null">
+				boardSpaceNo,
+			</if>
+			<if test="boardNo != null">
+				boardNo,
+			</if>
+		</trim>
+		<!-- 插入内容 -->
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="historyNo != null">
+				#{historyNo, jdbcType=INTEGER},
+			</if>
+			<if test="fromUserId != null">
+				#{fromUserId, jdbcType=INTEGER},
+			</if>
+			<if test="toUserId != null">
+				#{toUserId, jdbcType=INTEGER},
+			</if>
+			<if test="fromListName != null">
+				#{fromListName, jdbcType=VARCHAR},
+			</if>
+			<if test="toListName != null">
+				#{toListName, jdbcType=VARCHAR},
+			</if>
+			<if test="fromCardTitle != null">
+				#{fromCardTitle, jdbcType=VARCHAR},
+			</if>
+			<if test="toCardTitle != null">
+				#{toCardTitle, jdbcType=VARCHAR},
+			</if>
+			<if test="boardSpaceNo != null">
+				#{boardSpaceNo, jdbcType=INTEGER},
+			</if>
+			<if test="boardNo != null">
+				#{boardNo, jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 查询符合自定义条件的数据 -->
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="z_tknight.oa.model.entity.TCardHistoryExample">
+		select
+		<!-- 判断是否使用distinct查询 -->
+		<if test="distinct">
+			distinct
+		</if>
+		<!-- 查询字段 -->
+		<include refid="Base_Column_List" />
+		from t_card_history
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<!-- 判断是否指定排序从句 -->
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<!-- 根据主键查询单条数据 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_card_history
+		<!-- #表示占位符、$表示拼接 -->
+		where
+		history_no = #{historyNo, jdbcType=INTEGER} 
+	</select>
+
+	<!-- 自定义条件的有选择性的修改某些属性，可修改主键 -->
+	<update id="updateByExampleSelective">
+		update t_card_history
+		<!-- 修改属性，可修改主键 -->
+		<set>
+			<if test="record.historyNo != null">
+				historyNo = #{record.historyNo, jdbcType=INTEGER},
+			</if>
+			<if test="record.fromUserId != null">
+				fromUserId = #{record.fromUserId, jdbcType=INTEGER},
+			</if>
+			<if test="record.toUserId != null">
+				toUserId = #{record.toUserId, jdbcType=INTEGER},
+			</if>
+			<if test="record.fromListName != null">
+				fromListName = #{record.fromListName, jdbcType=VARCHAR},
+			</if>
+			<if test="record.toListName != null">
+				toListName = #{record.toListName, jdbcType=VARCHAR},
+			</if>
+			<if test="record.fromCardTitle != null">
+				fromCardTitle = #{record.fromCardTitle, jdbcType=VARCHAR},
+			</if>
+			<if test="record.toCardTitle != null">
+				toCardTitle = #{record.toCardTitle, jdbcType=VARCHAR},
+			</if>
+			<if test="record.boardSpaceNo != null">
+				boardSpaceNo = #{record.boardSpaceNo, jdbcType=INTEGER},
+			</if>
+			<if test="record.boardNo != null">
+				boardNo = #{record.boardNo, jdbcType=INTEGER},
+			</if>
+		</set>
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+
+	<!-- 自定义条件修改所有属性，可修改主键 -->
+	<update id="updateByExample">
+		update t_card_history
+		<!-- 修改属性，可修改主键 -->
+		set
+		historyNo = #{historyNo, jdbcType=INTEGER},
+		fromUserId = #{fromUserId, jdbcType=INTEGER},
+		toUserId = #{toUserId, jdbcType=INTEGER},
+		fromListName = #{fromListName, jdbcType=VARCHAR},
+		toListName = #{toListName, jdbcType=VARCHAR},
+		fromCardTitle = #{fromCardTitle, jdbcType=VARCHAR},
+		toCardTitle = #{toCardTitle, jdbcType=VARCHAR},
+		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
+		boardNo = #{boardNo, jdbcType=INTEGER}
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+
+	<!-- 通过主键有选择性的修改某该属性，不可以修改主键 -->
+	<update id="updateByPrimaryKeySelective" parameterType="z_tknight.oa.model.entity.TCardHistory">
+		update t_card_history
+		<!-- 修改属性，不可以修改主键 -->
+		<set>
+			<if test="fromUserId != null">
+				fromUserId = #{fromUserId, jdbcType=INTEGER},
+			</if>
+			<if test="toUserId != null">
+				toUserId = #{toUserId, jdbcType=INTEGER},
+			</if>
+			<if test="fromListName != null">
+				fromListName = #{fromListName, jdbcType=VARCHAR},
+			</if>
+			<if test="toListName != null">
+				toListName = #{toListName, jdbcType=VARCHAR},
+			</if>
+			<if test="fromCardTitle != null">
+				fromCardTitle = #{fromCardTitle, jdbcType=VARCHAR},
+			</if>
+			<if test="toCardTitle != null">
+				toCardTitle = #{toCardTitle, jdbcType=VARCHAR},
+			</if>
+			<if test="boardSpaceNo != null">
+				boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
+			</if>
+			<if test="boardNo != null">
+				boardNo = #{boardNo, jdbcType=INTEGER},
+			</if>
+		</set>
+		<!-- 主键作为条件 -->
+		where
+		history_no = #{historyNo, jdbcType=INTEGER} 
+	</update>
+
+	<!-- 通过主键修改属性，不可以修改主键 -->
+	<update id="updateByPrimaryKey" parameterType="z_tknight.oa.model.entity.TCardHistory">
+		update t_card_history
+		<!-- 修改属性，不可以修改主键 -->
+		set
+		fromUserId = #{fromUserId, jdbcType=INTEGER},
+		toUserId = #{toUserId, jdbcType=INTEGER},
+		fromListName = #{fromListName, jdbcType=VARCHAR},
+		toListName = #{toListName, jdbcType=VARCHAR},
+		fromCardTitle = #{fromCardTitle, jdbcType=VARCHAR},
+		toCardTitle = #{toCardTitle, jdbcType=VARCHAR},
+		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
+		boardNo = #{boardNo, jdbcType=INTEGER}
+		<!-- 主键作为条件 -->
+		where
+		history_no = #{historyNo, jdbcType=INTEGER} 
+	</update>
+</mapper>

@@ -15,7 +15,7 @@ create table t_user (															/* 【用户信息表】 */
     user_name varchar(15) not null comment '用户名',							/* 用户名 */
     password varchar(20) not null comment '密码',								/* 密码 */
 	nick_name varchar(20) not null comment '昵称',								/* 昵称 */
-	introduction varchar(250) comment '介绍',										/* 介绍 */
+	introduction varchar(250) comment '介绍',									/* 介绍 */
 	back_up int(4) comment '备用字段',											/* 备用字段 */
     primary key(user_no)														/* 主键 */
 ) comment = '用户信息表';
@@ -55,21 +55,21 @@ create table t_board_order (													/* 【看板顺序表】 */
 	order_no int(4) not null auto_increment comment '顺序编号',					/* 顺序编号 */
     board_space_no int(4) not null comment '看板空间编号',						/* 看板空间编号 */
 	board_order text not null comment '看板顺序',								/* 看板顺序 */
-    primary key(order_no)													/* 主键 */
+    primary key(order_no)														/* 主键 */
 ) comment = '看板顺序表';
 
 create table t_list_order (														/* 【列表顺序表】 */
 	order_no int(4) not null auto_increment comment '顺序编号',					/* 顺序编号 */
     board_no int(4) not null comment '看板编号',								/* 看板编号 */
 	list_order text not null comment '列表顺序',								/* 列表顺序 */
-    primary key(order_no)													/* 主键 */
+    primary key(order_no)														/* 主键 */
 ) comment = '列表顺序表';
 
 create table t_card_order (														/* 【卡片顺序表】 */
 	order_no int(4) not null auto_increment comment '顺序编号',					/* 顺序编号 */
     list_no int(4) not null comment '列表编号',									/* 列表编号 */
 	card_order text not null comment '卡片顺序',								/* 卡片顺序 */
-    primary key(order_no)													/* 主键 */
+    primary key(order_no)														/* 主键 */
 ) comment = '卡片顺序表';
 
 # ======================================================================================================== #
@@ -177,6 +177,7 @@ create table operation_log (													/* 【操作日志表】 */
     user_no int(4) comment '操作用户编号',										/* 操作用户编号 */
     operation varchar(20) not null comment '操作描述',							/* 操作描述 */
     exception varchar(100) comment '操作异常信息',								/* 操作异常信息 */
+    method_name varchar(50) not null comment '接口调用方法名';					/* 接口调用方法名 */
     params varchar(250) comment '传入参数',										/* 传入参数 */
     ip varchar(30) not null comment '客户端ip',									/* 客户端ip */
     begin_time datetime not null comment '操作起始时间',						/* 操作起始时间 */
@@ -196,7 +197,7 @@ create table t_card_history (													/* 【卡片历史信息表】 */
 	to_card_title varchar(4000) not null comment '操作后卡片内容',				/* 操作后卡片内容 */
 	board_space_no int(4) not null comment '所属看板空间编号',					/* 所属看板空间编号 */
 	board_no int(4) not null comment '所属看板编号',							/* 所属看板编号 */
-    primary key(history_no)												/* 主键 */
+    primary key(history_no)														/* 主键 */
 ) comment = '卡片历史信息表';
 
 create table t_user_notice (													/* 【用户通知表】 */

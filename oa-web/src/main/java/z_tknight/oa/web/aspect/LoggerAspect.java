@@ -43,7 +43,7 @@ public class LoggerAspect {
 	/**
 	 * 切面切入点表达式
 	 */
-	private static final String ASPECT_POINTCUT_EXPRESSION = "execution(public * cn.bluesking.blog.web.*controller.*.*(..))";
+	private static final String ASPECT_POINTCUT_EXPRESSION = "execution(public * z_tknight.oa.web.*controller.*.*(..))";
 
 	/**
 	 * 操作日志服务

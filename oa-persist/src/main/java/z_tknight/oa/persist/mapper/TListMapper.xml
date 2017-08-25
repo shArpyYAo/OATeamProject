@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="z_tknight.oa.persist.mapper.TListMapper" >
+
+	<!-- pojo类属性和对应表的结果集映射关系 -->
+	<resultMap id="BaseResultMap" type="z_tknight.oa.model.entity.TList">
+		<id column="list_no" property="listNo" jdbcType="INTEGER" />
+		<result column="list_name" property="listName" jdbcType="VARCHAR" />
+		<result column="board_space_no" property="boardSpaceNo" jdbcType="INTEGER" />
+		<result column="board_no" property="boardNo" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 条件从句 -->
+	<sql id="Example_Where_Clause">
+		<where>
+			<!-- 读取criteria列表集合中的元素 -->
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<!-- 判断criteria是否有条件 -->
+				<if test="criteria.valid">
+					<!-- 设置前后缀包裹，以and分隔 -->
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<!-- 遍历每一个criteria中的List<Criterion>自定义条件列表集合 -->
+						<foreach collection="criteria.criteria" item="criterion">
+							<!-- 有选择的插入，相当于switch -->
+							<choose>
+								<!-- 无数值数据，用于field is null和field is not null -->
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<!-- 单一数据 -->
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<!-- 两个数据，用于between和not between语句 -->
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<!-- 用于in和not in -->
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- 条件从句 -->
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<!-- 读取criteria列表集合中的元素 -->
+			<foreach collection="example.oredCriteria" item="criteria" separator="or">
+				<!-- 判断criteria是否有条件 -->
+				<if test="criteria.valid">
+					<!-- 设置前后缀包裹，以and分隔 -->
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<!-- 遍历每一个criteria中的List<Criterion>自定义条件列表集合 -->
+						<foreach collection="criteria.criteria" item="criterion">
+							<!-- 有选择的插入，相当于switch -->
+							<choose>
+								<!-- 无数值数据，用于field is null和field is not null -->
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<!-- 单一数据 -->
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<!-- 两个数据，用于between和not between语句 -->
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<!-- 用于in和not in -->
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<sql id="Base_Column_List">
+		list_no,
+		list_name,
+		board_space_no,
+		board_no
+	</sql>
+	<!-- 统计符合自定义条件的数据个数 -->
+	<select id="countByExample" parameterType="z_tknight.oa.model.entity.TListExample"
+		resultType="java.lang.Integer">
+		select count(*) from t_list
+		<!-- _parameter代表的时传入参数 -->
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<!-- 自定义条件删除数据 -->
+	<delete id="deleteByExample" parameterType="z_tknight.oa.model.entity.TListExample">
+		delete from t_list
+		<!-- _parameter代表的时传入参数 -->
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+
+	<!-- 根据主键删除单条数据 -->
+	<delete id="deleteByPrimaryKey">
+		delete from t_list
+		<!-- 传入主键作为条件 -->
+		where
+		list_no = #{listNo, jdbcType=INTEGER} 
+	</delete>
+
+	<!-- 插入单条数据 -->
+	<insert id="insert" parameterType="z_tknight.oa.model.entity.TList">
+		insert into t_list (
+			list_no,
+			list_name,
+			board_space_no,
+			board_no
+		)
+		values (
+			#{listNo, jdbcType=INTEGER},
+			#{listName, jdbcType=VARCHAR},
+			#{boardSpaceNo, jdbcType=INTEGER},
+			#{boardNo, jdbcType=INTEGER}
+		)
+	</insert>
+
+	<!-- 有选择的插入单条数据 -->
+	<insert id="insertSelective" parameterType="z_tknight.oa.model.entity.TList">
+		insert into t_list
+		<!-- 前缀为"("、后缀为")"、去掉最后一个"," -->
+		<!-- 插入属性 -->
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="listNo != null">
+				listNo,
+			</if>
+			<if test="listName != null">
+				listName,
+			</if>
+			<if test="boardSpaceNo != null">
+				boardSpaceNo,
+			</if>
+			<if test="boardNo != null">
+				boardNo,
+			</if>
+		</trim>
+		<!-- 插入内容 -->
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="listNo != null">
+				#{listNo, jdbcType=INTEGER},
+			</if>
+			<if test="listName != null">
+				#{listName, jdbcType=VARCHAR},
+			</if>
+			<if test="boardSpaceNo != null">
+				#{boardSpaceNo, jdbcType=INTEGER},
+			</if>
+			<if test="boardNo != null">
+				#{boardNo, jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 查询符合自定义条件的数据 -->
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="z_tknight.oa.model.entity.TListExample">
+		select
+		<!-- 判断是否使用distinct查询 -->
+		<if test="distinct">
+			distinct
+		</if>
+		<!-- 查询字段 -->
+		<include refid="Base_Column_List" />
+		from t_list
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<!-- 判断是否指定排序从句 -->
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<!-- 根据主键查询单条数据 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_list
+		<!-- #表示占位符、$表示拼接 -->
+		where
+		list_no = #{listNo, jdbcType=INTEGER} 
+	</select>
+
+	<!-- 自定义条件的有选择性的修改某些属性，可修改主键 -->
+	<update id="updateByExampleSelective">
+		update t_list
+		<!-- 修改属性，可修改主键 -->
+		<set>
+			<if test="record.listNo != null">
+				listNo = #{record.listNo, jdbcType=INTEGER},
+			</if>
+			<if test="record.listName != null">
+				listName = #{record.listName, jdbcType=VARCHAR},
+			</if>
+			<if test="record.boardSpaceNo != null">
+				boardSpaceNo = #{record.boardSpaceNo, jdbcType=INTEGER},
+			</if>
+			<if test="record.boardNo != null">
+				boardNo = #{record.boardNo, jdbcType=INTEGER},
+			</if>
+		</set>
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+
+	<!-- 自定义条件修改所有属性，可修改主键 -->
+	<update id="updateByExample">
+		update t_list
+		<!-- 修改属性，可修改主键 -->
+		set
+		listNo = #{listNo, jdbcType=INTEGER},
+		listName = #{listName, jdbcType=VARCHAR},
+		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
+		boardNo = #{boardNo, jdbcType=INTEGER}
+		<!-- 自定义条件 -->
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+
+	<!-- 通过主键有选择性的修改某该属性，不可以修改主键 -->
+	<update id="updateByPrimaryKeySelective" parameterType="z_tknight.oa.model.entity.TList">
+		update t_list
+		<!-- 修改属性，不可以修改主键 -->
+		<set>
+			<if test="listName != null">
+				listName = #{listName, jdbcType=VARCHAR},
+			</if>
+			<if test="boardSpaceNo != null">
+				boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
+			</if>
+			<if test="boardNo != null">
+				boardNo = #{boardNo, jdbcType=INTEGER},
+			</if>
+		</set>
+		<!-- 主键作为条件 -->
+		where
+		list_no = #{listNo, jdbcType=INTEGER} 
+	</update>
+
+	<!-- 通过主键修改属性，不可以修改主键 -->
+	<update id="updateByPrimaryKey" parameterType="z_tknight.oa.model.entity.TList">
+		update t_list
+		<!-- 修改属性，不可以修改主键 -->
+		set
+		listName = #{listName, jdbcType=VARCHAR},
+		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
+		boardNo = #{boardNo, jdbcType=INTEGER}
+		<!-- 主键作为条件 -->
+		where
+		list_no = #{listNo, jdbcType=INTEGER} 
+	</update>
+</mapper>
