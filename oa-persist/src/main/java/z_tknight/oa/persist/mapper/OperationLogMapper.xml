@@ -14,6 +14,7 @@
 		<result column="operation_time" property="operationTime" jdbcType="BIGINT" />
 		<result column="url" property="url" jdbcType="VARCHAR" />
 		<result column="state" property="state" jdbcType="BIT" />
+		<result column="method_name" property="methodName" jdbcType="VARCHAR" />
 	</resultMap>
 
 	<!-- 条件从句 -->
@@ -108,7 +109,8 @@
 		begin_time,
 		operation_time,
 		url,
-		state
+		state,
+		method_name
 	</sql>
 	<!-- 统计符合自定义条件的数据个数 -->
 	<select id="countByExample" parameterType="z_tknight.oa.model.entity.OperationLogExample"
@@ -151,7 +153,8 @@
 			begin_time,
 			operation_time,
 			url,
-			state
+			state,
+			method_name
 		)
 		values (
 			#{logNo, jdbcType=INTEGER},
@@ -163,7 +166,8 @@
 			#{beginTime, jdbcType=TIMESTAMP},
 			#{operationTime, jdbcType=BIGINT},
 			#{url, jdbcType=VARCHAR},
-			#{state, jdbcType=BIT}
+			#{state, jdbcType=BIT},
+			#{methodName, jdbcType=VARCHAR}
 		)
 	</insert>
 
@@ -203,6 +207,9 @@
 			<if test="state != null">
 				state,
 			</if>
+			<if test="methodName != null">
+				methodName,
+			</if>
 		</trim>
 		<!-- 插入内容 -->
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -235,6 +242,9 @@
 			</if>
 			<if test="state != null">
 				#{state, jdbcType=BIT},
+			</if>
+			<if test="methodName != null">
+				#{methodName, jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -305,6 +315,9 @@
 			<if test="record.state != null">
 				state = #{record.state, jdbcType=BIT},
 			</if>
+			<if test="record.methodName != null">
+				methodName = #{record.methodName, jdbcType=VARCHAR},
+			</if>
 		</set>
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
@@ -326,7 +339,8 @@
 		beginTime = #{beginTime, jdbcType=TIMESTAMP},
 		operationTime = #{operationTime, jdbcType=BIGINT},
 		url = #{url, jdbcType=VARCHAR},
-		state = #{state, jdbcType=BIT}
+		state = #{state, jdbcType=BIT},
+		methodName = #{methodName, jdbcType=VARCHAR}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -365,6 +379,9 @@
 			<if test="state != null">
 				state = #{state, jdbcType=BIT},
 			</if>
+			<if test="methodName != null">
+				methodName = #{methodName, jdbcType=VARCHAR},
+			</if>
 		</set>
 		<!-- 主键作为条件 -->
 		where
@@ -384,7 +401,8 @@
 		beginTime = #{beginTime, jdbcType=TIMESTAMP},
 		operationTime = #{operationTime, jdbcType=BIGINT},
 		url = #{url, jdbcType=VARCHAR},
-		state = #{state, jdbcType=BIT}
+		state = #{state, jdbcType=BIT},
+		methodName = #{methodName, jdbcType=VARCHAR}
 		<!-- 主键作为条件 -->
 		where
 		log_no = #{logNo, jdbcType=INTEGER} 

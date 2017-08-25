@@ -99,6 +99,8 @@ public class LoggerAspect {
 			// 代理方法信息
 			String methodName = joinPoint.getSignature().getName();
 			_LOG.debug("方法名：" + methodName);
+			// 方法名
+			log.setMethodName(methodName);
 			_LOG.debug("方法参数：" + params.length);
 			_LOG.debug("方法对象：" + joinPoint.getTarget());
 			// 操作描述

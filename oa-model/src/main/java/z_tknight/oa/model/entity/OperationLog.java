@@ -54,6 +54,11 @@ public class OperationLog {
 	 */
 	private Boolean state = null;
 
+	/**
+	 * 接口调用方法名
+	 */
+	private String methodName = null;
+
 	public void setLogNo(Integer logNo) {
 		this.logNo = logNo;
 	}
@@ -132,6 +137,14 @@ public class OperationLog {
 
 	public Boolean isState() {
 		return this.state;
+	}
+
+	public void setMethodName(String methodName) {
+		this.methodName = methodName;
+	}
+
+	public String getMethodName() {
+		return this.methodName;
 	}
 
 }

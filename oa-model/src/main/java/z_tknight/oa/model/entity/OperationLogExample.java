@@ -1518,6 +1518,125 @@ public class OperationLogExample {
 			addCriterion("state not between", value1, value2, "state");
 			return (Criteria) this;
 		}
+		/**
+		 * method_name字段为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andMethodNameIsNull() {
+			addCriterion("method_name is null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * method_name字段为不为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andMethodNameIsNotNull() {
+			addCriterion("method_name is not null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * method_name等于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andMethodNameEqualTo(String value) {
+			addCriterion("method_name =", value, "methodName");
+			return (Criteria) this;
+		}
+
+		/**
+		 * method_name不等于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andMethodNameNotEqualTo(String value) {
+			addCriterion("method_name <>", value, "methodName");
+			return (Criteria) this;
+		}
+
+		/**
+		 * method_name大于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andMethodNameGreaterThan(String value) {
+			addCriterion("method_name >", value, "methodName");
+			return (Criteria) this;
+		}
+
+		/**
+		 * method_name大于等于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andMethodNameGreaterThanOrEqualTo(String value) {
+			addCriterion("method_name >=", value, "methodName");
+			return (Criteria) this;
+		}
+
+		/**
+		 * method_name小于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andMethodNameLessThan(String value) {
+			addCriterion("method_name <", value, "methodName");
+			return (Criteria) this;
+		}
+
+		/**
+		 * method_name小于等于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andMethodNameLessThanOrEqualTo(String value) {
+			addCriterion("method_name <=", value, "methodName");
+			return (Criteria) this;
+		}
+
+		/**
+		 * method_name在传入值之中
+		 * @param value [List<String>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andMethodNameIn(List<String> values) {
+			addCriterion("method_name in", values, "methodName");
+			return (Criteria) this;
+		}
+
+		/**
+		 * method_name不在传入值之中
+		 * @param value [List<String>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andMethodNameNotIn(List<String> values) {
+			addCriterion("method_name not in", values, "methodName");
+			return (Criteria) this;
+		}
+
+		/**
+		 * method_name在传入值之间
+		 * @param value1 [String]传入值1
+		 * @param value2 [String]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andMethodNameBetween(String value1, String value2) {
+			addCriterion("method_name between", value1, value2, "methodName");
+			return (Criteria) this;
+		}
+
+		/**
+		 * method_name不在传入值之间
+		 * @param value1 [String]传入值1
+		 * @param value2 [String]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andMethodNameNotBetween(String value1, String value2) {
+			addCriterion("method_name not between", value1, value2, "methodName");
+			return (Criteria) this;
+		}
 
 	}
 }
