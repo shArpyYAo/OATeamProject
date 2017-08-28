@@ -2,13 +2,9 @@
 # 数据库
 # ======================================================================================================== #
 
-# create database if not exists z_tknight_oa;
+create database if not exists z_tknight_oa;
 
-create database if not exists demo;
-
-# use z_tknight_oa;
-
-use demo;
+use z_tknight_oa;
 
 # ======================================================================================================== #
 # 用户信息表
@@ -134,7 +130,8 @@ create table t_board (															/* 【看板信息表】 */
 	board_no int(4) not null auto_increment comment '看板空间编号',				/* 看板编号 */
     board_name varchar(70) not null comment '看板空间名称',						/* 看板名称 */
 	display_no int(4) not null comment '看板可见性编号',						/* 看板可见性编号 */
-	start_time datetime not null default now() comment '看板有效起始时间',		/* 看板有效起始时间 */
+	start_time timestamp not null 
+	default current_timestamp comment '看板有效起始时间',						/* 看板有效起始时间 */
 	end_time datetime not null comment '看板有效截止时间',						/* 看板有效截止时间 */
 	board_space_no int(4) not null comment '所属看板空间编号',					/* 所属看板空间编号 */
 	is_delete bit(1) not null comment '删除标记',								/* 删除标记 */

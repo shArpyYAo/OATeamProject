@@ -8,13 +8,13 @@
 		<result column="user_no" property="userNo" jdbcType="INTEGER" />
 		<result column="operation" property="operation" jdbcType="VARCHAR" />
 		<result column="exception" property="exception" jdbcType="VARCHAR" />
+		<result column="method_name" property="methodName" jdbcType="VARCHAR" />
 		<result column="params" property="params" jdbcType="VARCHAR" />
 		<result column="ip" property="ip" jdbcType="VARCHAR" />
 		<result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
 		<result column="operation_time" property="operationTime" jdbcType="BIGINT" />
 		<result column="url" property="url" jdbcType="VARCHAR" />
 		<result column="state" property="state" jdbcType="BIT" />
-		<result column="method_name" property="methodName" jdbcType="VARCHAR" />
 	</resultMap>
 
 	<!-- 条件从句 -->
@@ -104,13 +104,13 @@
 		user_no,
 		operation,
 		exception,
+		method_name,
 		params,
 		ip,
 		begin_time,
 		operation_time,
 		url,
-		state,
-		method_name
+		state
 	</sql>
 	<!-- 统计符合自定义条件的数据个数 -->
 	<select id="countByExample" parameterType="z_tknight.oa.model.entity.OperationLogExample"
@@ -148,26 +148,26 @@
 			user_no,
 			operation,
 			exception,
+			method_name,
 			params,
 			ip,
 			begin_time,
 			operation_time,
 			url,
-			state,
-			method_name
+			state
 		)
 		values (
 			#{logNo, jdbcType=INTEGER},
 			#{userNo, jdbcType=INTEGER},
 			#{operation, jdbcType=VARCHAR},
 			#{exception, jdbcType=VARCHAR},
+			#{methodName, jdbcType=VARCHAR},
 			#{params, jdbcType=VARCHAR},
 			#{ip, jdbcType=VARCHAR},
 			#{beginTime, jdbcType=TIMESTAMP},
 			#{operationTime, jdbcType=BIGINT},
 			#{url, jdbcType=VARCHAR},
-			#{state, jdbcType=BIT},
-			#{methodName, jdbcType=VARCHAR}
+			#{state, jdbcType=BIT}
 		)
 	</insert>
 
@@ -189,6 +189,9 @@
 			<if test="exception != null">
 				exception,
 			</if>
+			<if test="methodName != null">
+				methodName,
+			</if>
 			<if test="params != null">
 				params,
 			</if>
@@ -207,9 +210,6 @@
 			<if test="state != null">
 				state,
 			</if>
-			<if test="methodName != null">
-				methodName,
-			</if>
 		</trim>
 		<!-- 插入内容 -->
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -224,6 +224,9 @@
 			</if>
 			<if test="exception != null">
 				#{exception, jdbcType=VARCHAR},
+			</if>
+			<if test="methodName != null">
+				#{methodName, jdbcType=VARCHAR},
 			</if>
 			<if test="params != null">
 				#{params, jdbcType=VARCHAR},
@@ -242,9 +245,6 @@
 			</if>
 			<if test="state != null">
 				#{state, jdbcType=BIT},
-			</if>
-			<if test="methodName != null">
-				#{methodName, jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -297,6 +297,9 @@
 			<if test="record.exception != null">
 				exception = #{record.exception, jdbcType=VARCHAR},
 			</if>
+			<if test="record.methodName != null">
+				methodName = #{record.methodName, jdbcType=VARCHAR},
+			</if>
 			<if test="record.params != null">
 				params = #{record.params, jdbcType=VARCHAR},
 			</if>
@@ -315,9 +318,6 @@
 			<if test="record.state != null">
 				state = #{record.state, jdbcType=BIT},
 			</if>
-			<if test="record.methodName != null">
-				methodName = #{record.methodName, jdbcType=VARCHAR},
-			</if>
 		</set>
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
@@ -334,13 +334,13 @@
 		userNo = #{userNo, jdbcType=INTEGER},
 		operation = #{operation, jdbcType=VARCHAR},
 		exception = #{exception, jdbcType=VARCHAR},
+		methodName = #{methodName, jdbcType=VARCHAR},
 		params = #{params, jdbcType=VARCHAR},
 		ip = #{ip, jdbcType=VARCHAR},
 		beginTime = #{beginTime, jdbcType=TIMESTAMP},
 		operationTime = #{operationTime, jdbcType=BIGINT},
 		url = #{url, jdbcType=VARCHAR},
-		state = #{state, jdbcType=BIT},
-		methodName = #{methodName, jdbcType=VARCHAR}
+		state = #{state, jdbcType=BIT}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -361,6 +361,9 @@
 			<if test="exception != null">
 				exception = #{exception, jdbcType=VARCHAR},
 			</if>
+			<if test="methodName != null">
+				methodName = #{methodName, jdbcType=VARCHAR},
+			</if>
 			<if test="params != null">
 				params = #{params, jdbcType=VARCHAR},
 			</if>
@@ -379,9 +382,6 @@
 			<if test="state != null">
 				state = #{state, jdbcType=BIT},
 			</if>
-			<if test="methodName != null">
-				methodName = #{methodName, jdbcType=VARCHAR},
-			</if>
 		</set>
 		<!-- 主键作为条件 -->
 		where
@@ -396,13 +396,13 @@
 		userNo = #{userNo, jdbcType=INTEGER},
 		operation = #{operation, jdbcType=VARCHAR},
 		exception = #{exception, jdbcType=VARCHAR},
+		methodName = #{methodName, jdbcType=VARCHAR},
 		params = #{params, jdbcType=VARCHAR},
 		ip = #{ip, jdbcType=VARCHAR},
 		beginTime = #{beginTime, jdbcType=TIMESTAMP},
 		operationTime = #{operationTime, jdbcType=BIGINT},
 		url = #{url, jdbcType=VARCHAR},
-		state = #{state, jdbcType=BIT},
-		methodName = #{methodName, jdbcType=VARCHAR}
+		state = #{state, jdbcType=BIT}
 		<!-- 主键作为条件 -->
 		where
 		log_no = #{logNo, jdbcType=INTEGER} 

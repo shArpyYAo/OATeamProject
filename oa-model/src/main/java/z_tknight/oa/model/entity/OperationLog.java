@@ -25,6 +25,11 @@ public class OperationLog {
 	private String exception = null;
 
 	/**
+	 * 接口调用方法名
+	 */
+	private String methodName = null;
+
+	/**
 	 * 传入参数
 	 */
 	private String params = null;
@@ -53,11 +58,6 @@ public class OperationLog {
 	 * 操作成功与否
 	 */
 	private Boolean state = null;
-
-	/**
-	 * 接口调用方法名
-	 */
-	private String methodName = null;
 
 	public void setLogNo(Integer logNo) {
 		this.logNo = logNo;
@@ -89,6 +89,14 @@ public class OperationLog {
 
 	public String getException() {
 		return this.exception;
+	}
+
+	public void setMethodName(String methodName) {
+		this.methodName = methodName;
+	}
+
+	public String getMethodName() {
+		return this.methodName;
 	}
 
 	public void setParams(String params) {
@@ -137,14 +145,6 @@ public class OperationLog {
 
 	public Boolean isState() {
 		return this.state;
-	}
-
-	public void setMethodName(String methodName) {
-		this.methodName = methodName;
-	}
-
-	public String getMethodName() {
-		return this.methodName;
 	}
 
 }
