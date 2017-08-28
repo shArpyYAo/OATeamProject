@@ -2,9 +2,13 @@
 # 数据库
 # ======================================================================================================== #
 
-create database if not exists z_tknight_oa;
+# create database if not exists z_tknight_oa;
 
-use z_tknight_oa;
+create database if not exists demo;
+
+# use z_tknight_oa;
+
+use demo;
 
 # ======================================================================================================== #
 # 用户信息表
@@ -117,8 +121,6 @@ create table t_board_display_category (											/* 【看板可见性类别表
 # 基础数据表
 # ======================================================================================================== #
 
-use z_tknight_oa;
-
 create table t_board_space (													/* 【看板空间信息表】 */
 	board_space_no int(4) not null auto_increment comment '看板空间编号',		/* 看板空间编号 */
     board_space_name varchar(70) not null comment '看板空间名称',				/* 看板空间名称 */
@@ -185,7 +187,7 @@ create table operation_log (													/* 【操作日志表】 */
     user_no int(4) comment '操作用户编号',										/* 操作用户编号 */
     operation varchar(20) not null comment '操作描述',							/* 操作描述 */
     exception varchar(100) comment '操作异常信息',								/* 操作异常信息 */
-    method_name varchar(50) not null comment '接口调用方法名';					/* 接口调用方法名 */
+    method_name varchar(50) not null comment '接口调用方法名',					/* 接口调用方法名 */
     params varchar(250) comment '传入参数',										/* 传入参数 */
     ip varchar(30) not null comment '客户端ip',									/* 客户端ip */
     begin_time datetime not null comment '操作起始时间',						/* 操作起始时间 */
