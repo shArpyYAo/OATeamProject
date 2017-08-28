@@ -4,7 +4,7 @@
 
 	<!-- pojo类属性和对应表的结果集映射关系 -->
 	<resultMap id="BaseResultMap" type="z_tknight.oa.model.entity.TComment">
-		<id column="comment_id" property="commentId" jdbcType="INTEGER" />
+		<id column="comment_no" property="commentNo" jdbcType="INTEGER" />
 		<result column="comment" property="comment" jdbcType="VARCHAR" />
 		<result column="card_no" property="cardNo" jdbcType="INTEGER" />
 		<result column="user_no" property="userNo" jdbcType="INTEGER" />
@@ -93,7 +93,7 @@
 	</sql>
 
 	<sql id="Base_Column_List">
-		comment_id,
+		comment_no,
 		comment,
 		card_no,
 		user_no
@@ -124,19 +124,19 @@
 		delete from t_comment
 		<!-- 传入主键作为条件 -->
 		where
-		comment_id = #{commentId, jdbcType=INTEGER} 
+		comment_no = #{commentNo, jdbcType=INTEGER} 
 	</delete>
 
 	<!-- 插入单条数据 -->
 	<insert id="insert" parameterType="z_tknight.oa.model.entity.TComment">
 		insert into t_comment (
-			comment_id,
+			comment_no,
 			comment,
 			card_no,
 			user_no
 		)
 		values (
-			#{commentId, jdbcType=INTEGER},
+			#{commentNo, jdbcType=INTEGER},
 			#{comment, jdbcType=VARCHAR},
 			#{cardNo, jdbcType=INTEGER},
 			#{userNo, jdbcType=INTEGER}
@@ -149,8 +149,8 @@
 		<!-- 前缀为"("、后缀为")"、去掉最后一个"," -->
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="commentId != null">
-				commentId,
+			<if test="commentNo != null">
+				commentNo,
 			</if>
 			<if test="comment != null">
 				comment,
@@ -164,8 +164,8 @@
 		</trim>
 		<!-- 插入内容 -->
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="commentId != null">
-				#{commentId, jdbcType=INTEGER},
+			<if test="commentNo != null">
+				#{commentNo, jdbcType=INTEGER},
 			</if>
 			<if test="comment != null">
 				#{comment, jdbcType=VARCHAR},
@@ -207,7 +207,7 @@
 		from t_comment
 		<!-- #表示占位符、$表示拼接 -->
 		where
-		comment_id = #{commentId, jdbcType=INTEGER} 
+		comment_no = #{commentNo, jdbcType=INTEGER} 
 	</select>
 
 	<!-- 自定义条件的有选择性的修改某些属性，可修改主键 -->
@@ -215,8 +215,8 @@
 		update t_comment
 		<!-- 修改属性，可修改主键 -->
 		<set>
-			<if test="record.commentId != null">
-				commentId = #{record.commentId, jdbcType=INTEGER},
+			<if test="record.commentNo != null">
+				commentNo = #{record.commentNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.comment != null">
 				comment = #{record.comment, jdbcType=VARCHAR},
@@ -239,7 +239,7 @@
 		update t_comment
 		<!-- 修改属性，可修改主键 -->
 		set
-		commentId = #{commentId, jdbcType=INTEGER},
+		commentNo = #{commentNo, jdbcType=INTEGER},
 		comment = #{comment, jdbcType=VARCHAR},
 		cardNo = #{cardNo, jdbcType=INTEGER},
 		userNo = #{userNo, jdbcType=INTEGER}
@@ -266,7 +266,7 @@
 		</set>
 		<!-- 主键作为条件 -->
 		where
-		comment_id = #{commentId, jdbcType=INTEGER} 
+		comment_no = #{commentNo, jdbcType=INTEGER} 
 	</update>
 
 	<!-- 通过主键修改属性，不可以修改主键 -->
@@ -279,6 +279,6 @@
 		userNo = #{userNo, jdbcType=INTEGER}
 		<!-- 主键作为条件 -->
 		where
-		comment_id = #{commentId, jdbcType=INTEGER} 
+		comment_no = #{commentNo, jdbcType=INTEGER} 
 	</update>
 </mapper>

@@ -24,9 +24,19 @@ public class TBoardSpace {
 	private Integer categoryNo = null;
 
 	/**
-	 * 看板空间所有人编号
+	 * 看板空间所有者编号
 	 */
-	private Integer ownerUserNo = null;
+	private Integer userNo = null;
+
+	/**
+	 * 所属的公司编号
+	 */
+	private Integer companyNo = null;
+
+	/**
+	 * 删除标记
+	 */
+	private Boolean isDelete = null;
 
 	public void setBoardSpaceNo(Integer boardSpaceNo) {
 		this.boardSpaceNo = boardSpaceNo;
@@ -60,12 +70,28 @@ public class TBoardSpace {
 		return this.categoryNo;
 	}
 
-	public void setOwnerUserNo(Integer ownerUserNo) {
-		this.ownerUserNo = ownerUserNo;
+	public void setUserNo(Integer userNo) {
+		this.userNo = userNo;
 	}
 
-	public Integer getOwnerUserNo() {
-		return this.ownerUserNo;
+	public Integer getUserNo() {
+		return this.userNo;
+	}
+
+	public void setCompanyNo(Integer companyNo) {
+		this.companyNo = companyNo;
+	}
+
+	public Integer getCompanyNo() {
+		return this.companyNo;
+	}
+
+	public void setIsDelete(Boolean isDelete) {
+		this.isDelete = isDelete;
+	}
+
+	public Boolean isIsDelete() {
+		return this.isDelete;
 	}
 
 }

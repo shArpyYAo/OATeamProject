@@ -40,9 +40,9 @@ public class TBoard {
 	private Boolean isDelete = null;
 
 	/**
-	 * 看板所有人编号
+	 * 看板所有者编号
 	 */
-	private Integer ownerUserNo = null;
+	private Integer userNo = null;
 
 	public void setBoardNo(Integer boardNo) {
 		this.boardNo = boardNo;
@@ -100,12 +100,12 @@ public class TBoard {
 		return this.isDelete;
 	}
 
-	public void setOwnerUserNo(Integer ownerUserNo) {
-		this.ownerUserNo = ownerUserNo;
+	public void setUserNo(Integer userNo) {
+		this.userNo = userNo;
 	}
 
-	public Integer getOwnerUserNo() {
-		return this.ownerUserNo;
+	public Integer getUserNo() {
+		return this.userNo;
 	}
 
 }

@@ -29,6 +29,11 @@ public class TUser {
 	private String introduction = null;
 
 	/**
+	 * 用户所属部门
+	 */
+	private Integer deptNo = null;
+
+	/**
 	 * 备用字段
 	 */
 	private Integer backUp = null;
@@ -71,6 +76,14 @@ public class TUser {
 
 	public String getIntroduction() {
 		return this.introduction;
+	}
+
+	public void setDeptNo(Integer deptNo) {
+		this.deptNo = deptNo;
+	}
+
+	public Integer getDeptNo() {
+		return this.deptNo;
 	}
 
 	public void setBackUp(Integer backUp) {

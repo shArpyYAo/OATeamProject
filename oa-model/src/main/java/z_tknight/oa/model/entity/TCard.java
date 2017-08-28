@@ -44,6 +44,11 @@ public class TCard {
 	 */
 	private String listName = null;
 
+	/**
+	 * 删除标记
+	 */
+	private Boolean isDelete = null;
+
 	public void setCardNo(Integer cardNo) {
 		this.cardNo = cardNo;
 	}
@@ -106,6 +111,14 @@ public class TCard {
 
 	public String getListName() {
 		return this.listName;
+	}
+
+	public void setIsDelete(Boolean isDelete) {
+		this.isDelete = isDelete;
+	}
+
+	public Boolean isIsDelete() {
+		return this.isDelete;
 	}
 
 }

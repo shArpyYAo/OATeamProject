@@ -23,6 +23,11 @@ public class TList {
 	 */
 	private Integer boardNo = null;
 
+	/**
+	 * 删除标记
+	 */
+	private Boolean isDelete = null;
+
 	public void setListNo(Integer listNo) {
 		this.listNo = listNo;
 	}
@@ -53,6 +58,14 @@ public class TList {
 
 	public Integer getBoardNo() {
 		return this.boardNo;
+	}
+
+	public void setIsDelete(Boolean isDelete) {
+		this.isDelete = isDelete;
+	}
+
+	public Boolean isIsDelete() {
+		return this.isDelete;
 	}
 
 }

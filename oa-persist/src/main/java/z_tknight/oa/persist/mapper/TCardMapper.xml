@@ -12,6 +12,7 @@
 		<result column="board_no" property="boardNo" jdbcType="INTEGER" />
 		<result column="list_no" property="listNo" jdbcType="INTEGER" />
 		<result column="list_name" property="listName" jdbcType="VARCHAR" />
+		<result column="is_delete" property="isDelete" jdbcType="BIT" />
 	</resultMap>
 
 	<!-- 条件从句 -->
@@ -104,7 +105,8 @@
 		board_space_no,
 		board_no,
 		list_no,
-		list_name
+		list_name,
+		is_delete
 	</sql>
 	<!-- 统计符合自定义条件的数据个数 -->
 	<select id="countByExample" parameterType="z_tknight.oa.model.entity.TCardExample"
@@ -145,7 +147,8 @@
 			board_space_no,
 			board_no,
 			list_no,
-			list_name
+			list_name,
+			is_delete
 		)
 		values (
 			#{cardNo, jdbcType=INTEGER},
@@ -155,7 +158,8 @@
 			#{boardSpaceNo, jdbcType=INTEGER},
 			#{boardNo, jdbcType=INTEGER},
 			#{listNo, jdbcType=INTEGER},
-			#{listName, jdbcType=VARCHAR}
+			#{listName, jdbcType=VARCHAR},
+			#{isDelete, jdbcType=BIT}
 		)
 	</insert>
 
@@ -189,6 +193,9 @@
 			<if test="listName != null">
 				listName,
 			</if>
+			<if test="isDelete != null">
+				isDelete,
+			</if>
 		</trim>
 		<!-- 插入内容 -->
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -215,6 +222,9 @@
 			</if>
 			<if test="listName != null">
 				#{listName, jdbcType=VARCHAR},
+			</if>
+			<if test="isDelete != null">
+				#{isDelete, jdbcType=BIT},
 			</if>
 		</trim>
 	</insert>
@@ -279,6 +289,9 @@
 			<if test="record.listName != null">
 				listName = #{record.listName, jdbcType=VARCHAR},
 			</if>
+			<if test="record.isDelete != null">
+				isDelete = #{record.isDelete, jdbcType=BIT},
+			</if>
 		</set>
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
@@ -298,7 +311,8 @@
 		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
 		boardNo = #{boardNo, jdbcType=INTEGER},
 		listNo = #{listNo, jdbcType=INTEGER},
-		listName = #{listName, jdbcType=VARCHAR}
+		listName = #{listName, jdbcType=VARCHAR},
+		isDelete = #{isDelete, jdbcType=BIT}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -331,6 +345,9 @@
 			<if test="listName != null">
 				listName = #{listName, jdbcType=VARCHAR},
 			</if>
+			<if test="isDelete != null">
+				isDelete = #{isDelete, jdbcType=BIT},
+			</if>
 		</set>
 		<!-- 主键作为条件 -->
 		where
@@ -348,7 +365,8 @@
 		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
 		boardNo = #{boardNo, jdbcType=INTEGER},
 		listNo = #{listNo, jdbcType=INTEGER},
-		listName = #{listName, jdbcType=VARCHAR}
+		listName = #{listName, jdbcType=VARCHAR},
+		isDelete = #{isDelete, jdbcType=BIT}
 		<!-- 主键作为条件 -->
 		where
 		card_no = #{cardNo, jdbcType=INTEGER} 

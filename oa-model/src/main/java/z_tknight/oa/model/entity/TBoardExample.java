@@ -1162,122 +1162,122 @@ public class TBoardExample {
 			return (Criteria) this;
 		}
 		/**
-		 * owner_user_no字段为null
+		 * user_no字段为null
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andOwnerUserNoIsNull() {
-			addCriterion("owner_user_no is null");
+		public Criteria andUserNoIsNull() {
+			addCriterion("user_no is null");
 			return (Criteria) this;
 		}
 
 		/**
-		 * owner_user_no字段为不为null
+		 * user_no字段为不为null
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andOwnerUserNoIsNotNull() {
-			addCriterion("owner_user_no is not null");
+		public Criteria andUserNoIsNotNull() {
+			addCriterion("user_no is not null");
 			return (Criteria) this;
 		}
 
 		/**
-		 * owner_user_no等于传入值
+		 * user_no等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andOwnerUserNoEqualTo(Integer value) {
-			addCriterion("owner_user_no =", value, "ownerUserNo");
+		public Criteria andUserNoEqualTo(Integer value) {
+			addCriterion("user_no =", value, "userNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * owner_user_no不等于传入值
+		 * user_no不等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andOwnerUserNoNotEqualTo(Integer value) {
-			addCriterion("owner_user_no <>", value, "ownerUserNo");
+		public Criteria andUserNoNotEqualTo(Integer value) {
+			addCriterion("user_no <>", value, "userNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * owner_user_no大于传入值
+		 * user_no大于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andOwnerUserNoGreaterThan(Integer value) {
-			addCriterion("owner_user_no >", value, "ownerUserNo");
+		public Criteria andUserNoGreaterThan(Integer value) {
+			addCriterion("user_no >", value, "userNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * owner_user_no大于等于传入值
+		 * user_no大于等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andOwnerUserNoGreaterThanOrEqualTo(Integer value) {
-			addCriterion("owner_user_no >=", value, "ownerUserNo");
+		public Criteria andUserNoGreaterThanOrEqualTo(Integer value) {
+			addCriterion("user_no >=", value, "userNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * owner_user_no小于传入值
+		 * user_no小于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andOwnerUserNoLessThan(Integer value) {
-			addCriterion("owner_user_no <", value, "ownerUserNo");
+		public Criteria andUserNoLessThan(Integer value) {
+			addCriterion("user_no <", value, "userNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * owner_user_no小于等于传入值
+		 * user_no小于等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andOwnerUserNoLessThanOrEqualTo(Integer value) {
-			addCriterion("owner_user_no <=", value, "ownerUserNo");
+		public Criteria andUserNoLessThanOrEqualTo(Integer value) {
+			addCriterion("user_no <=", value, "userNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * owner_user_no在传入值之中
+		 * user_no在传入值之中
 		 * @param value [List<Integer>]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andOwnerUserNoIn(List<Integer> values) {
-			addCriterion("owner_user_no in", values, "ownerUserNo");
+		public Criteria andUserNoIn(List<Integer> values) {
+			addCriterion("user_no in", values, "userNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * owner_user_no不在传入值之中
+		 * user_no不在传入值之中
 		 * @param value [List<Integer>]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andOwnerUserNoNotIn(List<Integer> values) {
-			addCriterion("owner_user_no not in", values, "ownerUserNo");
+		public Criteria andUserNoNotIn(List<Integer> values) {
+			addCriterion("user_no not in", values, "userNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * owner_user_no在传入值之间
+		 * user_no在传入值之间
 		 * @param value1 [Integer]传入值1
 		 * @param value2 [Integer]传入值2
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andOwnerUserNoBetween(Integer value1, Integer value2) {
-			addCriterion("owner_user_no between", value1, value2, "ownerUserNo");
+		public Criteria andUserNoBetween(Integer value1, Integer value2) {
+			addCriterion("user_no between", value1, value2, "userNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * owner_user_no不在传入值之间
+		 * user_no不在传入值之间
 		 * @param value1 [Integer]传入值1
 		 * @param value2 [Integer]传入值2
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andOwnerUserNoNotBetween(Integer value1, Integer value2) {
-			addCriterion("owner_user_no not between", value1, value2, "ownerUserNo");
+		public Criteria andUserNoNotBetween(Integer value1, Integer value2) {
+			addCriterion("user_no not between", value1, value2, "userNo");
 			return (Criteria) this;
 		}
 

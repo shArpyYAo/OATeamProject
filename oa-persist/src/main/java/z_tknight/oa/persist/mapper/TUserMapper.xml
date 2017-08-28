@@ -9,6 +9,7 @@
 		<result column="password" property="password" jdbcType="VARCHAR" />
 		<result column="nick_name" property="nickName" jdbcType="VARCHAR" />
 		<result column="introduction" property="introduction" jdbcType="VARCHAR" />
+		<result column="dept_no" property="deptNo" jdbcType="INTEGER" />
 		<result column="back_up" property="backUp" jdbcType="INTEGER" />
 	</resultMap>
 
@@ -100,6 +101,7 @@
 		password,
 		nick_name,
 		introduction,
+		dept_no,
 		back_up
 	</sql>
 	<!-- 统计符合自定义条件的数据个数 -->
@@ -139,6 +141,7 @@
 			password,
 			nick_name,
 			introduction,
+			dept_no,
 			back_up
 		)
 		values (
@@ -147,6 +150,7 @@
 			#{password, jdbcType=VARCHAR},
 			#{nickName, jdbcType=VARCHAR},
 			#{introduction, jdbcType=VARCHAR},
+			#{deptNo, jdbcType=INTEGER},
 			#{backUp, jdbcType=INTEGER}
 		)
 	</insert>
@@ -172,6 +176,9 @@
 			<if test="introduction != null">
 				introduction,
 			</if>
+			<if test="deptNo != null">
+				deptNo,
+			</if>
 			<if test="backUp != null">
 				backUp,
 			</if>
@@ -192,6 +199,9 @@
 			</if>
 			<if test="introduction != null">
 				#{introduction, jdbcType=VARCHAR},
+			</if>
+			<if test="deptNo != null">
+				#{deptNo, jdbcType=INTEGER},
 			</if>
 			<if test="backUp != null">
 				#{backUp, jdbcType=INTEGER},
@@ -250,6 +260,9 @@
 			<if test="record.introduction != null">
 				introduction = #{record.introduction, jdbcType=VARCHAR},
 			</if>
+			<if test="record.deptNo != null">
+				deptNo = #{record.deptNo, jdbcType=INTEGER},
+			</if>
 			<if test="record.backUp != null">
 				backUp = #{record.backUp, jdbcType=INTEGER},
 			</if>
@@ -270,6 +283,7 @@
 		password = #{password, jdbcType=VARCHAR},
 		nickName = #{nickName, jdbcType=VARCHAR},
 		introduction = #{introduction, jdbcType=VARCHAR},
+		deptNo = #{deptNo, jdbcType=INTEGER},
 		backUp = #{backUp, jdbcType=INTEGER}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
@@ -294,6 +308,9 @@
 			<if test="introduction != null">
 				introduction = #{introduction, jdbcType=VARCHAR},
 			</if>
+			<if test="deptNo != null">
+				deptNo = #{deptNo, jdbcType=INTEGER},
+			</if>
 			<if test="backUp != null">
 				backUp = #{backUp, jdbcType=INTEGER},
 			</if>
@@ -312,6 +329,7 @@
 		password = #{password, jdbcType=VARCHAR},
 		nickName = #{nickName, jdbcType=VARCHAR},
 		introduction = #{introduction, jdbcType=VARCHAR},
+		deptNo = #{deptNo, jdbcType=INTEGER},
 		backUp = #{backUp, jdbcType=INTEGER}
 		<!-- 主键作为条件 -->
 		where

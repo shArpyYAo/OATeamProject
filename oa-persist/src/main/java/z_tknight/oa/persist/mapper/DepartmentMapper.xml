@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="z_tknight.oa.persist.mapper.TBoardMapper" >
+<mapper namespace="z_tknight.oa.persist.mapper.DepartmentMapper" >
 
 	<!-- pojo类属性和对应表的结果集映射关系 -->
-	<resultMap id="BaseResultMap" type="z_tknight.oa.model.entity.TBoard">
-		<id column="board_no" property="boardNo" jdbcType="INTEGER" />
-		<result column="board_name" property="boardName" jdbcType="VARCHAR" />
-		<result column="display_no" property="displayNo" jdbcType="INTEGER" />
-		<result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
-		<result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
-		<result column="board_space_no" property="boardSpaceNo" jdbcType="INTEGER" />
-		<result column="is_delete" property="isDelete" jdbcType="BIT" />
+	<resultMap id="BaseResultMap" type="z_tknight.oa.model.entity.Department">
+		<id column="dept_no" property="deptNo" jdbcType="INTEGER" />
+		<result column="dept_name" property="deptName" jdbcType="VARCHAR" />
 		<result column="user_no" property="userNo" jdbcType="INTEGER" />
+		<result column="company_no" property="companyNo" jdbcType="INTEGER" />
 	</resultMap>
 
 	<!-- 条件从句 -->
@@ -97,19 +93,15 @@
 	</sql>
 
 	<sql id="Base_Column_List">
-		board_no,
-		board_name,
-		display_no,
-		start_time,
-		end_time,
-		board_space_no,
-		is_delete,
-		user_no
+		dept_no,
+		dept_name,
+		user_no,
+		company_no
 	</sql>
 	<!-- 统计符合自定义条件的数据个数 -->
-	<select id="countByExample" parameterType="z_tknight.oa.model.entity.TBoardExample"
+	<select id="countByExample" parameterType="z_tknight.oa.model.entity.DepartmentExample"
 		resultType="java.lang.Integer">
-		select count(*) from t_board
+		select count(*) from department
 		<!-- _parameter代表的时传入参数 -->
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
@@ -118,8 +110,8 @@
 	</select>
 
 	<!-- 自定义条件删除数据 -->
-	<delete id="deleteByExample" parameterType="z_tknight.oa.model.entity.TBoardExample">
-		delete from t_board
+	<delete id="deleteByExample" parameterType="z_tknight.oa.model.entity.DepartmentExample">
+		delete from department
 		<!-- _parameter代表的时传入参数 -->
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
@@ -129,99 +121,67 @@
 
 	<!-- 根据主键删除单条数据 -->
 	<delete id="deleteByPrimaryKey">
-		delete from t_board
+		delete from department
 		<!-- 传入主键作为条件 -->
 		where
-		board_no = #{boardNo, jdbcType=INTEGER} 
+		dept_no = #{deptNo, jdbcType=INTEGER} 
 	</delete>
 
 	<!-- 插入单条数据 -->
-	<insert id="insert" parameterType="z_tknight.oa.model.entity.TBoard">
-		insert into t_board (
-			board_no,
-			board_name,
-			display_no,
-			start_time,
-			end_time,
-			board_space_no,
-			is_delete,
-			user_no
+	<insert id="insert" parameterType="z_tknight.oa.model.entity.Department">
+		insert into department (
+			dept_no,
+			dept_name,
+			user_no,
+			company_no
 		)
 		values (
-			#{boardNo, jdbcType=INTEGER},
-			#{boardName, jdbcType=VARCHAR},
-			#{displayNo, jdbcType=INTEGER},
-			#{startTime, jdbcType=TIMESTAMP},
-			#{endTime, jdbcType=TIMESTAMP},
-			#{boardSpaceNo, jdbcType=INTEGER},
-			#{isDelete, jdbcType=BIT},
-			#{userNo, jdbcType=INTEGER}
+			#{deptNo, jdbcType=INTEGER},
+			#{deptName, jdbcType=VARCHAR},
+			#{userNo, jdbcType=INTEGER},
+			#{companyNo, jdbcType=INTEGER}
 		)
 	</insert>
 
 	<!-- 有选择的插入单条数据 -->
-	<insert id="insertSelective" parameterType="z_tknight.oa.model.entity.TBoard">
-		insert into t_board
+	<insert id="insertSelective" parameterType="z_tknight.oa.model.entity.Department">
+		insert into department
 		<!-- 前缀为"("、后缀为")"、去掉最后一个"," -->
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="boardNo != null">
-				boardNo,
+			<if test="deptNo != null">
+				deptNo,
 			</if>
-			<if test="boardName != null">
-				boardName,
-			</if>
-			<if test="displayNo != null">
-				displayNo,
-			</if>
-			<if test="startTime != null">
-				startTime,
-			</if>
-			<if test="endTime != null">
-				endTime,
-			</if>
-			<if test="boardSpaceNo != null">
-				boardSpaceNo,
-			</if>
-			<if test="isDelete != null">
-				isDelete,
+			<if test="deptName != null">
+				deptName,
 			</if>
 			<if test="userNo != null">
 				userNo,
 			</if>
+			<if test="companyNo != null">
+				companyNo,
+			</if>
 		</trim>
 		<!-- 插入内容 -->
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="boardNo != null">
-				#{boardNo, jdbcType=INTEGER},
+			<if test="deptNo != null">
+				#{deptNo, jdbcType=INTEGER},
 			</if>
-			<if test="boardName != null">
-				#{boardName, jdbcType=VARCHAR},
-			</if>
-			<if test="displayNo != null">
-				#{displayNo, jdbcType=INTEGER},
-			</if>
-			<if test="startTime != null">
-				#{startTime, jdbcType=TIMESTAMP},
-			</if>
-			<if test="endTime != null">
-				#{endTime, jdbcType=TIMESTAMP},
-			</if>
-			<if test="boardSpaceNo != null">
-				#{boardSpaceNo, jdbcType=INTEGER},
-			</if>
-			<if test="isDelete != null">
-				#{isDelete, jdbcType=BIT},
+			<if test="deptName != null">
+				#{deptName, jdbcType=VARCHAR},
 			</if>
 			<if test="userNo != null">
 				#{userNo, jdbcType=INTEGER},
+			</if>
+			<if test="companyNo != null">
+				#{companyNo, jdbcType=INTEGER},
 			</if>
 		</trim>
 	</insert>
 
 	<!-- 查询符合自定义条件的数据 -->
 	<select id="selectByExample" resultMap="BaseResultMap"
-		parameterType="z_tknight.oa.model.entity.TBoardExample">
+		parameterType="z_tknight.oa.model.entity.DepartmentExample">
 		select
 		<!-- 判断是否使用distinct查询 -->
 		<if test="distinct">
@@ -229,7 +189,7 @@
 		</if>
 		<!-- 查询字段 -->
 		<include refid="Base_Column_List" />
-		from t_board
+		from department
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Example_Where_Clause" />
@@ -244,40 +204,28 @@
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from t_board
+		from department
 		<!-- #表示占位符、$表示拼接 -->
 		where
-		board_no = #{boardNo, jdbcType=INTEGER} 
+		dept_no = #{deptNo, jdbcType=INTEGER} 
 	</select>
 
 	<!-- 自定义条件的有选择性的修改某些属性，可修改主键 -->
 	<update id="updateByExampleSelective">
-		update t_board
+		update department
 		<!-- 修改属性，可修改主键 -->
 		<set>
-			<if test="record.boardNo != null">
-				boardNo = #{record.boardNo, jdbcType=INTEGER},
+			<if test="record.deptNo != null">
+				deptNo = #{record.deptNo, jdbcType=INTEGER},
 			</if>
-			<if test="record.boardName != null">
-				boardName = #{record.boardName, jdbcType=VARCHAR},
-			</if>
-			<if test="record.displayNo != null">
-				displayNo = #{record.displayNo, jdbcType=INTEGER},
-			</if>
-			<if test="record.startTime != null">
-				startTime = #{record.startTime, jdbcType=TIMESTAMP},
-			</if>
-			<if test="record.endTime != null">
-				endTime = #{record.endTime, jdbcType=TIMESTAMP},
-			</if>
-			<if test="record.boardSpaceNo != null">
-				boardSpaceNo = #{record.boardSpaceNo, jdbcType=INTEGER},
-			</if>
-			<if test="record.isDelete != null">
-				isDelete = #{record.isDelete, jdbcType=BIT},
+			<if test="record.deptName != null">
+				deptName = #{record.deptName, jdbcType=VARCHAR},
 			</if>
 			<if test="record.userNo != null">
 				userNo = #{record.userNo, jdbcType=INTEGER},
+			</if>
+			<if test="record.companyNo != null">
+				companyNo = #{record.companyNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -288,17 +236,13 @@
 
 	<!-- 自定义条件修改所有属性，可修改主键 -->
 	<update id="updateByExample">
-		update t_board
+		update department
 		<!-- 修改属性，可修改主键 -->
 		set
-		boardNo = #{boardNo, jdbcType=INTEGER},
-		boardName = #{boardName, jdbcType=VARCHAR},
-		displayNo = #{displayNo, jdbcType=INTEGER},
-		startTime = #{startTime, jdbcType=TIMESTAMP},
-		endTime = #{endTime, jdbcType=TIMESTAMP},
-		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
-		isDelete = #{isDelete, jdbcType=BIT},
-		userNo = #{userNo, jdbcType=INTEGER}
+		deptNo = #{deptNo, jdbcType=INTEGER},
+		deptName = #{deptName, jdbcType=VARCHAR},
+		userNo = #{userNo, jdbcType=INTEGER},
+		companyNo = #{companyNo, jdbcType=INTEGER}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -306,51 +250,35 @@
 	</update>
 
 	<!-- 通过主键有选择性的修改某该属性，不可以修改主键 -->
-	<update id="updateByPrimaryKeySelective" parameterType="z_tknight.oa.model.entity.TBoard">
-		update t_board
+	<update id="updateByPrimaryKeySelective" parameterType="z_tknight.oa.model.entity.Department">
+		update department
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
-			<if test="boardName != null">
-				boardName = #{boardName, jdbcType=VARCHAR},
-			</if>
-			<if test="displayNo != null">
-				displayNo = #{displayNo, jdbcType=INTEGER},
-			</if>
-			<if test="startTime != null">
-				startTime = #{startTime, jdbcType=TIMESTAMP},
-			</if>
-			<if test="endTime != null">
-				endTime = #{endTime, jdbcType=TIMESTAMP},
-			</if>
-			<if test="boardSpaceNo != null">
-				boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
-			</if>
-			<if test="isDelete != null">
-				isDelete = #{isDelete, jdbcType=BIT},
+			<if test="deptName != null">
+				deptName = #{deptName, jdbcType=VARCHAR},
 			</if>
 			<if test="userNo != null">
 				userNo = #{userNo, jdbcType=INTEGER},
 			</if>
+			<if test="companyNo != null">
+				companyNo = #{companyNo, jdbcType=INTEGER},
+			</if>
 		</set>
 		<!-- 主键作为条件 -->
 		where
-		board_no = #{boardNo, jdbcType=INTEGER} 
+		dept_no = #{deptNo, jdbcType=INTEGER} 
 	</update>
 
 	<!-- 通过主键修改属性，不可以修改主键 -->
-	<update id="updateByPrimaryKey" parameterType="z_tknight.oa.model.entity.TBoard">
-		update t_board
+	<update id="updateByPrimaryKey" parameterType="z_tknight.oa.model.entity.Department">
+		update department
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		boardName = #{boardName, jdbcType=VARCHAR},
-		displayNo = #{displayNo, jdbcType=INTEGER},
-		startTime = #{startTime, jdbcType=TIMESTAMP},
-		endTime = #{endTime, jdbcType=TIMESTAMP},
-		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
-		isDelete = #{isDelete, jdbcType=BIT},
-		userNo = #{userNo, jdbcType=INTEGER}
+		deptName = #{deptName, jdbcType=VARCHAR},
+		userNo = #{userNo, jdbcType=INTEGER},
+		companyNo = #{companyNo, jdbcType=INTEGER}
 		<!-- 主键作为条件 -->
 		where
-		board_no = #{boardNo, jdbcType=INTEGER} 
+		dept_no = #{deptNo, jdbcType=INTEGER} 
 	</update>
 </mapper>

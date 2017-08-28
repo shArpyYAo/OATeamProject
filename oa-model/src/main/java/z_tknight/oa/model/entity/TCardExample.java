@@ -1280,6 +1280,125 @@ public class TCardExample {
 			addCriterion("list_name not between", value1, value2, "listName");
 			return (Criteria) this;
 		}
+		/**
+		 * is_delete字段为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andIsDeleteIsNull() {
+			addCriterion("is_delete is null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * is_delete字段为不为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andIsDeleteIsNotNull() {
+			addCriterion("is_delete is not null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * is_delete等于传入值
+		 * @param value [Boolean]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andIsDeleteEqualTo(Boolean value) {
+			addCriterion("is_delete =", value, "isDelete");
+			return (Criteria) this;
+		}
+
+		/**
+		 * is_delete不等于传入值
+		 * @param value [Boolean]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andIsDeleteNotEqualTo(Boolean value) {
+			addCriterion("is_delete <>", value, "isDelete");
+			return (Criteria) this;
+		}
+
+		/**
+		 * is_delete大于传入值
+		 * @param value [Boolean]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andIsDeleteGreaterThan(Boolean value) {
+			addCriterion("is_delete >", value, "isDelete");
+			return (Criteria) this;
+		}
+
+		/**
+		 * is_delete大于等于传入值
+		 * @param value [Boolean]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andIsDeleteGreaterThanOrEqualTo(Boolean value) {
+			addCriterion("is_delete >=", value, "isDelete");
+			return (Criteria) this;
+		}
+
+		/**
+		 * is_delete小于传入值
+		 * @param value [Boolean]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andIsDeleteLessThan(Boolean value) {
+			addCriterion("is_delete <", value, "isDelete");
+			return (Criteria) this;
+		}
+
+		/**
+		 * is_delete小于等于传入值
+		 * @param value [Boolean]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andIsDeleteLessThanOrEqualTo(Boolean value) {
+			addCriterion("is_delete <=", value, "isDelete");
+			return (Criteria) this;
+		}
+
+		/**
+		 * is_delete在传入值之中
+		 * @param value [List<Boolean>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andIsDeleteIn(List<Boolean> values) {
+			addCriterion("is_delete in", values, "isDelete");
+			return (Criteria) this;
+		}
+
+		/**
+		 * is_delete不在传入值之中
+		 * @param value [List<Boolean>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andIsDeleteNotIn(List<Boolean> values) {
+			addCriterion("is_delete not in", values, "isDelete");
+			return (Criteria) this;
+		}
+
+		/**
+		 * is_delete在传入值之间
+		 * @param value1 [Boolean]传入值1
+		 * @param value2 [Boolean]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andIsDeleteBetween(Boolean value1, Boolean value2) {
+			addCriterion("is_delete between", value1, value2, "isDelete");
+			return (Criteria) this;
+		}
+
+		/**
+		 * is_delete不在传入值之间
+		 * @param value1 [Boolean]传入值1
+		 * @param value2 [Boolean]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andIsDeleteNotBetween(Boolean value1, Boolean value2) {
+			addCriterion("is_delete not between", value1, value2, "isDelete");
+			return (Criteria) this;
+		}
 
 	}
 }

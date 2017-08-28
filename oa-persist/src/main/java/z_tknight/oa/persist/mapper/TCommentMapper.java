@@ -26,10 +26,10 @@ public interface TCommentMapper {
 	/**
 	 * 根据主键删除单条数据
 	 *
-	 * @param commentId [Integer](主键属性)评论编号
+	 * @param commentNo [Integer](主键属性)评论编号
 	 * @return [int]受影响行数
 	 */
-	int deleteByPrimaryKey(@Param("commentId") Integer commentId);
+	int deleteByPrimaryKey(@Param("commentNo") Integer commentNo);
 
 	/**
 	 * 插入单条数据
@@ -58,10 +58,10 @@ public interface TCommentMapper {
 	/**
 	 * 根据主键查询单条数据
 	 *
-	 * @param commentId [Integer](主键属性)评论编号
+	 * @param commentNo [Integer](主键属性)评论编号
 	 * @return [TComment]查询结果
 	 */
-	TComment selectByPrimaryKey(@Param("commentId") Integer commentId);
+	TComment selectByPrimaryKey(@Param("commentNo") Integer commentNo);
 
 	/**
 	 * 自定义条件的有选择性的修改某些属性，只修改不为空的属性

@@ -3,7 +3,7 @@ package z_tknight.oa.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TCommentExample {
+public class DepartmentExample {
 
 	/**
 	 * 排序从句
@@ -25,7 +25,7 @@ public class TCommentExample {
 	/**
 	 * 构造方法，初始化criteria条件列表。
 	 */
-	public TCommentExample() {
+	public DepartmentExample() {
 		oredCriteria = new ArrayList<Criteria>();
 	}
 
@@ -328,360 +328,241 @@ public class TCommentExample {
 		}
 		
 		/**
-		 * comment_no字段为null
+		 * dept_no字段为null
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentNoIsNull() {
-			addCriterion("comment_no is null");
+		public Criteria andDeptNoIsNull() {
+			addCriterion("dept_no is null");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment_no字段为不为null
+		 * dept_no字段为不为null
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentNoIsNotNull() {
-			addCriterion("comment_no is not null");
+		public Criteria andDeptNoIsNotNull() {
+			addCriterion("dept_no is not null");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment_no等于传入值
+		 * dept_no等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentNoEqualTo(Integer value) {
-			addCriterion("comment_no =", value, "commentNo");
+		public Criteria andDeptNoEqualTo(Integer value) {
+			addCriterion("dept_no =", value, "deptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment_no不等于传入值
+		 * dept_no不等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentNoNotEqualTo(Integer value) {
-			addCriterion("comment_no <>", value, "commentNo");
+		public Criteria andDeptNoNotEqualTo(Integer value) {
+			addCriterion("dept_no <>", value, "deptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment_no大于传入值
+		 * dept_no大于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentNoGreaterThan(Integer value) {
-			addCriterion("comment_no >", value, "commentNo");
+		public Criteria andDeptNoGreaterThan(Integer value) {
+			addCriterion("dept_no >", value, "deptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment_no大于等于传入值
+		 * dept_no大于等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentNoGreaterThanOrEqualTo(Integer value) {
-			addCriterion("comment_no >=", value, "commentNo");
+		public Criteria andDeptNoGreaterThanOrEqualTo(Integer value) {
+			addCriterion("dept_no >=", value, "deptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment_no小于传入值
+		 * dept_no小于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentNoLessThan(Integer value) {
-			addCriterion("comment_no <", value, "commentNo");
+		public Criteria andDeptNoLessThan(Integer value) {
+			addCriterion("dept_no <", value, "deptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment_no小于等于传入值
+		 * dept_no小于等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentNoLessThanOrEqualTo(Integer value) {
-			addCriterion("comment_no <=", value, "commentNo");
+		public Criteria andDeptNoLessThanOrEqualTo(Integer value) {
+			addCriterion("dept_no <=", value, "deptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment_no在传入值之中
+		 * dept_no在传入值之中
 		 * @param value [List<Integer>]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentNoIn(List<Integer> values) {
-			addCriterion("comment_no in", values, "commentNo");
+		public Criteria andDeptNoIn(List<Integer> values) {
+			addCriterion("dept_no in", values, "deptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment_no不在传入值之中
+		 * dept_no不在传入值之中
 		 * @param value [List<Integer>]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentNoNotIn(List<Integer> values) {
-			addCriterion("comment_no not in", values, "commentNo");
+		public Criteria andDeptNoNotIn(List<Integer> values) {
+			addCriterion("dept_no not in", values, "deptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment_no在传入值之间
+		 * dept_no在传入值之间
 		 * @param value1 [Integer]传入值1
 		 * @param value2 [Integer]传入值2
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentNoBetween(Integer value1, Integer value2) {
-			addCriterion("comment_no between", value1, value2, "commentNo");
+		public Criteria andDeptNoBetween(Integer value1, Integer value2) {
+			addCriterion("dept_no between", value1, value2, "deptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment_no不在传入值之间
+		 * dept_no不在传入值之间
 		 * @param value1 [Integer]传入值1
 		 * @param value2 [Integer]传入值2
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentNoNotBetween(Integer value1, Integer value2) {
-			addCriterion("comment_no not between", value1, value2, "commentNo");
+		public Criteria andDeptNoNotBetween(Integer value1, Integer value2) {
+			addCriterion("dept_no not between", value1, value2, "deptNo");
 			return (Criteria) this;
 		}
 		/**
-		 * comment字段为null
+		 * dept_name字段为null
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentIsNull() {
-			addCriterion("comment is null");
+		public Criteria andDeptNameIsNull() {
+			addCriterion("dept_name is null");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment字段为不为null
+		 * dept_name字段为不为null
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentIsNotNull() {
-			addCriterion("comment is not null");
+		public Criteria andDeptNameIsNotNull() {
+			addCriterion("dept_name is not null");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment等于传入值
+		 * dept_name等于传入值
 		 * @param value [String]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentEqualTo(String value) {
-			addCriterion("comment =", value, "comment");
+		public Criteria andDeptNameEqualTo(String value) {
+			addCriterion("dept_name =", value, "deptName");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment不等于传入值
+		 * dept_name不等于传入值
 		 * @param value [String]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentNotEqualTo(String value) {
-			addCriterion("comment <>", value, "comment");
+		public Criteria andDeptNameNotEqualTo(String value) {
+			addCriterion("dept_name <>", value, "deptName");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment大于传入值
+		 * dept_name大于传入值
 		 * @param value [String]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentGreaterThan(String value) {
-			addCriterion("comment >", value, "comment");
+		public Criteria andDeptNameGreaterThan(String value) {
+			addCriterion("dept_name >", value, "deptName");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment大于等于传入值
+		 * dept_name大于等于传入值
 		 * @param value [String]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentGreaterThanOrEqualTo(String value) {
-			addCriterion("comment >=", value, "comment");
+		public Criteria andDeptNameGreaterThanOrEqualTo(String value) {
+			addCriterion("dept_name >=", value, "deptName");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment小于传入值
+		 * dept_name小于传入值
 		 * @param value [String]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentLessThan(String value) {
-			addCriterion("comment <", value, "comment");
+		public Criteria andDeptNameLessThan(String value) {
+			addCriterion("dept_name <", value, "deptName");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment小于等于传入值
+		 * dept_name小于等于传入值
 		 * @param value [String]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentLessThanOrEqualTo(String value) {
-			addCriterion("comment <=", value, "comment");
+		public Criteria andDeptNameLessThanOrEqualTo(String value) {
+			addCriterion("dept_name <=", value, "deptName");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment在传入值之中
+		 * dept_name在传入值之中
 		 * @param value [List<String>]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentIn(List<String> values) {
-			addCriterion("comment in", values, "comment");
+		public Criteria andDeptNameIn(List<String> values) {
+			addCriterion("dept_name in", values, "deptName");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment不在传入值之中
+		 * dept_name不在传入值之中
 		 * @param value [List<String>]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentNotIn(List<String> values) {
-			addCriterion("comment not in", values, "comment");
+		public Criteria andDeptNameNotIn(List<String> values) {
+			addCriterion("dept_name not in", values, "deptName");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment在传入值之间
+		 * dept_name在传入值之间
 		 * @param value1 [String]传入值1
 		 * @param value2 [String]传入值2
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentBetween(String value1, String value2) {
-			addCriterion("comment between", value1, value2, "comment");
+		public Criteria andDeptNameBetween(String value1, String value2) {
+			addCriterion("dept_name between", value1, value2, "deptName");
 			return (Criteria) this;
 		}
 
 		/**
-		 * comment不在传入值之间
+		 * dept_name不在传入值之间
 		 * @param value1 [String]传入值1
 		 * @param value2 [String]传入值2
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCommentNotBetween(String value1, String value2) {
-			addCriterion("comment not between", value1, value2, "comment");
-			return (Criteria) this;
-		}
-		/**
-		 * card_no字段为null
-		 * @return [Criteria]更新后的criteria
-		 */
-		public Criteria andCardNoIsNull() {
-			addCriterion("card_no is null");
-			return (Criteria) this;
-		}
-
-		/**
-		 * card_no字段为不为null
-		 * @return [Criteria]更新后的criteria
-		 */
-		public Criteria andCardNoIsNotNull() {
-			addCriterion("card_no is not null");
-			return (Criteria) this;
-		}
-
-		/**
-		 * card_no等于传入值
-		 * @param value [Integer]传入值
-		 * @return [Criteria]更新后的criteria
-		 */
-		public Criteria andCardNoEqualTo(Integer value) {
-			addCriterion("card_no =", value, "cardNo");
-			return (Criteria) this;
-		}
-
-		/**
-		 * card_no不等于传入值
-		 * @param value [Integer]传入值
-		 * @return [Criteria]更新后的criteria
-		 */
-		public Criteria andCardNoNotEqualTo(Integer value) {
-			addCriterion("card_no <>", value, "cardNo");
-			return (Criteria) this;
-		}
-
-		/**
-		 * card_no大于传入值
-		 * @param value [Integer]传入值
-		 * @return [Criteria]更新后的criteria
-		 */
-		public Criteria andCardNoGreaterThan(Integer value) {
-			addCriterion("card_no >", value, "cardNo");
-			return (Criteria) this;
-		}
-
-		/**
-		 * card_no大于等于传入值
-		 * @param value [Integer]传入值
-		 * @return [Criteria]更新后的criteria
-		 */
-		public Criteria andCardNoGreaterThanOrEqualTo(Integer value) {
-			addCriterion("card_no >=", value, "cardNo");
-			return (Criteria) this;
-		}
-
-		/**
-		 * card_no小于传入值
-		 * @param value [Integer]传入值
-		 * @return [Criteria]更新后的criteria
-		 */
-		public Criteria andCardNoLessThan(Integer value) {
-			addCriterion("card_no <", value, "cardNo");
-			return (Criteria) this;
-		}
-
-		/**
-		 * card_no小于等于传入值
-		 * @param value [Integer]传入值
-		 * @return [Criteria]更新后的criteria
-		 */
-		public Criteria andCardNoLessThanOrEqualTo(Integer value) {
-			addCriterion("card_no <=", value, "cardNo");
-			return (Criteria) this;
-		}
-
-		/**
-		 * card_no在传入值之中
-		 * @param value [List<Integer>]传入值
-		 * @return [Criteria]更新后的criteria
-		 */
-		public Criteria andCardNoIn(List<Integer> values) {
-			addCriterion("card_no in", values, "cardNo");
-			return (Criteria) this;
-		}
-
-		/**
-		 * card_no不在传入值之中
-		 * @param value [List<Integer>]传入值
-		 * @return [Criteria]更新后的criteria
-		 */
-		public Criteria andCardNoNotIn(List<Integer> values) {
-			addCriterion("card_no not in", values, "cardNo");
-			return (Criteria) this;
-		}
-
-		/**
-		 * card_no在传入值之间
-		 * @param value1 [Integer]传入值1
-		 * @param value2 [Integer]传入值2
-		 * @return [Criteria]更新后的criteria
-		 */
-		public Criteria andCardNoBetween(Integer value1, Integer value2) {
-			addCriterion("card_no between", value1, value2, "cardNo");
-			return (Criteria) this;
-		}
-
-		/**
-		 * card_no不在传入值之间
-		 * @param value1 [Integer]传入值1
-		 * @param value2 [Integer]传入值2
-		 * @return [Criteria]更新后的criteria
-		 */
-		public Criteria andCardNoNotBetween(Integer value1, Integer value2) {
-			addCriterion("card_no not between", value1, value2, "cardNo");
+		public Criteria andDeptNameNotBetween(String value1, String value2) {
+			addCriterion("dept_name not between", value1, value2, "deptName");
 			return (Criteria) this;
 		}
 		/**
@@ -801,6 +682,125 @@ public class TCommentExample {
 		 */
 		public Criteria andUserNoNotBetween(Integer value1, Integer value2) {
 			addCriterion("user_no not between", value1, value2, "userNo");
+			return (Criteria) this;
+		}
+		/**
+		 * company_no字段为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCompanyNoIsNull() {
+			addCriterion("company_no is null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * company_no字段为不为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCompanyNoIsNotNull() {
+			addCriterion("company_no is not null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * company_no等于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCompanyNoEqualTo(Integer value) {
+			addCriterion("company_no =", value, "companyNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * company_no不等于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCompanyNoNotEqualTo(Integer value) {
+			addCriterion("company_no <>", value, "companyNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * company_no大于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCompanyNoGreaterThan(Integer value) {
+			addCriterion("company_no >", value, "companyNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * company_no大于等于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCompanyNoGreaterThanOrEqualTo(Integer value) {
+			addCriterion("company_no >=", value, "companyNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * company_no小于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCompanyNoLessThan(Integer value) {
+			addCriterion("company_no <", value, "companyNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * company_no小于等于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCompanyNoLessThanOrEqualTo(Integer value) {
+			addCriterion("company_no <=", value, "companyNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * company_no在传入值之中
+		 * @param value [List<Integer>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCompanyNoIn(List<Integer> values) {
+			addCriterion("company_no in", values, "companyNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * company_no不在传入值之中
+		 * @param value [List<Integer>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCompanyNoNotIn(List<Integer> values) {
+			addCriterion("company_no not in", values, "companyNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * company_no在传入值之间
+		 * @param value1 [Integer]传入值1
+		 * @param value2 [Integer]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCompanyNoBetween(Integer value1, Integer value2) {
+			addCriterion("company_no between", value1, value2, "companyNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * company_no不在传入值之间
+		 * @param value1 [Integer]传入值1
+		 * @param value2 [Integer]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCompanyNoNotBetween(Integer value1, Integer value2) {
+			addCriterion("company_no not between", value1, value2, "companyNo");
 			return (Criteria) this;
 		}
 

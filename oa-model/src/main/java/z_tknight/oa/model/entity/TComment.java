@@ -6,7 +6,7 @@ public class TComment {
 	/**
 	 * 评论编号
 	 */
-	private Integer commentId = null;
+	private Integer commentNo = null;
 
 	/**
 	 * 评论内容
@@ -23,12 +23,12 @@ public class TComment {
 	 */
 	private Integer userNo = null;
 
-	public void setCommentId(Integer commentId) {
-		this.commentId = commentId;
+	public void setCommentNo(Integer commentNo) {
+		this.commentNo = commentNo;
 	}
 
-	public Integer getCommentId() {
-		return this.commentId;
+	public Integer getCommentNo() {
+		return this.commentNo;
 	}
 
 	public void setComment(String comment) {

@@ -923,6 +923,125 @@ public class TUserExample {
 			return (Criteria) this;
 		}
 		/**
+		 * dept_no字段为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andDeptNoIsNull() {
+			addCriterion("dept_no is null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * dept_no字段为不为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andDeptNoIsNotNull() {
+			addCriterion("dept_no is not null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * dept_no等于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andDeptNoEqualTo(Integer value) {
+			addCriterion("dept_no =", value, "deptNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * dept_no不等于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andDeptNoNotEqualTo(Integer value) {
+			addCriterion("dept_no <>", value, "deptNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * dept_no大于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andDeptNoGreaterThan(Integer value) {
+			addCriterion("dept_no >", value, "deptNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * dept_no大于等于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andDeptNoGreaterThanOrEqualTo(Integer value) {
+			addCriterion("dept_no >=", value, "deptNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * dept_no小于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andDeptNoLessThan(Integer value) {
+			addCriterion("dept_no <", value, "deptNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * dept_no小于等于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andDeptNoLessThanOrEqualTo(Integer value) {
+			addCriterion("dept_no <=", value, "deptNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * dept_no在传入值之中
+		 * @param value [List<Integer>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andDeptNoIn(List<Integer> values) {
+			addCriterion("dept_no in", values, "deptNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * dept_no不在传入值之中
+		 * @param value [List<Integer>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andDeptNoNotIn(List<Integer> values) {
+			addCriterion("dept_no not in", values, "deptNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * dept_no在传入值之间
+		 * @param value1 [Integer]传入值1
+		 * @param value2 [Integer]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andDeptNoBetween(Integer value1, Integer value2) {
+			addCriterion("dept_no between", value1, value2, "deptNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * dept_no不在传入值之间
+		 * @param value1 [Integer]传入值1
+		 * @param value2 [Integer]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andDeptNoNotBetween(Integer value1, Integer value2) {
+			addCriterion("dept_no not between", value1, value2, "deptNo");
+			return (Criteria) this;
+		}
+		/**
 		 * back_up字段为null
 		 * @return [Criteria]更新后的criteria
 		 */

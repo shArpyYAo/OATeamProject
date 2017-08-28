@@ -8,7 +8,9 @@
 		<result column="board_space_name" property="boardSpaceName" jdbcType="VARCHAR" />
 		<result column="summary" property="summary" jdbcType="VARCHAR" />
 		<result column="category_no" property="categoryNo" jdbcType="INTEGER" />
-		<result column="owner_user_no" property="ownerUserNo" jdbcType="INTEGER" />
+		<result column="user_no" property="userNo" jdbcType="INTEGER" />
+		<result column="company_no" property="companyNo" jdbcType="INTEGER" />
+		<result column="is_delete" property="isDelete" jdbcType="BIT" />
 	</resultMap>
 
 	<!-- 条件从句 -->
@@ -98,7 +100,9 @@
 		board_space_name,
 		summary,
 		category_no,
-		owner_user_no
+		user_no,
+		company_no,
+		is_delete
 	</sql>
 	<!-- 统计符合自定义条件的数据个数 -->
 	<select id="countByExample" parameterType="z_tknight.oa.model.entity.TBoardSpaceExample"
@@ -136,14 +140,18 @@
 			board_space_name,
 			summary,
 			category_no,
-			owner_user_no
+			user_no,
+			company_no,
+			is_delete
 		)
 		values (
 			#{boardSpaceNo, jdbcType=INTEGER},
 			#{boardSpaceName, jdbcType=VARCHAR},
 			#{summary, jdbcType=VARCHAR},
 			#{categoryNo, jdbcType=INTEGER},
-			#{ownerUserNo, jdbcType=INTEGER}
+			#{userNo, jdbcType=INTEGER},
+			#{companyNo, jdbcType=INTEGER},
+			#{isDelete, jdbcType=BIT}
 		)
 	</insert>
 
@@ -165,8 +173,14 @@
 			<if test="categoryNo != null">
 				categoryNo,
 			</if>
-			<if test="ownerUserNo != null">
-				ownerUserNo,
+			<if test="userNo != null">
+				userNo,
+			</if>
+			<if test="companyNo != null">
+				companyNo,
+			</if>
+			<if test="isDelete != null">
+				isDelete,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -183,8 +197,14 @@
 			<if test="categoryNo != null">
 				#{categoryNo, jdbcType=INTEGER},
 			</if>
-			<if test="ownerUserNo != null">
-				#{ownerUserNo, jdbcType=INTEGER},
+			<if test="userNo != null">
+				#{userNo, jdbcType=INTEGER},
+			</if>
+			<if test="companyNo != null">
+				#{companyNo, jdbcType=INTEGER},
+			</if>
+			<if test="isDelete != null">
+				#{isDelete, jdbcType=BIT},
 			</if>
 		</trim>
 	</insert>
@@ -237,8 +257,14 @@
 			<if test="record.categoryNo != null">
 				categoryNo = #{record.categoryNo, jdbcType=INTEGER},
 			</if>
-			<if test="record.ownerUserNo != null">
-				ownerUserNo = #{record.ownerUserNo, jdbcType=INTEGER},
+			<if test="record.userNo != null">
+				userNo = #{record.userNo, jdbcType=INTEGER},
+			</if>
+			<if test="record.companyNo != null">
+				companyNo = #{record.companyNo, jdbcType=INTEGER},
+			</if>
+			<if test="record.isDelete != null">
+				isDelete = #{record.isDelete, jdbcType=BIT},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -256,7 +282,9 @@
 		boardSpaceName = #{boardSpaceName, jdbcType=VARCHAR},
 		summary = #{summary, jdbcType=VARCHAR},
 		categoryNo = #{categoryNo, jdbcType=INTEGER},
-		ownerUserNo = #{ownerUserNo, jdbcType=INTEGER}
+		userNo = #{userNo, jdbcType=INTEGER},
+		companyNo = #{companyNo, jdbcType=INTEGER},
+		isDelete = #{isDelete, jdbcType=BIT}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -277,8 +305,14 @@
 			<if test="categoryNo != null">
 				categoryNo = #{categoryNo, jdbcType=INTEGER},
 			</if>
-			<if test="ownerUserNo != null">
-				ownerUserNo = #{ownerUserNo, jdbcType=INTEGER},
+			<if test="userNo != null">
+				userNo = #{userNo, jdbcType=INTEGER},
+			</if>
+			<if test="companyNo != null">
+				companyNo = #{companyNo, jdbcType=INTEGER},
+			</if>
+			<if test="isDelete != null">
+				isDelete = #{isDelete, jdbcType=BIT},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -294,7 +328,9 @@
 		boardSpaceName = #{boardSpaceName, jdbcType=VARCHAR},
 		summary = #{summary, jdbcType=VARCHAR},
 		categoryNo = #{categoryNo, jdbcType=INTEGER},
-		ownerUserNo = #{ownerUserNo, jdbcType=INTEGER}
+		userNo = #{userNo, jdbcType=INTEGER},
+		companyNo = #{companyNo, jdbcType=INTEGER},
+		isDelete = #{isDelete, jdbcType=BIT}
 		<!-- 主键作为条件 -->
 		where
 		board_space_no = #{boardSpaceNo, jdbcType=INTEGER} 
