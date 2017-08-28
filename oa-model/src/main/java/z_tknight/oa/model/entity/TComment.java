@@ -18,6 +18,11 @@ public class TComment {
 	 */
 	private Integer cardNo = null;
 
+	/**
+	 * 评论发起用户编号
+	 */
+	private Integer userNo = null;
+
 	public void setCommentId(Integer commentId) {
 		this.commentId = commentId;
 	}
@@ -40,6 +45,14 @@ public class TComment {
 
 	public Integer getCardNo() {
 		return this.cardNo;
+	}
+
+	public void setUserNo(Integer userNo) {
+		this.userNo = userNo;
+	}
+
+	public Integer getUserNo() {
+		return this.userNo;
 	}
 
 }
