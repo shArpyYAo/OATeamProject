@@ -10,3 +10,6 @@ bin/
 .settings/
 .classpath
 .project
+
+# 过滤掉数据库配置文件 #
+database.properties
