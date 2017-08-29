@@ -1,7 +1,7 @@
 package z_tknight.oa.model.entity;
 
 
-public class Department {
+public class TDepartment {
 
 	/**
 	 * 部门编号
@@ -19,9 +19,14 @@ public class Department {
 	private Integer userNo = null;
 
 	/**
-	 * 部门所属公司编号
+	 * 上级部门编号
 	 */
-	private Integer companyNo = null;
+	private Integer superiorDeptNo = null;
+
+	/**
+	 * 部门所属看板空间编号
+	 */
+	private Integer tBoardSpace = null;
 
 	public void setDeptNo(Integer deptNo) {
 		this.deptNo = deptNo;
@@ -47,12 +52,20 @@ public class Department {
 		return this.userNo;
 	}
 
-	public void setCompanyNo(Integer companyNo) {
-		this.companyNo = companyNo;
+	public void setSuperiorDeptNo(Integer superiorDeptNo) {
+		this.superiorDeptNo = superiorDeptNo;
 	}
 
-	public Integer getCompanyNo() {
-		return this.companyNo;
+	public Integer getSuperiorDeptNo() {
+		return this.superiorDeptNo;
+	}
+
+	public void setTBoardSpace(Integer tBoardSpace) {
+		this.tBoardSpace = tBoardSpace;
+	}
+
+	public Integer getTBoardSpace() {
+		return this.tBoardSpace;
 	}
 
 }

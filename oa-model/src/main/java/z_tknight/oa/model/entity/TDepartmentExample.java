@@ -3,7 +3,7 @@ package z_tknight.oa.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DepartmentExample {
+public class TDepartmentExample {
 
 	/**
 	 * 排序从句
@@ -25,7 +25,7 @@ public class DepartmentExample {
 	/**
 	 * 构造方法，初始化criteria条件列表。
 	 */
-	public DepartmentExample() {
+	public TDepartmentExample() {
 		oredCriteria = new ArrayList<Criteria>();
 	}
 
@@ -685,122 +685,241 @@ public class DepartmentExample {
 			return (Criteria) this;
 		}
 		/**
-		 * company_no字段为null
+		 * superior_dept_no字段为null
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCompanyNoIsNull() {
-			addCriterion("company_no is null");
+		public Criteria andSuperiorDeptNoIsNull() {
+			addCriterion("superior_dept_no is null");
 			return (Criteria) this;
 		}
 
 		/**
-		 * company_no字段为不为null
+		 * superior_dept_no字段为不为null
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCompanyNoIsNotNull() {
-			addCriterion("company_no is not null");
+		public Criteria andSuperiorDeptNoIsNotNull() {
+			addCriterion("superior_dept_no is not null");
 			return (Criteria) this;
 		}
 
 		/**
-		 * company_no等于传入值
+		 * superior_dept_no等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCompanyNoEqualTo(Integer value) {
-			addCriterion("company_no =", value, "companyNo");
+		public Criteria andSuperiorDeptNoEqualTo(Integer value) {
+			addCriterion("superior_dept_no =", value, "superiorDeptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * company_no不等于传入值
+		 * superior_dept_no不等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCompanyNoNotEqualTo(Integer value) {
-			addCriterion("company_no <>", value, "companyNo");
+		public Criteria andSuperiorDeptNoNotEqualTo(Integer value) {
+			addCriterion("superior_dept_no <>", value, "superiorDeptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * company_no大于传入值
+		 * superior_dept_no大于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCompanyNoGreaterThan(Integer value) {
-			addCriterion("company_no >", value, "companyNo");
+		public Criteria andSuperiorDeptNoGreaterThan(Integer value) {
+			addCriterion("superior_dept_no >", value, "superiorDeptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * company_no大于等于传入值
+		 * superior_dept_no大于等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCompanyNoGreaterThanOrEqualTo(Integer value) {
-			addCriterion("company_no >=", value, "companyNo");
+		public Criteria andSuperiorDeptNoGreaterThanOrEqualTo(Integer value) {
+			addCriterion("superior_dept_no >=", value, "superiorDeptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * company_no小于传入值
+		 * superior_dept_no小于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCompanyNoLessThan(Integer value) {
-			addCriterion("company_no <", value, "companyNo");
+		public Criteria andSuperiorDeptNoLessThan(Integer value) {
+			addCriterion("superior_dept_no <", value, "superiorDeptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * company_no小于等于传入值
+		 * superior_dept_no小于等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCompanyNoLessThanOrEqualTo(Integer value) {
-			addCriterion("company_no <=", value, "companyNo");
+		public Criteria andSuperiorDeptNoLessThanOrEqualTo(Integer value) {
+			addCriterion("superior_dept_no <=", value, "superiorDeptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * company_no在传入值之中
+		 * superior_dept_no在传入值之中
 		 * @param value [List<Integer>]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCompanyNoIn(List<Integer> values) {
-			addCriterion("company_no in", values, "companyNo");
+		public Criteria andSuperiorDeptNoIn(List<Integer> values) {
+			addCriterion("superior_dept_no in", values, "superiorDeptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * company_no不在传入值之中
+		 * superior_dept_no不在传入值之中
 		 * @param value [List<Integer>]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCompanyNoNotIn(List<Integer> values) {
-			addCriterion("company_no not in", values, "companyNo");
+		public Criteria andSuperiorDeptNoNotIn(List<Integer> values) {
+			addCriterion("superior_dept_no not in", values, "superiorDeptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * company_no在传入值之间
+		 * superior_dept_no在传入值之间
 		 * @param value1 [Integer]传入值1
 		 * @param value2 [Integer]传入值2
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCompanyNoBetween(Integer value1, Integer value2) {
-			addCriterion("company_no between", value1, value2, "companyNo");
+		public Criteria andSuperiorDeptNoBetween(Integer value1, Integer value2) {
+			addCriterion("superior_dept_no between", value1, value2, "superiorDeptNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * company_no不在传入值之间
+		 * superior_dept_no不在传入值之间
 		 * @param value1 [Integer]传入值1
 		 * @param value2 [Integer]传入值2
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andCompanyNoNotBetween(Integer value1, Integer value2) {
-			addCriterion("company_no not between", value1, value2, "companyNo");
+		public Criteria andSuperiorDeptNoNotBetween(Integer value1, Integer value2) {
+			addCriterion("superior_dept_no not between", value1, value2, "superiorDeptNo");
+			return (Criteria) this;
+		}
+		/**
+		 * t_board_space字段为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andTBoardSpaceIsNull() {
+			addCriterion("t_board_space is null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * t_board_space字段为不为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andTBoardSpaceIsNotNull() {
+			addCriterion("t_board_space is not null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * t_board_space等于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andTBoardSpaceEqualTo(Integer value) {
+			addCriterion("t_board_space =", value, "tBoardSpace");
+			return (Criteria) this;
+		}
+
+		/**
+		 * t_board_space不等于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andTBoardSpaceNotEqualTo(Integer value) {
+			addCriterion("t_board_space <>", value, "tBoardSpace");
+			return (Criteria) this;
+		}
+
+		/**
+		 * t_board_space大于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andTBoardSpaceGreaterThan(Integer value) {
+			addCriterion("t_board_space >", value, "tBoardSpace");
+			return (Criteria) this;
+		}
+
+		/**
+		 * t_board_space大于等于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andTBoardSpaceGreaterThanOrEqualTo(Integer value) {
+			addCriterion("t_board_space >=", value, "tBoardSpace");
+			return (Criteria) this;
+		}
+
+		/**
+		 * t_board_space小于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andTBoardSpaceLessThan(Integer value) {
+			addCriterion("t_board_space <", value, "tBoardSpace");
+			return (Criteria) this;
+		}
+
+		/**
+		 * t_board_space小于等于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andTBoardSpaceLessThanOrEqualTo(Integer value) {
+			addCriterion("t_board_space <=", value, "tBoardSpace");
+			return (Criteria) this;
+		}
+
+		/**
+		 * t_board_space在传入值之中
+		 * @param value [List<Integer>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andTBoardSpaceIn(List<Integer> values) {
+			addCriterion("t_board_space in", values, "tBoardSpace");
+			return (Criteria) this;
+		}
+
+		/**
+		 * t_board_space不在传入值之中
+		 * @param value [List<Integer>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andTBoardSpaceNotIn(List<Integer> values) {
+			addCriterion("t_board_space not in", values, "tBoardSpace");
+			return (Criteria) this;
+		}
+
+		/**
+		 * t_board_space在传入值之间
+		 * @param value1 [Integer]传入值1
+		 * @param value2 [Integer]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andTBoardSpaceBetween(Integer value1, Integer value2) {
+			addCriterion("t_board_space between", value1, value2, "tBoardSpace");
+			return (Criteria) this;
+		}
+
+		/**
+		 * t_board_space不在传入值之间
+		 * @param value1 [Integer]传入值1
+		 * @param value2 [Integer]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andTBoardSpaceNotBetween(Integer value1, Integer value2) {
+			addCriterion("t_board_space not between", value1, value2, "tBoardSpace");
 			return (Criteria) this;
 		}
 

@@ -120,18 +120,12 @@ create table t_board_display_category (											/* 【看板可见性类别表
 # 基础数据表
 # ======================================================================================================== #
 
-create table t_company (														/* 【公司信息表】 */
-	company_no int(4) not null auto_increment comment '公司编号',				/* 公司编号 */
-	company_name varchar(40) not null comment '公司名称',						/* 公司名称 */
-	user_no int(4) not null comment '公司所有者编号',							/* 公司所有者编号 */
-	primary key(company_no)														/* 主键 */
-) comment = '公司信息表';
-
-create table department (														/* 【部门信息表】 */
+create table t_department (														/* 【部门信息表】 */
 	dept_no int(4) not null auto_increment comment '部门编号',					/* 部门编号 */
 	dept_name varchar(20) not null comment '部门名称',							/* 部门名称 */
 	user_no int(4) not null comment '部门所有者编号',							/* 部门所有者编号 */
-	company_no int(4) not null comment '部门所属公司编号',						/* 部门所属公司编号 */
+	superior_dept_no int(4) comment '上级部门编号',								/* 上级部门编号 */
+	t_board_space int(4) not null comment '部门所属看板空间编号',				/* 部门所属看板空间编号 */
 	primary key(dept_no)														/* 主键 */
 ) comment = '部门信息表';
 
@@ -209,7 +203,7 @@ create table operation_log (													/* 【操作日志表】 */
 	log_no int(4) not null auto_increment comment '操作日志编号',				/* 操作日志编号 */
 	user_no int(4) comment '操作用户编号',										/* 操作用户编号 */
 	operation varchar(20) not null comment '操作描述',							/* 操作描述 */
-	exception varchar(100) comment '操作异常信息',								/* 操作异常信息 */
+	exception varchar(4000) comment '操作异常信息',								/* 操作异常信息 */
 	method_name varchar(50) not null comment '接口调用方法名',					/* 接口调用方法名 */
 	params varchar(250) comment '传入参数',										/* 传入参数 */
 	ip varchar(30) not null comment '客户端ip',									/* 客户端ip */
