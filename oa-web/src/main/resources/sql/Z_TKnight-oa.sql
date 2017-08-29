@@ -135,7 +135,6 @@ create table t_board_space (													/* 【看板空间信息表】 */
 	summary varchar(70) not null comment '看板空间摘要',						/* 看板空间摘要 */
 	category_no int(4) not null comment '看板空间类型',							/* 看板空间类型 */
 	user_no int(4) not null comment '看板空间所有者编号',						/* 看板空间所有者编号 */
-	company_no int(4) comment '所属的公司编号',									/* 所属的公司编号 */
 	is_delete bit(1) not null comment '删除标记',								/* 删除标记 */
 	primary key(board_space_no)													/* 主键 */
 ) comment = '看板空间信息表';
@@ -240,3 +239,15 @@ create table t_user_notice (													/* 【用户通知表】 */
 	card_title varchar(4000) comment '操作卡片内容',							/* 操作卡片内容 */
 	primary key(notice_no)														/* 主键 */
 ) comment = '用户通知表';
+
+# ======================================================================================================== #
+# 初始化数据
+# ======================================================================================================== #
+
+
+/* 看板空间类别初始值 */
+insert into t_board_space_category(category_no, category_name) 
+	values(null, "个人空间"), (null, "普通项目"), (null, "标星项目");
+/* 看板可见性类别初始值 */
+insert into t_board_display_category(category_no, category_name) 
+	values(null, "仅看板成员可见"), (null, "仅项目成员可见"), (null, "所有人可见");

@@ -29,11 +29,6 @@ public class TBoardSpace {
 	private Integer userNo = null;
 
 	/**
-	 * 所属的公司编号
-	 */
-	private Integer companyNo = null;
-
-	/**
 	 * 删除标记
 	 */
 	private Boolean isDelete = null;
@@ -76,14 +71,6 @@ public class TBoardSpace {
 
 	public Integer getUserNo() {
 		return this.userNo;
-	}
-
-	public void setCompanyNo(Integer companyNo) {
-		this.companyNo = companyNo;
-	}
-
-	public Integer getCompanyNo() {
-		return this.companyNo;
 	}
 
 	public void setIsDelete(Boolean isDelete) {
