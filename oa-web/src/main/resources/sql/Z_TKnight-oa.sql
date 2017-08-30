@@ -111,7 +111,7 @@ create table t_board_space (													/* 【看板空间信息表】 */
 	category_no int(4) not null comment '看板空间类型',							/* 看板空间类型 */
 	user_no int(4) not null comment '看板空间所有者编号',						/* 看板空间所有者编号 */
 	is_delete bit(1) not null comment '删除标记',								/* 删除标记 */
-	board_order text not null comment '看板顺序',								/* 看板顺序 */
+	board_order text comment '看板顺序',										/* 看板顺序 */
 	primary key(board_space_no)													/* 主键 */
 ) comment = '看板空间信息表';
 
@@ -125,7 +125,7 @@ create table t_board (															/* 【看板信息表】 */
 	board_space_no int(4) not null comment '所属看板空间编号',					/* 所属看板空间编号 */
 	is_delete bit(1) not null comment '删除标记',								/* 删除标记 */
 	user_no int(4) not null comment '看板所有者编号',							/* 看板所有者编号 */
-	list_order text not null comment '列表顺序',								/* 列表顺序 */
+	list_order text comment '列表顺序',											/* 列表顺序 */
 	primary key(board_no)														/* 主键 */
 ) comment = '看板信息表';
 
@@ -135,7 +135,7 @@ create table t_list (															/* 【列表信息表】 */
 	board_space_no int(4) not null comment '所属看板空间编号',					/* 所属看板空间编号 */
 	board_no int(4) not null comment '所属看板编号',							/* 所属看板编号 */
 	is_delete bit(1) not null comment '删除标记',								/* 删除标记 */
-	card_order text not null comment '卡片顺序',								/* 卡片顺序 */
+	card_order text comment '卡片顺序',											/* 卡片顺序 */
 	primary key(list_no)														/* 主键 */
 ) comment = '列表信息表';
 
