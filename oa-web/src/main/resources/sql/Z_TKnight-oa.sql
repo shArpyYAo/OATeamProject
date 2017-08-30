@@ -252,3 +252,5 @@ insert into t_board_space_category(category_no, category_name)
 /* 看板可见性类别初始值 */
 insert into t_board_display_category(category_no, category_name) 
 	values(null, "仅看板成员可见"), (null, "仅项目成员可见"), (null, "所有人可见");
+
+
