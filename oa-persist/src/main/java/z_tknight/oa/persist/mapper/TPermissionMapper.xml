@@ -142,10 +142,10 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="permissionNo != null">
-				permissionNo,
+				permission_no,
 			</if>
 			<if test="permissionName != null">
-				permissionName,
+				permission_name,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -196,10 +196,10 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.permissionNo != null">
-				permissionNo = #{record.permissionNo, jdbcType=INTEGER},
+				permission_no = #{record.permissionNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.permissionName != null">
-				permissionName = #{record.permissionName, jdbcType=VARCHAR},
+				permission_name = #{record.permissionName, jdbcType=VARCHAR},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -213,8 +213,8 @@
 		update t_permission
 		<!-- 修改属性，可修改主键 -->
 		set
-		permissionNo = #{permissionNo, jdbcType=INTEGER},
-		permissionName = #{permissionName, jdbcType=VARCHAR}
+		permission_no = #{permissionNo, jdbcType=INTEGER},
+		permission_name = #{permissionName, jdbcType=VARCHAR}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -227,7 +227,7 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="permissionName != null">
-				permissionName = #{permissionName, jdbcType=VARCHAR},
+				permission_name = #{permissionName, jdbcType=VARCHAR},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -240,7 +240,7 @@
 		update t_permission
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		permissionName = #{permissionName, jdbcType=VARCHAR}
+		permission_name = #{permissionName, jdbcType=VARCHAR}
 		<!-- 主键作为条件 -->
 		where
 		permission_no = #{permissionNo, jdbcType=INTEGER} 

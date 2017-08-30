@@ -142,10 +142,10 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="categoryNo != null">
-				categoryNo,
+				category_no,
 			</if>
 			<if test="categoryName != null">
-				categoryName,
+				category_name,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -196,10 +196,10 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.categoryNo != null">
-				categoryNo = #{record.categoryNo, jdbcType=INTEGER},
+				category_no = #{record.categoryNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.categoryName != null">
-				categoryName = #{record.categoryName, jdbcType=VARCHAR},
+				category_name = #{record.categoryName, jdbcType=VARCHAR},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -213,8 +213,8 @@
 		update t_board_space_category
 		<!-- 修改属性，可修改主键 -->
 		set
-		categoryNo = #{categoryNo, jdbcType=INTEGER},
-		categoryName = #{categoryName, jdbcType=VARCHAR}
+		category_no = #{categoryNo, jdbcType=INTEGER},
+		category_name = #{categoryName, jdbcType=VARCHAR}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -227,7 +227,7 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="categoryName != null">
-				categoryName = #{categoryName, jdbcType=VARCHAR},
+				category_name = #{categoryName, jdbcType=VARCHAR},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -240,7 +240,7 @@
 		update t_board_space_category
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		categoryName = #{categoryName, jdbcType=VARCHAR}
+		category_name = #{categoryName, jdbcType=VARCHAR}
 		<!-- 主键作为条件 -->
 		where
 		category_no = #{categoryNo, jdbcType=INTEGER} 

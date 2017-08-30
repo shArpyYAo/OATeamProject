@@ -146,13 +146,13 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="relationNo != null">
-				relationNo,
+				relation_no,
 			</if>
 			<if test="boardSpaceNo != null">
-				boardSpaceNo,
+				board_space_no,
 			</if>
 			<if test="userNo != null">
-				userNo,
+				user_no,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -206,13 +206,13 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.relationNo != null">
-				relationNo = #{record.relationNo, jdbcType=INTEGER},
+				relation_no = #{record.relationNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.boardSpaceNo != null">
-				boardSpaceNo = #{record.boardSpaceNo, jdbcType=INTEGER},
+				board_space_no = #{record.boardSpaceNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.userNo != null">
-				userNo = #{record.userNo, jdbcType=INTEGER},
+				user_no = #{record.userNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -226,9 +226,9 @@
 		update t_board_space_user
 		<!-- 修改属性，可修改主键 -->
 		set
-		relationNo = #{relationNo, jdbcType=INTEGER},
-		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
-		userNo = #{userNo, jdbcType=INTEGER}
+		relation_no = #{relationNo, jdbcType=INTEGER},
+		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
+		user_no = #{userNo, jdbcType=INTEGER}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -241,10 +241,10 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="boardSpaceNo != null">
-				boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
+				board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
 			</if>
 			<if test="userNo != null">
-				userNo = #{userNo, jdbcType=INTEGER},
+				user_no = #{userNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -257,8 +257,8 @@
 		update t_board_space_user
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
-		userNo = #{userNo, jdbcType=INTEGER}
+		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
+		user_no = #{userNo, jdbcType=INTEGER}
 		<!-- 主键作为条件 -->
 		where
 		relation_no = #{relationNo, jdbcType=INTEGER} 

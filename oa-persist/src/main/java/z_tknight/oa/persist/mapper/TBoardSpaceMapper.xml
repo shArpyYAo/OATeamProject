@@ -158,22 +158,22 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="boardSpaceNo != null">
-				boardSpaceNo,
+				board_space_no,
 			</if>
 			<if test="boardSpaceName != null">
-				boardSpaceName,
+				board_space_name,
 			</if>
 			<if test="summary != null">
 				summary,
 			</if>
 			<if test="categoryNo != null">
-				categoryNo,
+				category_no,
 			</if>
 			<if test="userNo != null">
-				userNo,
+				user_no,
 			</if>
 			<if test="isDelete != null">
-				isDelete,
+				is_delete,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -236,22 +236,22 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.boardSpaceNo != null">
-				boardSpaceNo = #{record.boardSpaceNo, jdbcType=INTEGER},
+				board_space_no = #{record.boardSpaceNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.boardSpaceName != null">
-				boardSpaceName = #{record.boardSpaceName, jdbcType=VARCHAR},
+				board_space_name = #{record.boardSpaceName, jdbcType=VARCHAR},
 			</if>
 			<if test="record.summary != null">
 				summary = #{record.summary, jdbcType=VARCHAR},
 			</if>
 			<if test="record.categoryNo != null">
-				categoryNo = #{record.categoryNo, jdbcType=INTEGER},
+				category_no = #{record.categoryNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.userNo != null">
-				userNo = #{record.userNo, jdbcType=INTEGER},
+				user_no = #{record.userNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.isDelete != null">
-				isDelete = #{record.isDelete, jdbcType=BIT},
+				is_delete = #{record.isDelete, jdbcType=BIT},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -265,12 +265,12 @@
 		update t_board_space
 		<!-- 修改属性，可修改主键 -->
 		set
-		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
-		boardSpaceName = #{boardSpaceName, jdbcType=VARCHAR},
+		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
+		board_space_name = #{boardSpaceName, jdbcType=VARCHAR},
 		summary = #{summary, jdbcType=VARCHAR},
-		categoryNo = #{categoryNo, jdbcType=INTEGER},
-		userNo = #{userNo, jdbcType=INTEGER},
-		isDelete = #{isDelete, jdbcType=BIT}
+		category_no = #{categoryNo, jdbcType=INTEGER},
+		user_no = #{userNo, jdbcType=INTEGER},
+		is_delete = #{isDelete, jdbcType=BIT}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -283,19 +283,19 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="boardSpaceName != null">
-				boardSpaceName = #{boardSpaceName, jdbcType=VARCHAR},
+				board_space_name = #{boardSpaceName, jdbcType=VARCHAR},
 			</if>
 			<if test="summary != null">
 				summary = #{summary, jdbcType=VARCHAR},
 			</if>
 			<if test="categoryNo != null">
-				categoryNo = #{categoryNo, jdbcType=INTEGER},
+				category_no = #{categoryNo, jdbcType=INTEGER},
 			</if>
 			<if test="userNo != null">
-				userNo = #{userNo, jdbcType=INTEGER},
+				user_no = #{userNo, jdbcType=INTEGER},
 			</if>
 			<if test="isDelete != null">
-				isDelete = #{isDelete, jdbcType=BIT},
+				is_delete = #{isDelete, jdbcType=BIT},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -308,11 +308,11 @@
 		update t_board_space
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		boardSpaceName = #{boardSpaceName, jdbcType=VARCHAR},
+		board_space_name = #{boardSpaceName, jdbcType=VARCHAR},
 		summary = #{summary, jdbcType=VARCHAR},
-		categoryNo = #{categoryNo, jdbcType=INTEGER},
-		userNo = #{userNo, jdbcType=INTEGER},
-		isDelete = #{isDelete, jdbcType=BIT}
+		category_no = #{categoryNo, jdbcType=INTEGER},
+		user_no = #{userNo, jdbcType=INTEGER},
+		is_delete = #{isDelete, jdbcType=BIT}
 		<!-- 主键作为条件 -->
 		where
 		board_space_no = #{boardSpaceNo, jdbcType=INTEGER} 

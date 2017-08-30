@@ -146,13 +146,13 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="userRolesNo != null">
-				userRolesNo,
+				user_roles_no,
 			</if>
 			<if test="userNo != null">
-				userNo,
+				user_no,
 			</if>
 			<if test="roleNo != null">
-				roleNo,
+				role_no,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -206,13 +206,13 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.userRolesNo != null">
-				userRolesNo = #{record.userRolesNo, jdbcType=INTEGER},
+				user_roles_no = #{record.userRolesNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.userNo != null">
-				userNo = #{record.userNo, jdbcType=INTEGER},
+				user_no = #{record.userNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.roleNo != null">
-				roleNo = #{record.roleNo, jdbcType=INTEGER},
+				role_no = #{record.roleNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -226,9 +226,9 @@
 		update t_user_roles
 		<!-- 修改属性，可修改主键 -->
 		set
-		userRolesNo = #{userRolesNo, jdbcType=INTEGER},
-		userNo = #{userNo, jdbcType=INTEGER},
-		roleNo = #{roleNo, jdbcType=INTEGER}
+		user_roles_no = #{userRolesNo, jdbcType=INTEGER},
+		user_no = #{userNo, jdbcType=INTEGER},
+		role_no = #{roleNo, jdbcType=INTEGER}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -241,10 +241,10 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="userNo != null">
-				userNo = #{userNo, jdbcType=INTEGER},
+				user_no = #{userNo, jdbcType=INTEGER},
 			</if>
 			<if test="roleNo != null">
-				roleNo = #{roleNo, jdbcType=INTEGER},
+				role_no = #{roleNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -257,8 +257,8 @@
 		update t_user_roles
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		userNo = #{userNo, jdbcType=INTEGER},
-		roleNo = #{roleNo, jdbcType=INTEGER}
+		user_no = #{userNo, jdbcType=INTEGER},
+		role_no = #{roleNo, jdbcType=INTEGER}
 		<!-- 主键作为条件 -->
 		where
 		user_roles_no = #{userRolesNo, jdbcType=INTEGER} 

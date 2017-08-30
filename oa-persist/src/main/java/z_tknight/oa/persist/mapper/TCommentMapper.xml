@@ -150,16 +150,16 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="commentNo != null">
-				commentNo,
+				comment_no,
 			</if>
 			<if test="comment != null">
 				comment,
 			</if>
 			<if test="cardNo != null">
-				cardNo,
+				card_no,
 			</if>
 			<if test="userNo != null">
-				userNo,
+				user_no,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -216,16 +216,16 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.commentNo != null">
-				commentNo = #{record.commentNo, jdbcType=INTEGER},
+				comment_no = #{record.commentNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.comment != null">
 				comment = #{record.comment, jdbcType=VARCHAR},
 			</if>
 			<if test="record.cardNo != null">
-				cardNo = #{record.cardNo, jdbcType=INTEGER},
+				card_no = #{record.cardNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.userNo != null">
-				userNo = #{record.userNo, jdbcType=INTEGER},
+				user_no = #{record.userNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -239,10 +239,10 @@
 		update t_comment
 		<!-- 修改属性，可修改主键 -->
 		set
-		commentNo = #{commentNo, jdbcType=INTEGER},
+		comment_no = #{commentNo, jdbcType=INTEGER},
 		comment = #{comment, jdbcType=VARCHAR},
-		cardNo = #{cardNo, jdbcType=INTEGER},
-		userNo = #{userNo, jdbcType=INTEGER}
+		card_no = #{cardNo, jdbcType=INTEGER},
+		user_no = #{userNo, jdbcType=INTEGER}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -258,10 +258,10 @@
 				comment = #{comment, jdbcType=VARCHAR},
 			</if>
 			<if test="cardNo != null">
-				cardNo = #{cardNo, jdbcType=INTEGER},
+				card_no = #{cardNo, jdbcType=INTEGER},
 			</if>
 			<if test="userNo != null">
-				userNo = #{userNo, jdbcType=INTEGER},
+				user_no = #{userNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -275,8 +275,8 @@
 		<!-- 修改属性，不可以修改主键 -->
 		set
 		comment = #{comment, jdbcType=VARCHAR},
-		cardNo = #{cardNo, jdbcType=INTEGER},
-		userNo = #{userNo, jdbcType=INTEGER}
+		card_no = #{cardNo, jdbcType=INTEGER},
+		user_no = #{userNo, jdbcType=INTEGER}
 		<!-- 主键作为条件 -->
 		where
 		comment_no = #{commentNo, jdbcType=INTEGER} 

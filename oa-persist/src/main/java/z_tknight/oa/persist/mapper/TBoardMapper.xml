@@ -166,28 +166,28 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="boardNo != null">
-				boardNo,
+				board_no,
 			</if>
 			<if test="boardName != null">
-				boardName,
+				board_name,
 			</if>
 			<if test="displayNo != null">
-				displayNo,
+				display_no,
 			</if>
 			<if test="startTime != null">
-				startTime,
+				start_time,
 			</if>
 			<if test="endTime != null">
-				endTime,
+				end_time,
 			</if>
 			<if test="boardSpaceNo != null">
-				boardSpaceNo,
+				board_space_no,
 			</if>
 			<if test="isDelete != null">
-				isDelete,
+				is_delete,
 			</if>
 			<if test="userNo != null">
-				userNo,
+				user_no,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -256,28 +256,28 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.boardNo != null">
-				boardNo = #{record.boardNo, jdbcType=INTEGER},
+				board_no = #{record.boardNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.boardName != null">
-				boardName = #{record.boardName, jdbcType=VARCHAR},
+				board_name = #{record.boardName, jdbcType=VARCHAR},
 			</if>
 			<if test="record.displayNo != null">
-				displayNo = #{record.displayNo, jdbcType=INTEGER},
+				display_no = #{record.displayNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.startTime != null">
-				startTime = #{record.startTime, jdbcType=TIMESTAMP},
+				start_time = #{record.startTime, jdbcType=TIMESTAMP},
 			</if>
 			<if test="record.endTime != null">
-				endTime = #{record.endTime, jdbcType=TIMESTAMP},
+				end_time = #{record.endTime, jdbcType=TIMESTAMP},
 			</if>
 			<if test="record.boardSpaceNo != null">
-				boardSpaceNo = #{record.boardSpaceNo, jdbcType=INTEGER},
+				board_space_no = #{record.boardSpaceNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.isDelete != null">
-				isDelete = #{record.isDelete, jdbcType=BIT},
+				is_delete = #{record.isDelete, jdbcType=BIT},
 			</if>
 			<if test="record.userNo != null">
-				userNo = #{record.userNo, jdbcType=INTEGER},
+				user_no = #{record.userNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -291,14 +291,14 @@
 		update t_board
 		<!-- 修改属性，可修改主键 -->
 		set
-		boardNo = #{boardNo, jdbcType=INTEGER},
-		boardName = #{boardName, jdbcType=VARCHAR},
-		displayNo = #{displayNo, jdbcType=INTEGER},
-		startTime = #{startTime, jdbcType=TIMESTAMP},
-		endTime = #{endTime, jdbcType=TIMESTAMP},
-		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
-		isDelete = #{isDelete, jdbcType=BIT},
-		userNo = #{userNo, jdbcType=INTEGER}
+		board_no = #{boardNo, jdbcType=INTEGER},
+		board_name = #{boardName, jdbcType=VARCHAR},
+		display_no = #{displayNo, jdbcType=INTEGER},
+		start_time = #{startTime, jdbcType=TIMESTAMP},
+		end_time = #{endTime, jdbcType=TIMESTAMP},
+		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
+		is_delete = #{isDelete, jdbcType=BIT},
+		user_no = #{userNo, jdbcType=INTEGER}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -311,25 +311,25 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="boardName != null">
-				boardName = #{boardName, jdbcType=VARCHAR},
+				board_name = #{boardName, jdbcType=VARCHAR},
 			</if>
 			<if test="displayNo != null">
-				displayNo = #{displayNo, jdbcType=INTEGER},
+				display_no = #{displayNo, jdbcType=INTEGER},
 			</if>
 			<if test="startTime != null">
-				startTime = #{startTime, jdbcType=TIMESTAMP},
+				start_time = #{startTime, jdbcType=TIMESTAMP},
 			</if>
 			<if test="endTime != null">
-				endTime = #{endTime, jdbcType=TIMESTAMP},
+				end_time = #{endTime, jdbcType=TIMESTAMP},
 			</if>
 			<if test="boardSpaceNo != null">
-				boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
+				board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
 			</if>
 			<if test="isDelete != null">
-				isDelete = #{isDelete, jdbcType=BIT},
+				is_delete = #{isDelete, jdbcType=BIT},
 			</if>
 			<if test="userNo != null">
-				userNo = #{userNo, jdbcType=INTEGER},
+				user_no = #{userNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -342,13 +342,13 @@
 		update t_board
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		boardName = #{boardName, jdbcType=VARCHAR},
-		displayNo = #{displayNo, jdbcType=INTEGER},
-		startTime = #{startTime, jdbcType=TIMESTAMP},
-		endTime = #{endTime, jdbcType=TIMESTAMP},
-		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
-		isDelete = #{isDelete, jdbcType=BIT},
-		userNo = #{userNo, jdbcType=INTEGER}
+		board_name = #{boardName, jdbcType=VARCHAR},
+		display_no = #{displayNo, jdbcType=INTEGER},
+		start_time = #{startTime, jdbcType=TIMESTAMP},
+		end_time = #{endTime, jdbcType=TIMESTAMP},
+		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
+		is_delete = #{isDelete, jdbcType=BIT},
+		user_no = #{userNo, jdbcType=INTEGER}
 		<!-- 主键作为条件 -->
 		where
 		board_no = #{boardNo, jdbcType=INTEGER} 

@@ -150,16 +150,16 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="tagNo != null">
-				tagNo,
+				tag_no,
 			</if>
 			<if test="tagName != null">
-				tagName,
+				tag_name,
 			</if>
 			<if test="boardSpaceNo != null">
-				boardSpaceNo,
+				board_space_no,
 			</if>
 			<if test="boardNo != null">
-				boardNo,
+				board_no,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -216,16 +216,16 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.tagNo != null">
-				tagNo = #{record.tagNo, jdbcType=INTEGER},
+				tag_no = #{record.tagNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.tagName != null">
-				tagName = #{record.tagName, jdbcType=VARCHAR},
+				tag_name = #{record.tagName, jdbcType=VARCHAR},
 			</if>
 			<if test="record.boardSpaceNo != null">
-				boardSpaceNo = #{record.boardSpaceNo, jdbcType=INTEGER},
+				board_space_no = #{record.boardSpaceNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.boardNo != null">
-				boardNo = #{record.boardNo, jdbcType=INTEGER},
+				board_no = #{record.boardNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -239,10 +239,10 @@
 		update t_tag
 		<!-- 修改属性，可修改主键 -->
 		set
-		tagNo = #{tagNo, jdbcType=INTEGER},
-		tagName = #{tagName, jdbcType=VARCHAR},
-		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
-		boardNo = #{boardNo, jdbcType=INTEGER}
+		tag_no = #{tagNo, jdbcType=INTEGER},
+		tag_name = #{tagName, jdbcType=VARCHAR},
+		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
+		board_no = #{boardNo, jdbcType=INTEGER}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -255,13 +255,13 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="tagName != null">
-				tagName = #{tagName, jdbcType=VARCHAR},
+				tag_name = #{tagName, jdbcType=VARCHAR},
 			</if>
 			<if test="boardSpaceNo != null">
-				boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
+				board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
 			</if>
 			<if test="boardNo != null">
-				boardNo = #{boardNo, jdbcType=INTEGER},
+				board_no = #{boardNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -274,9 +274,9 @@
 		update t_tag
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		tagName = #{tagName, jdbcType=VARCHAR},
-		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
-		boardNo = #{boardNo, jdbcType=INTEGER}
+		tag_name = #{tagName, jdbcType=VARCHAR},
+		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
+		board_no = #{boardNo, jdbcType=INTEGER}
 		<!-- 主键作为条件 -->
 		where
 		tag_no = #{tagNo, jdbcType=INTEGER} 

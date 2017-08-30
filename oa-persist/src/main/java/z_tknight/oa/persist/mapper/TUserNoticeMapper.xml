@@ -174,34 +174,34 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="noticeNo != null">
-				noticeNo,
+				notice_no,
 			</if>
 			<if test="fromUserId != null">
-				fromUserId,
+				from_user_id,
 			</if>
 			<if test="toUserId != null">
-				toUserId,
+				to_user_id,
 			</if>
 			<if test="listName != null">
-				listName,
+				list_name,
 			</if>
 			<if test="boardSpaceNo != null">
-				boardSpaceNo,
+				board_space_no,
 			</if>
 			<if test="boardSpaceName != null">
-				boardSpaceName,
+				board_space_name,
 			</if>
 			<if test="boardNo != null">
-				boardNo,
+				board_no,
 			</if>
 			<if test="boardName != null">
-				boardName,
+				board_name,
 			</if>
 			<if test="cardNo != null">
-				cardNo,
+				card_no,
 			</if>
 			<if test="cardTitle != null">
-				cardTitle,
+				card_title,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -276,34 +276,34 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.noticeNo != null">
-				noticeNo = #{record.noticeNo, jdbcType=INTEGER},
+				notice_no = #{record.noticeNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.fromUserId != null">
-				fromUserId = #{record.fromUserId, jdbcType=INTEGER},
+				from_user_id = #{record.fromUserId, jdbcType=INTEGER},
 			</if>
 			<if test="record.toUserId != null">
-				toUserId = #{record.toUserId, jdbcType=INTEGER},
+				to_user_id = #{record.toUserId, jdbcType=INTEGER},
 			</if>
 			<if test="record.listName != null">
-				listName = #{record.listName, jdbcType=VARCHAR},
+				list_name = #{record.listName, jdbcType=VARCHAR},
 			</if>
 			<if test="record.boardSpaceNo != null">
-				boardSpaceNo = #{record.boardSpaceNo, jdbcType=INTEGER},
+				board_space_no = #{record.boardSpaceNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.boardSpaceName != null">
-				boardSpaceName = #{record.boardSpaceName, jdbcType=VARCHAR},
+				board_space_name = #{record.boardSpaceName, jdbcType=VARCHAR},
 			</if>
 			<if test="record.boardNo != null">
-				boardNo = #{record.boardNo, jdbcType=INTEGER},
+				board_no = #{record.boardNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.boardName != null">
-				boardName = #{record.boardName, jdbcType=VARCHAR},
+				board_name = #{record.boardName, jdbcType=VARCHAR},
 			</if>
 			<if test="record.cardNo != null">
-				cardNo = #{record.cardNo, jdbcType=INTEGER},
+				card_no = #{record.cardNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.cardTitle != null">
-				cardTitle = #{record.cardTitle, jdbcType=VARCHAR},
+				card_title = #{record.cardTitle, jdbcType=VARCHAR},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -317,16 +317,16 @@
 		update t_user_notice
 		<!-- 修改属性，可修改主键 -->
 		set
-		noticeNo = #{noticeNo, jdbcType=INTEGER},
-		fromUserId = #{fromUserId, jdbcType=INTEGER},
-		toUserId = #{toUserId, jdbcType=INTEGER},
-		listName = #{listName, jdbcType=VARCHAR},
-		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
-		boardSpaceName = #{boardSpaceName, jdbcType=VARCHAR},
-		boardNo = #{boardNo, jdbcType=INTEGER},
-		boardName = #{boardName, jdbcType=VARCHAR},
-		cardNo = #{cardNo, jdbcType=INTEGER},
-		cardTitle = #{cardTitle, jdbcType=VARCHAR}
+		notice_no = #{noticeNo, jdbcType=INTEGER},
+		from_user_id = #{fromUserId, jdbcType=INTEGER},
+		to_user_id = #{toUserId, jdbcType=INTEGER},
+		list_name = #{listName, jdbcType=VARCHAR},
+		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
+		board_space_name = #{boardSpaceName, jdbcType=VARCHAR},
+		board_no = #{boardNo, jdbcType=INTEGER},
+		board_name = #{boardName, jdbcType=VARCHAR},
+		card_no = #{cardNo, jdbcType=INTEGER},
+		card_title = #{cardTitle, jdbcType=VARCHAR}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -339,31 +339,31 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="fromUserId != null">
-				fromUserId = #{fromUserId, jdbcType=INTEGER},
+				from_user_id = #{fromUserId, jdbcType=INTEGER},
 			</if>
 			<if test="toUserId != null">
-				toUserId = #{toUserId, jdbcType=INTEGER},
+				to_user_id = #{toUserId, jdbcType=INTEGER},
 			</if>
 			<if test="listName != null">
-				listName = #{listName, jdbcType=VARCHAR},
+				list_name = #{listName, jdbcType=VARCHAR},
 			</if>
 			<if test="boardSpaceNo != null">
-				boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
+				board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
 			</if>
 			<if test="boardSpaceName != null">
-				boardSpaceName = #{boardSpaceName, jdbcType=VARCHAR},
+				board_space_name = #{boardSpaceName, jdbcType=VARCHAR},
 			</if>
 			<if test="boardNo != null">
-				boardNo = #{boardNo, jdbcType=INTEGER},
+				board_no = #{boardNo, jdbcType=INTEGER},
 			</if>
 			<if test="boardName != null">
-				boardName = #{boardName, jdbcType=VARCHAR},
+				board_name = #{boardName, jdbcType=VARCHAR},
 			</if>
 			<if test="cardNo != null">
-				cardNo = #{cardNo, jdbcType=INTEGER},
+				card_no = #{cardNo, jdbcType=INTEGER},
 			</if>
 			<if test="cardTitle != null">
-				cardTitle = #{cardTitle, jdbcType=VARCHAR},
+				card_title = #{cardTitle, jdbcType=VARCHAR},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -376,15 +376,15 @@
 		update t_user_notice
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		fromUserId = #{fromUserId, jdbcType=INTEGER},
-		toUserId = #{toUserId, jdbcType=INTEGER},
-		listName = #{listName, jdbcType=VARCHAR},
-		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
-		boardSpaceName = #{boardSpaceName, jdbcType=VARCHAR},
-		boardNo = #{boardNo, jdbcType=INTEGER},
-		boardName = #{boardName, jdbcType=VARCHAR},
-		cardNo = #{cardNo, jdbcType=INTEGER},
-		cardTitle = #{cardTitle, jdbcType=VARCHAR}
+		from_user_id = #{fromUserId, jdbcType=INTEGER},
+		to_user_id = #{toUserId, jdbcType=INTEGER},
+		list_name = #{listName, jdbcType=VARCHAR},
+		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
+		board_space_name = #{boardSpaceName, jdbcType=VARCHAR},
+		board_no = #{boardNo, jdbcType=INTEGER},
+		board_name = #{boardName, jdbcType=VARCHAR},
+		card_no = #{cardNo, jdbcType=INTEGER},
+		card_title = #{cardTitle, jdbcType=VARCHAR}
 		<!-- 主键作为条件 -->
 		where
 		notice_no = #{noticeNo, jdbcType=INTEGER} 

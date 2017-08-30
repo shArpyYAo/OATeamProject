@@ -146,13 +146,13 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="orderNo != null">
-				orderNo,
+				order_no,
 			</if>
 			<if test="listNo != null">
-				listNo,
+				list_no,
 			</if>
 			<if test="cardOrder != null">
-				cardOrder,
+				card_order,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -206,13 +206,13 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.orderNo != null">
-				orderNo = #{record.orderNo, jdbcType=INTEGER},
+				order_no = #{record.orderNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.listNo != null">
-				listNo = #{record.listNo, jdbcType=INTEGER},
+				list_no = #{record.listNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.cardOrder != null">
-				cardOrder = #{record.cardOrder, jdbcType=CLOB},
+				card_order = #{record.cardOrder, jdbcType=CLOB},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -226,9 +226,9 @@
 		update t_card_order
 		<!-- 修改属性，可修改主键 -->
 		set
-		orderNo = #{orderNo, jdbcType=INTEGER},
-		listNo = #{listNo, jdbcType=INTEGER},
-		cardOrder = #{cardOrder, jdbcType=CLOB}
+		order_no = #{orderNo, jdbcType=INTEGER},
+		list_no = #{listNo, jdbcType=INTEGER},
+		card_order = #{cardOrder, jdbcType=CLOB}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -241,10 +241,10 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="listNo != null">
-				listNo = #{listNo, jdbcType=INTEGER},
+				list_no = #{listNo, jdbcType=INTEGER},
 			</if>
 			<if test="cardOrder != null">
-				cardOrder = #{cardOrder, jdbcType=CLOB},
+				card_order = #{cardOrder, jdbcType=CLOB},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -257,8 +257,8 @@
 		update t_card_order
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		listNo = #{listNo, jdbcType=INTEGER},
-		cardOrder = #{cardOrder, jdbcType=CLOB}
+		list_no = #{listNo, jdbcType=INTEGER},
+		card_order = #{cardOrder, jdbcType=CLOB}
 		<!-- 主键作为条件 -->
 		where
 		order_no = #{orderNo, jdbcType=INTEGER} 

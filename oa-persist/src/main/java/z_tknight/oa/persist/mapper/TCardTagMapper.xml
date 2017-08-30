@@ -146,13 +146,13 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="relationNo != null">
-				relationNo,
+				relation_no,
 			</if>
 			<if test="cardNo != null">
-				cardNo,
+				card_no,
 			</if>
 			<if test="tagNo != null">
-				tagNo,
+				tag_no,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -206,13 +206,13 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.relationNo != null">
-				relationNo = #{record.relationNo, jdbcType=INTEGER},
+				relation_no = #{record.relationNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.cardNo != null">
-				cardNo = #{record.cardNo, jdbcType=INTEGER},
+				card_no = #{record.cardNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.tagNo != null">
-				tagNo = #{record.tagNo, jdbcType=INTEGER},
+				tag_no = #{record.tagNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -226,9 +226,9 @@
 		update t_card_tag
 		<!-- 修改属性，可修改主键 -->
 		set
-		relationNo = #{relationNo, jdbcType=INTEGER},
-		cardNo = #{cardNo, jdbcType=INTEGER},
-		tagNo = #{tagNo, jdbcType=INTEGER}
+		relation_no = #{relationNo, jdbcType=INTEGER},
+		card_no = #{cardNo, jdbcType=INTEGER},
+		tag_no = #{tagNo, jdbcType=INTEGER}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -241,10 +241,10 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="cardNo != null">
-				cardNo = #{cardNo, jdbcType=INTEGER},
+				card_no = #{cardNo, jdbcType=INTEGER},
 			</if>
 			<if test="tagNo != null">
-				tagNo = #{tagNo, jdbcType=INTEGER},
+				tag_no = #{tagNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -257,8 +257,8 @@
 		update t_card_tag
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		cardNo = #{cardNo, jdbcType=INTEGER},
-		tagNo = #{tagNo, jdbcType=INTEGER}
+		card_no = #{cardNo, jdbcType=INTEGER},
+		tag_no = #{tagNo, jdbcType=INTEGER}
 		<!-- 主键作为条件 -->
 		where
 		relation_no = #{relationNo, jdbcType=INTEGER} 

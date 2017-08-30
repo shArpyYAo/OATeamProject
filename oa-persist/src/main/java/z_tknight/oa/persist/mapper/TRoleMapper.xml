@@ -142,10 +142,10 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="roleNo != null">
-				roleNo,
+				role_no,
 			</if>
 			<if test="roleName != null">
-				roleName,
+				role_name,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -196,10 +196,10 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.roleNo != null">
-				roleNo = #{record.roleNo, jdbcType=INTEGER},
+				role_no = #{record.roleNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.roleName != null">
-				roleName = #{record.roleName, jdbcType=VARCHAR},
+				role_name = #{record.roleName, jdbcType=VARCHAR},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -213,8 +213,8 @@
 		update t_role
 		<!-- 修改属性，可修改主键 -->
 		set
-		roleNo = #{roleNo, jdbcType=INTEGER},
-		roleName = #{roleName, jdbcType=VARCHAR}
+		role_no = #{roleNo, jdbcType=INTEGER},
+		role_name = #{roleName, jdbcType=VARCHAR}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -227,7 +227,7 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="roleName != null">
-				roleName = #{roleName, jdbcType=VARCHAR},
+				role_name = #{roleName, jdbcType=VARCHAR},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -240,7 +240,7 @@
 		update t_role
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		roleName = #{roleName, jdbcType=VARCHAR}
+		role_name = #{roleName, jdbcType=VARCHAR}
 		<!-- 主键作为条件 -->
 		where
 		role_no = #{roleNo, jdbcType=INTEGER} 

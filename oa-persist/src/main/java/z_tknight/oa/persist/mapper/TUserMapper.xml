@@ -162,25 +162,25 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="userNo != null">
-				userNo,
+				user_no,
 			</if>
 			<if test="userName != null">
-				userName,
+				user_name,
 			</if>
 			<if test="password != null">
 				password,
 			</if>
 			<if test="nickName != null">
-				nickName,
+				nick_name,
 			</if>
 			<if test="introduction != null">
 				introduction,
 			</if>
 			<if test="deptNo != null">
-				deptNo,
+				dept_no,
 			</if>
 			<if test="backUp != null">
-				backUp,
+				back_up,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -246,25 +246,25 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.userNo != null">
-				userNo = #{record.userNo, jdbcType=INTEGER},
+				user_no = #{record.userNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.userName != null">
-				userName = #{record.userName, jdbcType=VARCHAR},
+				user_name = #{record.userName, jdbcType=VARCHAR},
 			</if>
 			<if test="record.password != null">
 				password = #{record.password, jdbcType=VARCHAR},
 			</if>
 			<if test="record.nickName != null">
-				nickName = #{record.nickName, jdbcType=VARCHAR},
+				nick_name = #{record.nickName, jdbcType=VARCHAR},
 			</if>
 			<if test="record.introduction != null">
 				introduction = #{record.introduction, jdbcType=VARCHAR},
 			</if>
 			<if test="record.deptNo != null">
-				deptNo = #{record.deptNo, jdbcType=INTEGER},
+				dept_no = #{record.deptNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.backUp != null">
-				backUp = #{record.backUp, jdbcType=INTEGER},
+				back_up = #{record.backUp, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -278,13 +278,13 @@
 		update t_user
 		<!-- 修改属性，可修改主键 -->
 		set
-		userNo = #{userNo, jdbcType=INTEGER},
-		userName = #{userName, jdbcType=VARCHAR},
+		user_no = #{userNo, jdbcType=INTEGER},
+		user_name = #{userName, jdbcType=VARCHAR},
 		password = #{password, jdbcType=VARCHAR},
-		nickName = #{nickName, jdbcType=VARCHAR},
+		nick_name = #{nickName, jdbcType=VARCHAR},
 		introduction = #{introduction, jdbcType=VARCHAR},
-		deptNo = #{deptNo, jdbcType=INTEGER},
-		backUp = #{backUp, jdbcType=INTEGER}
+		dept_no = #{deptNo, jdbcType=INTEGER},
+		back_up = #{backUp, jdbcType=INTEGER}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -297,22 +297,22 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="userName != null">
-				userName = #{userName, jdbcType=VARCHAR},
+				user_name = #{userName, jdbcType=VARCHAR},
 			</if>
 			<if test="password != null">
 				password = #{password, jdbcType=VARCHAR},
 			</if>
 			<if test="nickName != null">
-				nickName = #{nickName, jdbcType=VARCHAR},
+				nick_name = #{nickName, jdbcType=VARCHAR},
 			</if>
 			<if test="introduction != null">
 				introduction = #{introduction, jdbcType=VARCHAR},
 			</if>
 			<if test="deptNo != null">
-				deptNo = #{deptNo, jdbcType=INTEGER},
+				dept_no = #{deptNo, jdbcType=INTEGER},
 			</if>
 			<if test="backUp != null">
-				backUp = #{backUp, jdbcType=INTEGER},
+				back_up = #{backUp, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -325,12 +325,12 @@
 		update t_user
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		userName = #{userName, jdbcType=VARCHAR},
+		user_name = #{userName, jdbcType=VARCHAR},
 		password = #{password, jdbcType=VARCHAR},
-		nickName = #{nickName, jdbcType=VARCHAR},
+		nick_name = #{nickName, jdbcType=VARCHAR},
 		introduction = #{introduction, jdbcType=VARCHAR},
-		deptNo = #{deptNo, jdbcType=INTEGER},
-		backUp = #{backUp, jdbcType=INTEGER}
+		dept_no = #{deptNo, jdbcType=INTEGER},
+		back_up = #{backUp, jdbcType=INTEGER}
 		<!-- 主键作为条件 -->
 		where
 		user_no = #{userNo, jdbcType=INTEGER} 

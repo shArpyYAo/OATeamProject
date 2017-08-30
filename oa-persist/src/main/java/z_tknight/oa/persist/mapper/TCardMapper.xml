@@ -170,31 +170,31 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="cardNo != null">
-				cardNo,
+				card_no,
 			</if>
 			<if test="cardTitle != null">
-				cardTitle,
+				card_title,
 			</if>
 			<if test="workLoad != null">
-				workLoad,
+				work_load,
 			</if>
 			<if test="endTime != null">
-				endTime,
+				end_time,
 			</if>
 			<if test="boardSpaceNo != null">
-				boardSpaceNo,
+				board_space_no,
 			</if>
 			<if test="boardNo != null">
-				boardNo,
+				board_no,
 			</if>
 			<if test="listNo != null">
-				listNo,
+				list_no,
 			</if>
 			<if test="listName != null">
-				listName,
+				list_name,
 			</if>
 			<if test="isDelete != null">
-				isDelete,
+				is_delete,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -266,31 +266,31 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.cardNo != null">
-				cardNo = #{record.cardNo, jdbcType=INTEGER},
+				card_no = #{record.cardNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.cardTitle != null">
-				cardTitle = #{record.cardTitle, jdbcType=VARCHAR},
+				card_title = #{record.cardTitle, jdbcType=VARCHAR},
 			</if>
 			<if test="record.workLoad != null">
-				workLoad = #{record.workLoad, jdbcType=DOUBLE},
+				work_load = #{record.workLoad, jdbcType=DOUBLE},
 			</if>
 			<if test="record.endTime != null">
-				endTime = #{record.endTime, jdbcType=TIMESTAMP},
+				end_time = #{record.endTime, jdbcType=TIMESTAMP},
 			</if>
 			<if test="record.boardSpaceNo != null">
-				boardSpaceNo = #{record.boardSpaceNo, jdbcType=INTEGER},
+				board_space_no = #{record.boardSpaceNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.boardNo != null">
-				boardNo = #{record.boardNo, jdbcType=INTEGER},
+				board_no = #{record.boardNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.listNo != null">
-				listNo = #{record.listNo, jdbcType=INTEGER},
+				list_no = #{record.listNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.listName != null">
-				listName = #{record.listName, jdbcType=VARCHAR},
+				list_name = #{record.listName, jdbcType=VARCHAR},
 			</if>
 			<if test="record.isDelete != null">
-				isDelete = #{record.isDelete, jdbcType=BIT},
+				is_delete = #{record.isDelete, jdbcType=BIT},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -304,15 +304,15 @@
 		update t_card
 		<!-- 修改属性，可修改主键 -->
 		set
-		cardNo = #{cardNo, jdbcType=INTEGER},
-		cardTitle = #{cardTitle, jdbcType=VARCHAR},
-		workLoad = #{workLoad, jdbcType=DOUBLE},
-		endTime = #{endTime, jdbcType=TIMESTAMP},
-		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
-		boardNo = #{boardNo, jdbcType=INTEGER},
-		listNo = #{listNo, jdbcType=INTEGER},
-		listName = #{listName, jdbcType=VARCHAR},
-		isDelete = #{isDelete, jdbcType=BIT}
+		card_no = #{cardNo, jdbcType=INTEGER},
+		card_title = #{cardTitle, jdbcType=VARCHAR},
+		work_load = #{workLoad, jdbcType=DOUBLE},
+		end_time = #{endTime, jdbcType=TIMESTAMP},
+		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
+		board_no = #{boardNo, jdbcType=INTEGER},
+		list_no = #{listNo, jdbcType=INTEGER},
+		list_name = #{listName, jdbcType=VARCHAR},
+		is_delete = #{isDelete, jdbcType=BIT}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -325,28 +325,28 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="cardTitle != null">
-				cardTitle = #{cardTitle, jdbcType=VARCHAR},
+				card_title = #{cardTitle, jdbcType=VARCHAR},
 			</if>
 			<if test="workLoad != null">
-				workLoad = #{workLoad, jdbcType=DOUBLE},
+				work_load = #{workLoad, jdbcType=DOUBLE},
 			</if>
 			<if test="endTime != null">
-				endTime = #{endTime, jdbcType=TIMESTAMP},
+				end_time = #{endTime, jdbcType=TIMESTAMP},
 			</if>
 			<if test="boardSpaceNo != null">
-				boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
+				board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
 			</if>
 			<if test="boardNo != null">
-				boardNo = #{boardNo, jdbcType=INTEGER},
+				board_no = #{boardNo, jdbcType=INTEGER},
 			</if>
 			<if test="listNo != null">
-				listNo = #{listNo, jdbcType=INTEGER},
+				list_no = #{listNo, jdbcType=INTEGER},
 			</if>
 			<if test="listName != null">
-				listName = #{listName, jdbcType=VARCHAR},
+				list_name = #{listName, jdbcType=VARCHAR},
 			</if>
 			<if test="isDelete != null">
-				isDelete = #{isDelete, jdbcType=BIT},
+				is_delete = #{isDelete, jdbcType=BIT},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -359,14 +359,14 @@
 		update t_card
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		cardTitle = #{cardTitle, jdbcType=VARCHAR},
-		workLoad = #{workLoad, jdbcType=DOUBLE},
-		endTime = #{endTime, jdbcType=TIMESTAMP},
-		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
-		boardNo = #{boardNo, jdbcType=INTEGER},
-		listNo = #{listNo, jdbcType=INTEGER},
-		listName = #{listName, jdbcType=VARCHAR},
-		isDelete = #{isDelete, jdbcType=BIT}
+		card_title = #{cardTitle, jdbcType=VARCHAR},
+		work_load = #{workLoad, jdbcType=DOUBLE},
+		end_time = #{endTime, jdbcType=TIMESTAMP},
+		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
+		board_no = #{boardNo, jdbcType=INTEGER},
+		list_no = #{listNo, jdbcType=INTEGER},
+		list_name = #{listName, jdbcType=VARCHAR},
+		is_delete = #{isDelete, jdbcType=BIT}
 		<!-- 主键作为条件 -->
 		where
 		card_no = #{cardNo, jdbcType=INTEGER} 

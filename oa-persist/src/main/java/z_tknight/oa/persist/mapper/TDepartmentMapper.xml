@@ -154,19 +154,19 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="deptNo != null">
-				deptNo,
+				dept_no,
 			</if>
 			<if test="deptName != null">
-				deptName,
+				dept_name,
 			</if>
 			<if test="userNo != null">
-				userNo,
+				user_no,
 			</if>
 			<if test="superiorDeptNo != null">
-				superiorDeptNo,
+				superior_dept_no,
 			</if>
 			<if test="tBoardSpace != null">
-				tBoardSpace,
+				t_board_space,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -226,19 +226,19 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.deptNo != null">
-				deptNo = #{record.deptNo, jdbcType=INTEGER},
+				dept_no = #{record.deptNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.deptName != null">
-				deptName = #{record.deptName, jdbcType=VARCHAR},
+				dept_name = #{record.deptName, jdbcType=VARCHAR},
 			</if>
 			<if test="record.userNo != null">
-				userNo = #{record.userNo, jdbcType=INTEGER},
+				user_no = #{record.userNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.superiorDeptNo != null">
-				superiorDeptNo = #{record.superiorDeptNo, jdbcType=INTEGER},
+				superior_dept_no = #{record.superiorDeptNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.tBoardSpace != null">
-				tBoardSpace = #{record.tBoardSpace, jdbcType=INTEGER},
+				t_board_space = #{record.tBoardSpace, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -252,11 +252,11 @@
 		update t_department
 		<!-- 修改属性，可修改主键 -->
 		set
-		deptNo = #{deptNo, jdbcType=INTEGER},
-		deptName = #{deptName, jdbcType=VARCHAR},
-		userNo = #{userNo, jdbcType=INTEGER},
-		superiorDeptNo = #{superiorDeptNo, jdbcType=INTEGER},
-		tBoardSpace = #{tBoardSpace, jdbcType=INTEGER}
+		dept_no = #{deptNo, jdbcType=INTEGER},
+		dept_name = #{deptName, jdbcType=VARCHAR},
+		user_no = #{userNo, jdbcType=INTEGER},
+		superior_dept_no = #{superiorDeptNo, jdbcType=INTEGER},
+		t_board_space = #{tBoardSpace, jdbcType=INTEGER}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -269,16 +269,16 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="deptName != null">
-				deptName = #{deptName, jdbcType=VARCHAR},
+				dept_name = #{deptName, jdbcType=VARCHAR},
 			</if>
 			<if test="userNo != null">
-				userNo = #{userNo, jdbcType=INTEGER},
+				user_no = #{userNo, jdbcType=INTEGER},
 			</if>
 			<if test="superiorDeptNo != null">
-				superiorDeptNo = #{superiorDeptNo, jdbcType=INTEGER},
+				superior_dept_no = #{superiorDeptNo, jdbcType=INTEGER},
 			</if>
 			<if test="tBoardSpace != null">
-				tBoardSpace = #{tBoardSpace, jdbcType=INTEGER},
+				t_board_space = #{tBoardSpace, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -291,10 +291,10 @@
 		update t_department
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		deptName = #{deptName, jdbcType=VARCHAR},
-		userNo = #{userNo, jdbcType=INTEGER},
-		superiorDeptNo = #{superiorDeptNo, jdbcType=INTEGER},
-		tBoardSpace = #{tBoardSpace, jdbcType=INTEGER}
+		dept_name = #{deptName, jdbcType=VARCHAR},
+		user_no = #{userNo, jdbcType=INTEGER},
+		superior_dept_no = #{superiorDeptNo, jdbcType=INTEGER},
+		t_board_space = #{tBoardSpace, jdbcType=INTEGER}
 		<!-- 主键作为条件 -->
 		where
 		dept_no = #{deptNo, jdbcType=INTEGER} 

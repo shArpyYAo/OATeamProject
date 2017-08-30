@@ -154,19 +154,19 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="listNo != null">
-				listNo,
+				list_no,
 			</if>
 			<if test="listName != null">
-				listName,
+				list_name,
 			</if>
 			<if test="boardSpaceNo != null">
-				boardSpaceNo,
+				board_space_no,
 			</if>
 			<if test="boardNo != null">
-				boardNo,
+				board_no,
 			</if>
 			<if test="isDelete != null">
-				isDelete,
+				is_delete,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -226,19 +226,19 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.listNo != null">
-				listNo = #{record.listNo, jdbcType=INTEGER},
+				list_no = #{record.listNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.listName != null">
-				listName = #{record.listName, jdbcType=VARCHAR},
+				list_name = #{record.listName, jdbcType=VARCHAR},
 			</if>
 			<if test="record.boardSpaceNo != null">
-				boardSpaceNo = #{record.boardSpaceNo, jdbcType=INTEGER},
+				board_space_no = #{record.boardSpaceNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.boardNo != null">
-				boardNo = #{record.boardNo, jdbcType=INTEGER},
+				board_no = #{record.boardNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.isDelete != null">
-				isDelete = #{record.isDelete, jdbcType=BIT},
+				is_delete = #{record.isDelete, jdbcType=BIT},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -252,11 +252,11 @@
 		update t_list
 		<!-- 修改属性，可修改主键 -->
 		set
-		listNo = #{listNo, jdbcType=INTEGER},
-		listName = #{listName, jdbcType=VARCHAR},
-		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
-		boardNo = #{boardNo, jdbcType=INTEGER},
-		isDelete = #{isDelete, jdbcType=BIT}
+		list_no = #{listNo, jdbcType=INTEGER},
+		list_name = #{listName, jdbcType=VARCHAR},
+		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
+		board_no = #{boardNo, jdbcType=INTEGER},
+		is_delete = #{isDelete, jdbcType=BIT}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -269,16 +269,16 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="listName != null">
-				listName = #{listName, jdbcType=VARCHAR},
+				list_name = #{listName, jdbcType=VARCHAR},
 			</if>
 			<if test="boardSpaceNo != null">
-				boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
+				board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
 			</if>
 			<if test="boardNo != null">
-				boardNo = #{boardNo, jdbcType=INTEGER},
+				board_no = #{boardNo, jdbcType=INTEGER},
 			</if>
 			<if test="isDelete != null">
-				isDelete = #{isDelete, jdbcType=BIT},
+				is_delete = #{isDelete, jdbcType=BIT},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -291,10 +291,10 @@
 		update t_list
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		listName = #{listName, jdbcType=VARCHAR},
-		boardSpaceNo = #{boardSpaceNo, jdbcType=INTEGER},
-		boardNo = #{boardNo, jdbcType=INTEGER},
-		isDelete = #{isDelete, jdbcType=BIT}
+		list_name = #{listName, jdbcType=VARCHAR},
+		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
+		board_no = #{boardNo, jdbcType=INTEGER},
+		is_delete = #{isDelete, jdbcType=BIT}
 		<!-- 主键作为条件 -->
 		where
 		list_no = #{listNo, jdbcType=INTEGER} 

@@ -178,10 +178,10 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="logNo != null">
-				logNo,
+				log_no,
 			</if>
 			<if test="userNo != null">
-				userNo,
+				user_no,
 			</if>
 			<if test="operation != null">
 				operation,
@@ -190,7 +190,7 @@
 				exception,
 			</if>
 			<if test="methodName != null">
-				methodName,
+				method_name,
 			</if>
 			<if test="params != null">
 				params,
@@ -199,10 +199,10 @@
 				ip,
 			</if>
 			<if test="beginTime != null">
-				beginTime,
+				begin_time,
 			</if>
 			<if test="operationTime != null">
-				operationTime,
+				operation_time,
 			</if>
 			<if test="url != null">
 				url,
@@ -286,10 +286,10 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.logNo != null">
-				logNo = #{record.logNo, jdbcType=INTEGER},
+				log_no = #{record.logNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.userNo != null">
-				userNo = #{record.userNo, jdbcType=INTEGER},
+				user_no = #{record.userNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.operation != null">
 				operation = #{record.operation, jdbcType=VARCHAR},
@@ -298,7 +298,7 @@
 				exception = #{record.exception, jdbcType=VARCHAR},
 			</if>
 			<if test="record.methodName != null">
-				methodName = #{record.methodName, jdbcType=VARCHAR},
+				method_name = #{record.methodName, jdbcType=VARCHAR},
 			</if>
 			<if test="record.params != null">
 				params = #{record.params, jdbcType=VARCHAR},
@@ -307,10 +307,10 @@
 				ip = #{record.ip, jdbcType=VARCHAR},
 			</if>
 			<if test="record.beginTime != null">
-				beginTime = #{record.beginTime, jdbcType=TIMESTAMP},
+				begin_time = #{record.beginTime, jdbcType=TIMESTAMP},
 			</if>
 			<if test="record.operationTime != null">
-				operationTime = #{record.operationTime, jdbcType=BIGINT},
+				operation_time = #{record.operationTime, jdbcType=BIGINT},
 			</if>
 			<if test="record.url != null">
 				url = #{record.url, jdbcType=VARCHAR},
@@ -330,15 +330,15 @@
 		update operation_log
 		<!-- 修改属性，可修改主键 -->
 		set
-		logNo = #{logNo, jdbcType=INTEGER},
-		userNo = #{userNo, jdbcType=INTEGER},
+		log_no = #{logNo, jdbcType=INTEGER},
+		user_no = #{userNo, jdbcType=INTEGER},
 		operation = #{operation, jdbcType=VARCHAR},
 		exception = #{exception, jdbcType=VARCHAR},
-		methodName = #{methodName, jdbcType=VARCHAR},
+		method_name = #{methodName, jdbcType=VARCHAR},
 		params = #{params, jdbcType=VARCHAR},
 		ip = #{ip, jdbcType=VARCHAR},
-		beginTime = #{beginTime, jdbcType=TIMESTAMP},
-		operationTime = #{operationTime, jdbcType=BIGINT},
+		begin_time = #{beginTime, jdbcType=TIMESTAMP},
+		operation_time = #{operationTime, jdbcType=BIGINT},
 		url = #{url, jdbcType=VARCHAR},
 		state = #{state, jdbcType=BIT}
 		<!-- 自定义条件 -->
@@ -353,7 +353,7 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="userNo != null">
-				userNo = #{userNo, jdbcType=INTEGER},
+				user_no = #{userNo, jdbcType=INTEGER},
 			</if>
 			<if test="operation != null">
 				operation = #{operation, jdbcType=VARCHAR},
@@ -362,7 +362,7 @@
 				exception = #{exception, jdbcType=VARCHAR},
 			</if>
 			<if test="methodName != null">
-				methodName = #{methodName, jdbcType=VARCHAR},
+				method_name = #{methodName, jdbcType=VARCHAR},
 			</if>
 			<if test="params != null">
 				params = #{params, jdbcType=VARCHAR},
@@ -371,10 +371,10 @@
 				ip = #{ip, jdbcType=VARCHAR},
 			</if>
 			<if test="beginTime != null">
-				beginTime = #{beginTime, jdbcType=TIMESTAMP},
+				begin_time = #{beginTime, jdbcType=TIMESTAMP},
 			</if>
 			<if test="operationTime != null">
-				operationTime = #{operationTime, jdbcType=BIGINT},
+				operation_time = #{operationTime, jdbcType=BIGINT},
 			</if>
 			<if test="url != null">
 				url = #{url, jdbcType=VARCHAR},
@@ -393,14 +393,14 @@
 		update operation_log
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		userNo = #{userNo, jdbcType=INTEGER},
+		user_no = #{userNo, jdbcType=INTEGER},
 		operation = #{operation, jdbcType=VARCHAR},
 		exception = #{exception, jdbcType=VARCHAR},
-		methodName = #{methodName, jdbcType=VARCHAR},
+		method_name = #{methodName, jdbcType=VARCHAR},
 		params = #{params, jdbcType=VARCHAR},
 		ip = #{ip, jdbcType=VARCHAR},
-		beginTime = #{beginTime, jdbcType=TIMESTAMP},
-		operationTime = #{operationTime, jdbcType=BIGINT},
+		begin_time = #{beginTime, jdbcType=TIMESTAMP},
+		operation_time = #{operationTime, jdbcType=BIGINT},
 		url = #{url, jdbcType=VARCHAR},
 		state = #{state, jdbcType=BIT}
 		<!-- 主键作为条件 -->

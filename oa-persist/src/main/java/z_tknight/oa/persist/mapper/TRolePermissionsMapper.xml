@@ -146,13 +146,13 @@
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="rolePermissionsNo != null">
-				rolePermissionsNo,
+				role_permissions_no,
 			</if>
 			<if test="roleNo != null">
-				roleNo,
+				role_no,
 			</if>
 			<if test="permissionNo != null">
-				permissionNo,
+				permission_no,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -206,13 +206,13 @@
 		<!-- 修改属性，可修改主键 -->
 		<set>
 			<if test="record.rolePermissionsNo != null">
-				rolePermissionsNo = #{record.rolePermissionsNo, jdbcType=INTEGER},
+				role_permissions_no = #{record.rolePermissionsNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.roleNo != null">
-				roleNo = #{record.roleNo, jdbcType=INTEGER},
+				role_no = #{record.roleNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.permissionNo != null">
-				permissionNo = #{record.permissionNo, jdbcType=INTEGER},
+				permission_no = #{record.permissionNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -226,9 +226,9 @@
 		update t_role_permissions
 		<!-- 修改属性，可修改主键 -->
 		set
-		rolePermissionsNo = #{rolePermissionsNo, jdbcType=INTEGER},
-		roleNo = #{roleNo, jdbcType=INTEGER},
-		permissionNo = #{permissionNo, jdbcType=INTEGER}
+		role_permissions_no = #{rolePermissionsNo, jdbcType=INTEGER},
+		role_no = #{roleNo, jdbcType=INTEGER},
+		permission_no = #{permissionNo, jdbcType=INTEGER}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -241,10 +241,10 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="roleNo != null">
-				roleNo = #{roleNo, jdbcType=INTEGER},
+				role_no = #{roleNo, jdbcType=INTEGER},
 			</if>
 			<if test="permissionNo != null">
-				permissionNo = #{permissionNo, jdbcType=INTEGER},
+				permission_no = #{permissionNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -257,8 +257,8 @@
 		update t_role_permissions
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		roleNo = #{roleNo, jdbcType=INTEGER},
-		permissionNo = #{permissionNo, jdbcType=INTEGER}
+		role_no = #{roleNo, jdbcType=INTEGER},
+		permission_no = #{permissionNo, jdbcType=INTEGER}
 		<!-- 主键作为条件 -->
 		where
 		role_permissions_no = #{rolePermissionsNo, jdbcType=INTEGER} 
