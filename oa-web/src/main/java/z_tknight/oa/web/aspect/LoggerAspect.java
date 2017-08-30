@@ -132,7 +132,7 @@ public class LoggerAspect {
 			_LOG.debug("state：" + state);
 			// 操作时间
 			log.setOperationTime(endTime - beginTime);
-			_LOG.debug("操作时间：" + (endTime - beginTime));
+			_LOG.debug("操作时间：" + log.getOperationTime());
 			// 保存到数据库
 			logService.insertOperationLog(log);
 			_LOG.debug("==================================================【End】");

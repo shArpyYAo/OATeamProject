@@ -46,7 +46,7 @@
 	<!-- 扫描mapper.xml,创建sql会话工厂 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="classpath:config/mybatis/SqlMapConfig.xml" />
+<!-- 		<property name="mapperLocations" value="classpath:z_tknight/oa/persist/mapper/*Mapper.xml"></property> -->
 	</bean>
 
 	<!-- 扫描mapper -->
