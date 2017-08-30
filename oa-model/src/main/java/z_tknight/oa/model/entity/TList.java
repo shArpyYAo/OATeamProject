@@ -28,6 +28,11 @@ public class TList {
 	 */
 	private Boolean isDelete = null;
 
+	/**
+	 * 卡片顺序
+	 */
+	private String cardOrder = null;
+
 	public void setListNo(Integer listNo) {
 		this.listNo = listNo;
 	}
@@ -66,6 +71,14 @@ public class TList {
 
 	public Boolean isIsDelete() {
 		return this.isDelete;
+	}
+
+	public void setCardOrder(String cardOrder) {
+		this.cardOrder = cardOrder;
+	}
+
+	public String getCardOrder() {
+		return this.cardOrder;
 	}
 
 }

@@ -44,6 +44,11 @@ public class TBoard {
 	 */
 	private Integer userNo = null;
 
+	/**
+	 * 列表顺序
+	 */
+	private String listOrder = null;
+
 	public void setBoardNo(Integer boardNo) {
 		this.boardNo = boardNo;
 	}
@@ -106,6 +111,14 @@ public class TBoard {
 
 	public Integer getUserNo() {
 		return this.userNo;
+	}
+
+	public void setListOrder(String listOrder) {
+		this.listOrder = listOrder;
+	}
+
+	public String getListOrder() {
+		return this.listOrder;
 	}
 
 }

@@ -33,6 +33,11 @@ public class TBoardSpace {
 	 */
 	private Boolean isDelete = null;
 
+	/**
+	 * 看板顺序
+	 */
+	private String boardOrder = null;
+
 	public void setBoardSpaceNo(Integer boardSpaceNo) {
 		this.boardSpaceNo = boardSpaceNo;
 	}
@@ -79,6 +84,14 @@ public class TBoardSpace {
 
 	public Boolean isIsDelete() {
 		return this.isDelete;
+	}
+
+	public void setBoardOrder(String boardOrder) {
+		this.boardOrder = boardOrder;
+	}
+
+	public String getBoardOrder() {
+		return this.boardOrder;
 	}
 
 }

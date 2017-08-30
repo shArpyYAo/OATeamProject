@@ -10,6 +10,7 @@
 		<result column="category_no" property="categoryNo" jdbcType="INTEGER" />
 		<result column="user_no" property="userNo" jdbcType="INTEGER" />
 		<result column="is_delete" property="isDelete" jdbcType="BIT" />
+		<result column="board_order" property="boardOrder" jdbcType="CLOB" />
 	</resultMap>
 
 	<!-- 条件从句 -->
@@ -100,7 +101,8 @@
 		summary,
 		category_no,
 		user_no,
-		is_delete
+		is_delete,
+		board_order
 	</sql>
 	<!-- 统计符合自定义条件的数据个数 -->
 	<select id="countByExample" parameterType="z_tknight.oa.model.entity.TBoardSpaceExample"
@@ -139,7 +141,8 @@
 			summary,
 			category_no,
 			user_no,
-			is_delete
+			is_delete,
+			board_order
 		)
 		values (
 			#{boardSpaceNo, jdbcType=INTEGER},
@@ -147,7 +150,8 @@
 			#{summary, jdbcType=VARCHAR},
 			#{categoryNo, jdbcType=INTEGER},
 			#{userNo, jdbcType=INTEGER},
-			#{isDelete, jdbcType=BIT}
+			#{isDelete, jdbcType=BIT},
+			#{boardOrder, jdbcType=CLOB}
 		)
 	</insert>
 
@@ -175,6 +179,9 @@
 			<if test="isDelete != null">
 				is_delete,
 			</if>
+			<if test="boardOrder != null">
+				board_order,
+			</if>
 		</trim>
 		<!-- 插入内容 -->
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -195,6 +202,9 @@
 			</if>
 			<if test="isDelete != null">
 				#{isDelete, jdbcType=BIT},
+			</if>
+			<if test="boardOrder != null">
+				#{boardOrder, jdbcType=CLOB},
 			</if>
 		</trim>
 	</insert>
@@ -253,6 +263,9 @@
 			<if test="record.isDelete != null">
 				is_delete = #{record.isDelete, jdbcType=BIT},
 			</if>
+			<if test="record.boardOrder != null">
+				board_order = #{record.boardOrder, jdbcType=CLOB},
+			</if>
 		</set>
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
@@ -270,7 +283,8 @@
 		summary = #{summary, jdbcType=VARCHAR},
 		category_no = #{categoryNo, jdbcType=INTEGER},
 		user_no = #{userNo, jdbcType=INTEGER},
-		is_delete = #{isDelete, jdbcType=BIT}
+		is_delete = #{isDelete, jdbcType=BIT},
+		board_order = #{boardOrder, jdbcType=CLOB}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -297,6 +311,9 @@
 			<if test="isDelete != null">
 				is_delete = #{isDelete, jdbcType=BIT},
 			</if>
+			<if test="boardOrder != null">
+				board_order = #{boardOrder, jdbcType=CLOB},
+			</if>
 		</set>
 		<!-- 主键作为条件 -->
 		where
@@ -312,7 +329,8 @@
 		summary = #{summary, jdbcType=VARCHAR},
 		category_no = #{categoryNo, jdbcType=INTEGER},
 		user_no = #{userNo, jdbcType=INTEGER},
-		is_delete = #{isDelete, jdbcType=BIT}
+		is_delete = #{isDelete, jdbcType=BIT},
+		board_order = #{boardOrder, jdbcType=CLOB}
 		<!-- 主键作为条件 -->
 		where
 		board_space_no = #{boardSpaceNo, jdbcType=INTEGER} 

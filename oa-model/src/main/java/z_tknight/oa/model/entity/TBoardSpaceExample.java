@@ -1041,6 +1041,125 @@ public class TBoardSpaceExample {
 			addCriterion("is_delete not between", value1, value2, "isDelete");
 			return (Criteria) this;
 		}
+		/**
+		 * board_order字段为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andBoardOrderIsNull() {
+			addCriterion("board_order is null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * board_order字段为不为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andBoardOrderIsNotNull() {
+			addCriterion("board_order is not null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * board_order等于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andBoardOrderEqualTo(String value) {
+			addCriterion("board_order =", value, "boardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * board_order不等于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andBoardOrderNotEqualTo(String value) {
+			addCriterion("board_order <>", value, "boardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * board_order大于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andBoardOrderGreaterThan(String value) {
+			addCriterion("board_order >", value, "boardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * board_order大于等于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andBoardOrderGreaterThanOrEqualTo(String value) {
+			addCriterion("board_order >=", value, "boardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * board_order小于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andBoardOrderLessThan(String value) {
+			addCriterion("board_order <", value, "boardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * board_order小于等于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andBoardOrderLessThanOrEqualTo(String value) {
+			addCriterion("board_order <=", value, "boardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * board_order在传入值之中
+		 * @param value [List<String>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andBoardOrderIn(List<String> values) {
+			addCriterion("board_order in", values, "boardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * board_order不在传入值之中
+		 * @param value [List<String>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andBoardOrderNotIn(List<String> values) {
+			addCriterion("board_order not in", values, "boardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * board_order在传入值之间
+		 * @param value1 [String]传入值1
+		 * @param value2 [String]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andBoardOrderBetween(String value1, String value2) {
+			addCriterion("board_order between", value1, value2, "boardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * board_order不在传入值之间
+		 * @param value1 [String]传入值1
+		 * @param value2 [String]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andBoardOrderNotBetween(String value1, String value2) {
+			addCriterion("board_order not between", value1, value2, "boardOrder");
+			return (Criteria) this;
+		}
 
 	}
 }

@@ -9,6 +9,7 @@
 		<result column="board_space_no" property="boardSpaceNo" jdbcType="INTEGER" />
 		<result column="board_no" property="boardNo" jdbcType="INTEGER" />
 		<result column="is_delete" property="isDelete" jdbcType="BIT" />
+		<result column="card_order" property="cardOrder" jdbcType="CLOB" />
 	</resultMap>
 
 	<!-- 条件从句 -->
@@ -98,7 +99,8 @@
 		list_name,
 		board_space_no,
 		board_no,
-		is_delete
+		is_delete,
+		card_order
 	</sql>
 	<!-- 统计符合自定义条件的数据个数 -->
 	<select id="countByExample" parameterType="z_tknight.oa.model.entity.TListExample"
@@ -136,14 +138,16 @@
 			list_name,
 			board_space_no,
 			board_no,
-			is_delete
+			is_delete,
+			card_order
 		)
 		values (
 			#{listNo, jdbcType=INTEGER},
 			#{listName, jdbcType=VARCHAR},
 			#{boardSpaceNo, jdbcType=INTEGER},
 			#{boardNo, jdbcType=INTEGER},
-			#{isDelete, jdbcType=BIT}
+			#{isDelete, jdbcType=BIT},
+			#{cardOrder, jdbcType=CLOB}
 		)
 	</insert>
 
@@ -168,6 +172,9 @@
 			<if test="isDelete != null">
 				is_delete,
 			</if>
+			<if test="cardOrder != null">
+				card_order,
+			</if>
 		</trim>
 		<!-- 插入内容 -->
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -185,6 +192,9 @@
 			</if>
 			<if test="isDelete != null">
 				#{isDelete, jdbcType=BIT},
+			</if>
+			<if test="cardOrder != null">
+				#{cardOrder, jdbcType=CLOB},
 			</if>
 		</trim>
 	</insert>
@@ -240,6 +250,9 @@
 			<if test="record.isDelete != null">
 				is_delete = #{record.isDelete, jdbcType=BIT},
 			</if>
+			<if test="record.cardOrder != null">
+				card_order = #{record.cardOrder, jdbcType=CLOB},
+			</if>
 		</set>
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
@@ -256,7 +269,8 @@
 		list_name = #{listName, jdbcType=VARCHAR},
 		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
 		board_no = #{boardNo, jdbcType=INTEGER},
-		is_delete = #{isDelete, jdbcType=BIT}
+		is_delete = #{isDelete, jdbcType=BIT},
+		card_order = #{cardOrder, jdbcType=CLOB}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -280,6 +294,9 @@
 			<if test="isDelete != null">
 				is_delete = #{isDelete, jdbcType=BIT},
 			</if>
+			<if test="cardOrder != null">
+				card_order = #{cardOrder, jdbcType=CLOB},
+			</if>
 		</set>
 		<!-- 主键作为条件 -->
 		where
@@ -294,7 +311,8 @@
 		list_name = #{listName, jdbcType=VARCHAR},
 		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
 		board_no = #{boardNo, jdbcType=INTEGER},
-		is_delete = #{isDelete, jdbcType=BIT}
+		is_delete = #{isDelete, jdbcType=BIT},
+		card_order = #{cardOrder, jdbcType=CLOB}
 		<!-- 主键作为条件 -->
 		where
 		list_no = #{listNo, jdbcType=INTEGER} 

@@ -922,6 +922,125 @@ public class TListExample {
 			addCriterion("is_delete not between", value1, value2, "isDelete");
 			return (Criteria) this;
 		}
+		/**
+		 * card_order字段为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardOrderIsNull() {
+			addCriterion("card_order is null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_order字段为不为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardOrderIsNotNull() {
+			addCriterion("card_order is not null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_order等于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardOrderEqualTo(String value) {
+			addCriterion("card_order =", value, "cardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_order不等于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardOrderNotEqualTo(String value) {
+			addCriterion("card_order <>", value, "cardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_order大于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardOrderGreaterThan(String value) {
+			addCriterion("card_order >", value, "cardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_order大于等于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardOrderGreaterThanOrEqualTo(String value) {
+			addCriterion("card_order >=", value, "cardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_order小于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardOrderLessThan(String value) {
+			addCriterion("card_order <", value, "cardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_order小于等于传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardOrderLessThanOrEqualTo(String value) {
+			addCriterion("card_order <=", value, "cardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_order在传入值之中
+		 * @param value [List<String>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardOrderIn(List<String> values) {
+			addCriterion("card_order in", values, "cardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_order不在传入值之中
+		 * @param value [List<String>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardOrderNotIn(List<String> values) {
+			addCriterion("card_order not in", values, "cardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_order在传入值之间
+		 * @param value1 [String]传入值1
+		 * @param value2 [String]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardOrderBetween(String value1, String value2) {
+			addCriterion("card_order between", value1, value2, "cardOrder");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_order不在传入值之间
+		 * @param value1 [String]传入值1
+		 * @param value2 [String]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardOrderNotBetween(String value1, String value2) {
+			addCriterion("card_order not between", value1, value2, "cardOrder");
+			return (Criteria) this;
+		}
 
 	}
 }
