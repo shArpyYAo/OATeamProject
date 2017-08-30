@@ -26,7 +26,7 @@ public class TDepartment {
 	/**
 	 * 部门所属看板空间编号
 	 */
-	private Integer tBoardSpace = null;
+	private Integer boardSpaceNo = null;
 
 	public void setDeptNo(Integer deptNo) {
 		this.deptNo = deptNo;
@@ -60,12 +60,12 @@ public class TDepartment {
 		return this.superiorDeptNo;
 	}
 
-	public void setTBoardSpace(Integer tBoardSpace) {
-		this.tBoardSpace = tBoardSpace;
+	public void setBoardSpaceNo(Integer boardSpaceNo) {
+		this.boardSpaceNo = boardSpaceNo;
 	}
 
-	public Integer getTBoardSpace() {
-		return this.tBoardSpace;
+	public Integer getBoardSpaceNo() {
+		return this.boardSpaceNo;
 	}
 
 }

@@ -8,7 +8,7 @@
 		<result column="dept_name" property="deptName" jdbcType="VARCHAR" />
 		<result column="user_no" property="userNo" jdbcType="INTEGER" />
 		<result column="superior_dept_no" property="superiorDeptNo" jdbcType="INTEGER" />
-		<result column="t_board_space" property="tBoardSpace" jdbcType="INTEGER" />
+		<result column="board_space_no" property="boardSpaceNo" jdbcType="INTEGER" />
 	</resultMap>
 
 	<!-- 条件从句 -->
@@ -98,7 +98,7 @@
 		dept_name,
 		user_no,
 		superior_dept_no,
-		t_board_space
+		board_space_no
 	</sql>
 	<!-- 统计符合自定义条件的数据个数 -->
 	<select id="countByExample" parameterType="z_tknight.oa.model.entity.TDepartmentExample"
@@ -136,14 +136,14 @@
 			dept_name,
 			user_no,
 			superior_dept_no,
-			t_board_space
+			board_space_no
 		)
 		values (
 			#{deptNo, jdbcType=INTEGER},
 			#{deptName, jdbcType=VARCHAR},
 			#{userNo, jdbcType=INTEGER},
 			#{superiorDeptNo, jdbcType=INTEGER},
-			#{tBoardSpace, jdbcType=INTEGER}
+			#{boardSpaceNo, jdbcType=INTEGER}
 		)
 	</insert>
 
@@ -165,8 +165,8 @@
 			<if test="superiorDeptNo != null">
 				superior_dept_no,
 			</if>
-			<if test="tBoardSpace != null">
-				t_board_space,
+			<if test="boardSpaceNo != null">
+				board_space_no,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
@@ -183,8 +183,8 @@
 			<if test="superiorDeptNo != null">
 				#{superiorDeptNo, jdbcType=INTEGER},
 			</if>
-			<if test="tBoardSpace != null">
-				#{tBoardSpace, jdbcType=INTEGER},
+			<if test="boardSpaceNo != null">
+				#{boardSpaceNo, jdbcType=INTEGER},
 			</if>
 		</trim>
 	</insert>
@@ -237,8 +237,8 @@
 			<if test="record.superiorDeptNo != null">
 				superior_dept_no = #{record.superiorDeptNo, jdbcType=INTEGER},
 			</if>
-			<if test="record.tBoardSpace != null">
-				t_board_space = #{record.tBoardSpace, jdbcType=INTEGER},
+			<if test="record.boardSpaceNo != null">
+				board_space_no = #{record.boardSpaceNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -256,7 +256,7 @@
 		dept_name = #{deptName, jdbcType=VARCHAR},
 		user_no = #{userNo, jdbcType=INTEGER},
 		superior_dept_no = #{superiorDeptNo, jdbcType=INTEGER},
-		t_board_space = #{tBoardSpace, jdbcType=INTEGER}
+		board_space_no = #{boardSpaceNo, jdbcType=INTEGER}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -277,8 +277,8 @@
 			<if test="superiorDeptNo != null">
 				superior_dept_no = #{superiorDeptNo, jdbcType=INTEGER},
 			</if>
-			<if test="tBoardSpace != null">
-				t_board_space = #{tBoardSpace, jdbcType=INTEGER},
+			<if test="boardSpaceNo != null">
+				board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
@@ -294,7 +294,7 @@
 		dept_name = #{deptName, jdbcType=VARCHAR},
 		user_no = #{userNo, jdbcType=INTEGER},
 		superior_dept_no = #{superiorDeptNo, jdbcType=INTEGER},
-		t_board_space = #{tBoardSpace, jdbcType=INTEGER}
+		board_space_no = #{boardSpaceNo, jdbcType=INTEGER}
 		<!-- 主键作为条件 -->
 		where
 		dept_no = #{deptNo, jdbcType=INTEGER} 

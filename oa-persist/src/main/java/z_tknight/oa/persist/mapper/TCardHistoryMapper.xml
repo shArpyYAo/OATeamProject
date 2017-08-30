@@ -5,14 +5,15 @@
 	<!-- pojo类属性和对应表的结果集映射关系 -->
 	<resultMap id="BaseResultMap" type="z_tknight.oa.model.entity.TCardHistory">
 		<id column="history_no" property="historyNo" jdbcType="INTEGER" />
-		<result column="from_user_id" property="fromUserId" jdbcType="INTEGER" />
-		<result column="to_user_id" property="toUserId" jdbcType="INTEGER" />
+		<result column="from_user_no" property="fromUserNo" jdbcType="INTEGER" />
+		<result column="to_user_no" property="toUserNo" jdbcType="INTEGER" />
 		<result column="from_list_name" property="fromListName" jdbcType="VARCHAR" />
 		<result column="to_list_name" property="toListName" jdbcType="VARCHAR" />
 		<result column="from_card_title" property="fromCardTitle" jdbcType="VARCHAR" />
 		<result column="to_card_title" property="toCardTitle" jdbcType="VARCHAR" />
 		<result column="board_space_no" property="boardSpaceNo" jdbcType="INTEGER" />
 		<result column="board_no" property="boardNo" jdbcType="INTEGER" />
+		<result column="card_no" property="cardNo" jdbcType="INTEGER" />
 	</resultMap>
 
 	<!-- 条件从句 -->
@@ -99,14 +100,15 @@
 
 	<sql id="Base_Column_List">
 		history_no,
-		from_user_id,
-		to_user_id,
+		from_user_no,
+		to_user_no,
 		from_list_name,
 		to_list_name,
 		from_card_title,
 		to_card_title,
 		board_space_no,
-		board_no
+		board_no,
+		card_no
 	</sql>
 	<!-- 统计符合自定义条件的数据个数 -->
 	<select id="countByExample" parameterType="z_tknight.oa.model.entity.TCardHistoryExample"
@@ -141,25 +143,27 @@
 	<insert id="insert" parameterType="z_tknight.oa.model.entity.TCardHistory">
 		insert into t_card_history (
 			history_no,
-			from_user_id,
-			to_user_id,
+			from_user_no,
+			to_user_no,
 			from_list_name,
 			to_list_name,
 			from_card_title,
 			to_card_title,
 			board_space_no,
-			board_no
+			board_no,
+			card_no
 		)
 		values (
 			#{historyNo, jdbcType=INTEGER},
-			#{fromUserId, jdbcType=INTEGER},
-			#{toUserId, jdbcType=INTEGER},
+			#{fromUserNo, jdbcType=INTEGER},
+			#{toUserNo, jdbcType=INTEGER},
 			#{fromListName, jdbcType=VARCHAR},
 			#{toListName, jdbcType=VARCHAR},
 			#{fromCardTitle, jdbcType=VARCHAR},
 			#{toCardTitle, jdbcType=VARCHAR},
 			#{boardSpaceNo, jdbcType=INTEGER},
-			#{boardNo, jdbcType=INTEGER}
+			#{boardNo, jdbcType=INTEGER},
+			#{cardNo, jdbcType=INTEGER}
 		)
 	</insert>
 
@@ -172,11 +176,11 @@
 			<if test="historyNo != null">
 				history_no,
 			</if>
-			<if test="fromUserId != null">
-				from_user_id,
+			<if test="fromUserNo != null">
+				from_user_no,
 			</if>
-			<if test="toUserId != null">
-				to_user_id,
+			<if test="toUserNo != null">
+				to_user_no,
 			</if>
 			<if test="fromListName != null">
 				from_list_name,
@@ -196,17 +200,20 @@
 			<if test="boardNo != null">
 				board_no,
 			</if>
+			<if test="cardNo != null">
+				card_no,
+			</if>
 		</trim>
 		<!-- 插入内容 -->
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="historyNo != null">
 				#{historyNo, jdbcType=INTEGER},
 			</if>
-			<if test="fromUserId != null">
-				#{fromUserId, jdbcType=INTEGER},
+			<if test="fromUserNo != null">
+				#{fromUserNo, jdbcType=INTEGER},
 			</if>
-			<if test="toUserId != null">
-				#{toUserId, jdbcType=INTEGER},
+			<if test="toUserNo != null">
+				#{toUserNo, jdbcType=INTEGER},
 			</if>
 			<if test="fromListName != null">
 				#{fromListName, jdbcType=VARCHAR},
@@ -225,6 +232,9 @@
 			</if>
 			<if test="boardNo != null">
 				#{boardNo, jdbcType=INTEGER},
+			</if>
+			<if test="cardNo != null">
+				#{cardNo, jdbcType=INTEGER},
 			</if>
 		</trim>
 	</insert>
@@ -268,11 +278,11 @@
 			<if test="record.historyNo != null">
 				history_no = #{record.historyNo, jdbcType=INTEGER},
 			</if>
-			<if test="record.fromUserId != null">
-				from_user_id = #{record.fromUserId, jdbcType=INTEGER},
+			<if test="record.fromUserNo != null">
+				from_user_no = #{record.fromUserNo, jdbcType=INTEGER},
 			</if>
-			<if test="record.toUserId != null">
-				to_user_id = #{record.toUserId, jdbcType=INTEGER},
+			<if test="record.toUserNo != null">
+				to_user_no = #{record.toUserNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.fromListName != null">
 				from_list_name = #{record.fromListName, jdbcType=VARCHAR},
@@ -292,6 +302,9 @@
 			<if test="record.boardNo != null">
 				board_no = #{record.boardNo, jdbcType=INTEGER},
 			</if>
+			<if test="record.cardNo != null">
+				card_no = #{record.cardNo, jdbcType=INTEGER},
+			</if>
 		</set>
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
@@ -305,14 +318,15 @@
 		<!-- 修改属性，可修改主键 -->
 		set
 		history_no = #{historyNo, jdbcType=INTEGER},
-		from_user_id = #{fromUserId, jdbcType=INTEGER},
-		to_user_id = #{toUserId, jdbcType=INTEGER},
+		from_user_no = #{fromUserNo, jdbcType=INTEGER},
+		to_user_no = #{toUserNo, jdbcType=INTEGER},
 		from_list_name = #{fromListName, jdbcType=VARCHAR},
 		to_list_name = #{toListName, jdbcType=VARCHAR},
 		from_card_title = #{fromCardTitle, jdbcType=VARCHAR},
 		to_card_title = #{toCardTitle, jdbcType=VARCHAR},
 		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
-		board_no = #{boardNo, jdbcType=INTEGER}
+		board_no = #{boardNo, jdbcType=INTEGER},
+		card_no = #{cardNo, jdbcType=INTEGER}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -324,11 +338,11 @@
 		update t_card_history
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
-			<if test="fromUserId != null">
-				from_user_id = #{fromUserId, jdbcType=INTEGER},
+			<if test="fromUserNo != null">
+				from_user_no = #{fromUserNo, jdbcType=INTEGER},
 			</if>
-			<if test="toUserId != null">
-				to_user_id = #{toUserId, jdbcType=INTEGER},
+			<if test="toUserNo != null">
+				to_user_no = #{toUserNo, jdbcType=INTEGER},
 			</if>
 			<if test="fromListName != null">
 				from_list_name = #{fromListName, jdbcType=VARCHAR},
@@ -348,6 +362,9 @@
 			<if test="boardNo != null">
 				board_no = #{boardNo, jdbcType=INTEGER},
 			</if>
+			<if test="cardNo != null">
+				card_no = #{cardNo, jdbcType=INTEGER},
+			</if>
 		</set>
 		<!-- 主键作为条件 -->
 		where
@@ -359,14 +376,15 @@
 		update t_card_history
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		from_user_id = #{fromUserId, jdbcType=INTEGER},
-		to_user_id = #{toUserId, jdbcType=INTEGER},
+		from_user_no = #{fromUserNo, jdbcType=INTEGER},
+		to_user_no = #{toUserNo, jdbcType=INTEGER},
 		from_list_name = #{fromListName, jdbcType=VARCHAR},
 		to_list_name = #{toListName, jdbcType=VARCHAR},
 		from_card_title = #{fromCardTitle, jdbcType=VARCHAR},
 		to_card_title = #{toCardTitle, jdbcType=VARCHAR},
 		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
-		board_no = #{boardNo, jdbcType=INTEGER}
+		board_no = #{boardNo, jdbcType=INTEGER},
+		card_no = #{cardNo, jdbcType=INTEGER}
 		<!-- 主键作为条件 -->
 		where
 		history_no = #{historyNo, jdbcType=INTEGER} 

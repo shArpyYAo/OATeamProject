@@ -447,241 +447,241 @@ public class TCardHistoryExample {
 			return (Criteria) this;
 		}
 		/**
-		 * from_user_id字段为null
+		 * from_user_no字段为null
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andFromUserIdIsNull() {
-			addCriterion("from_user_id is null");
+		public Criteria andFromUserNoIsNull() {
+			addCriterion("from_user_no is null");
 			return (Criteria) this;
 		}
 
 		/**
-		 * from_user_id字段为不为null
+		 * from_user_no字段为不为null
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andFromUserIdIsNotNull() {
-			addCriterion("from_user_id is not null");
+		public Criteria andFromUserNoIsNotNull() {
+			addCriterion("from_user_no is not null");
 			return (Criteria) this;
 		}
 
 		/**
-		 * from_user_id等于传入值
+		 * from_user_no等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andFromUserIdEqualTo(Integer value) {
-			addCriterion("from_user_id =", value, "fromUserId");
+		public Criteria andFromUserNoEqualTo(Integer value) {
+			addCriterion("from_user_no =", value, "fromUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * from_user_id不等于传入值
+		 * from_user_no不等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andFromUserIdNotEqualTo(Integer value) {
-			addCriterion("from_user_id <>", value, "fromUserId");
+		public Criteria andFromUserNoNotEqualTo(Integer value) {
+			addCriterion("from_user_no <>", value, "fromUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * from_user_id大于传入值
+		 * from_user_no大于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andFromUserIdGreaterThan(Integer value) {
-			addCriterion("from_user_id >", value, "fromUserId");
+		public Criteria andFromUserNoGreaterThan(Integer value) {
+			addCriterion("from_user_no >", value, "fromUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * from_user_id大于等于传入值
+		 * from_user_no大于等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andFromUserIdGreaterThanOrEqualTo(Integer value) {
-			addCriterion("from_user_id >=", value, "fromUserId");
+		public Criteria andFromUserNoGreaterThanOrEqualTo(Integer value) {
+			addCriterion("from_user_no >=", value, "fromUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * from_user_id小于传入值
+		 * from_user_no小于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andFromUserIdLessThan(Integer value) {
-			addCriterion("from_user_id <", value, "fromUserId");
+		public Criteria andFromUserNoLessThan(Integer value) {
+			addCriterion("from_user_no <", value, "fromUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * from_user_id小于等于传入值
+		 * from_user_no小于等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andFromUserIdLessThanOrEqualTo(Integer value) {
-			addCriterion("from_user_id <=", value, "fromUserId");
+		public Criteria andFromUserNoLessThanOrEqualTo(Integer value) {
+			addCriterion("from_user_no <=", value, "fromUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * from_user_id在传入值之中
+		 * from_user_no在传入值之中
 		 * @param value [List<Integer>]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andFromUserIdIn(List<Integer> values) {
-			addCriterion("from_user_id in", values, "fromUserId");
+		public Criteria andFromUserNoIn(List<Integer> values) {
+			addCriterion("from_user_no in", values, "fromUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * from_user_id不在传入值之中
+		 * from_user_no不在传入值之中
 		 * @param value [List<Integer>]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andFromUserIdNotIn(List<Integer> values) {
-			addCriterion("from_user_id not in", values, "fromUserId");
+		public Criteria andFromUserNoNotIn(List<Integer> values) {
+			addCriterion("from_user_no not in", values, "fromUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * from_user_id在传入值之间
+		 * from_user_no在传入值之间
 		 * @param value1 [Integer]传入值1
 		 * @param value2 [Integer]传入值2
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andFromUserIdBetween(Integer value1, Integer value2) {
-			addCriterion("from_user_id between", value1, value2, "fromUserId");
+		public Criteria andFromUserNoBetween(Integer value1, Integer value2) {
+			addCriterion("from_user_no between", value1, value2, "fromUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * from_user_id不在传入值之间
+		 * from_user_no不在传入值之间
 		 * @param value1 [Integer]传入值1
 		 * @param value2 [Integer]传入值2
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andFromUserIdNotBetween(Integer value1, Integer value2) {
-			addCriterion("from_user_id not between", value1, value2, "fromUserId");
+		public Criteria andFromUserNoNotBetween(Integer value1, Integer value2) {
+			addCriterion("from_user_no not between", value1, value2, "fromUserNo");
 			return (Criteria) this;
 		}
 		/**
-		 * to_user_id字段为null
+		 * to_user_no字段为null
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andToUserIdIsNull() {
-			addCriterion("to_user_id is null");
+		public Criteria andToUserNoIsNull() {
+			addCriterion("to_user_no is null");
 			return (Criteria) this;
 		}
 
 		/**
-		 * to_user_id字段为不为null
+		 * to_user_no字段为不为null
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andToUserIdIsNotNull() {
-			addCriterion("to_user_id is not null");
+		public Criteria andToUserNoIsNotNull() {
+			addCriterion("to_user_no is not null");
 			return (Criteria) this;
 		}
 
 		/**
-		 * to_user_id等于传入值
+		 * to_user_no等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andToUserIdEqualTo(Integer value) {
-			addCriterion("to_user_id =", value, "toUserId");
+		public Criteria andToUserNoEqualTo(Integer value) {
+			addCriterion("to_user_no =", value, "toUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * to_user_id不等于传入值
+		 * to_user_no不等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andToUserIdNotEqualTo(Integer value) {
-			addCriterion("to_user_id <>", value, "toUserId");
+		public Criteria andToUserNoNotEqualTo(Integer value) {
+			addCriterion("to_user_no <>", value, "toUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * to_user_id大于传入值
+		 * to_user_no大于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andToUserIdGreaterThan(Integer value) {
-			addCriterion("to_user_id >", value, "toUserId");
+		public Criteria andToUserNoGreaterThan(Integer value) {
+			addCriterion("to_user_no >", value, "toUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * to_user_id大于等于传入值
+		 * to_user_no大于等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andToUserIdGreaterThanOrEqualTo(Integer value) {
-			addCriterion("to_user_id >=", value, "toUserId");
+		public Criteria andToUserNoGreaterThanOrEqualTo(Integer value) {
+			addCriterion("to_user_no >=", value, "toUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * to_user_id小于传入值
+		 * to_user_no小于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andToUserIdLessThan(Integer value) {
-			addCriterion("to_user_id <", value, "toUserId");
+		public Criteria andToUserNoLessThan(Integer value) {
+			addCriterion("to_user_no <", value, "toUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * to_user_id小于等于传入值
+		 * to_user_no小于等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andToUserIdLessThanOrEqualTo(Integer value) {
-			addCriterion("to_user_id <=", value, "toUserId");
+		public Criteria andToUserNoLessThanOrEqualTo(Integer value) {
+			addCriterion("to_user_no <=", value, "toUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * to_user_id在传入值之中
+		 * to_user_no在传入值之中
 		 * @param value [List<Integer>]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andToUserIdIn(List<Integer> values) {
-			addCriterion("to_user_id in", values, "toUserId");
+		public Criteria andToUserNoIn(List<Integer> values) {
+			addCriterion("to_user_no in", values, "toUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * to_user_id不在传入值之中
+		 * to_user_no不在传入值之中
 		 * @param value [List<Integer>]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andToUserIdNotIn(List<Integer> values) {
-			addCriterion("to_user_id not in", values, "toUserId");
+		public Criteria andToUserNoNotIn(List<Integer> values) {
+			addCriterion("to_user_no not in", values, "toUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * to_user_id在传入值之间
+		 * to_user_no在传入值之间
 		 * @param value1 [Integer]传入值1
 		 * @param value2 [Integer]传入值2
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andToUserIdBetween(Integer value1, Integer value2) {
-			addCriterion("to_user_id between", value1, value2, "toUserId");
+		public Criteria andToUserNoBetween(Integer value1, Integer value2) {
+			addCriterion("to_user_no between", value1, value2, "toUserNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * to_user_id不在传入值之间
+		 * to_user_no不在传入值之间
 		 * @param value1 [Integer]传入值1
 		 * @param value2 [Integer]传入值2
 		 * @return [Criteria]更新后的criteria
 		 */
-		public Criteria andToUserIdNotBetween(Integer value1, Integer value2) {
-			addCriterion("to_user_id not between", value1, value2, "toUserId");
+		public Criteria andToUserNoNotBetween(Integer value1, Integer value2) {
+			addCriterion("to_user_no not between", value1, value2, "toUserNo");
 			return (Criteria) this;
 		}
 		/**
@@ -1396,6 +1396,125 @@ public class TCardHistoryExample {
 		 */
 		public Criteria andBoardNoNotBetween(Integer value1, Integer value2) {
 			addCriterion("board_no not between", value1, value2, "boardNo");
+			return (Criteria) this;
+		}
+		/**
+		 * card_no字段为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardNoIsNull() {
+			addCriterion("card_no is null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_no字段为不为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardNoIsNotNull() {
+			addCriterion("card_no is not null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_no等于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardNoEqualTo(Integer value) {
+			addCriterion("card_no =", value, "cardNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_no不等于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardNoNotEqualTo(Integer value) {
+			addCriterion("card_no <>", value, "cardNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_no大于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardNoGreaterThan(Integer value) {
+			addCriterion("card_no >", value, "cardNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_no大于等于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardNoGreaterThanOrEqualTo(Integer value) {
+			addCriterion("card_no >=", value, "cardNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_no小于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardNoLessThan(Integer value) {
+			addCriterion("card_no <", value, "cardNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_no小于等于传入值
+		 * @param value [Integer]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardNoLessThanOrEqualTo(Integer value) {
+			addCriterion("card_no <=", value, "cardNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_no在传入值之中
+		 * @param value [List<Integer>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardNoIn(List<Integer> values) {
+			addCriterion("card_no in", values, "cardNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_no不在传入值之中
+		 * @param value [List<Integer>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardNoNotIn(List<Integer> values) {
+			addCriterion("card_no not in", values, "cardNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_no在传入值之间
+		 * @param value1 [Integer]传入值1
+		 * @param value2 [Integer]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardNoBetween(Integer value1, Integer value2) {
+			addCriterion("card_no between", value1, value2, "cardNo");
+			return (Criteria) this;
+		}
+
+		/**
+		 * card_no不在传入值之间
+		 * @param value1 [Integer]传入值1
+		 * @param value2 [Integer]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCardNoNotBetween(Integer value1, Integer value2) {
+			addCriterion("card_no not between", value1, value2, "cardNo");
 			return (Criteria) this;
 		}
 

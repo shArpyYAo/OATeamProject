@@ -5,8 +5,8 @@
 	<!-- pojo类属性和对应表的结果集映射关系 -->
 	<resultMap id="BaseResultMap" type="z_tknight.oa.model.entity.TUserNotice">
 		<id column="notice_no" property="noticeNo" jdbcType="INTEGER" />
-		<result column="from_user_id" property="fromUserId" jdbcType="INTEGER" />
-		<result column="to_user_id" property="toUserId" jdbcType="INTEGER" />
+		<result column="from_user_no" property="fromUserNo" jdbcType="INTEGER" />
+		<result column="to_user_no" property="toUserNo" jdbcType="INTEGER" />
 		<result column="list_name" property="listName" jdbcType="VARCHAR" />
 		<result column="board_space_no" property="boardSpaceNo" jdbcType="INTEGER" />
 		<result column="board_space_name" property="boardSpaceName" jdbcType="VARCHAR" />
@@ -100,8 +100,8 @@
 
 	<sql id="Base_Column_List">
 		notice_no,
-		from_user_id,
-		to_user_id,
+		from_user_no,
+		to_user_no,
 		list_name,
 		board_space_no,
 		board_space_name,
@@ -143,8 +143,8 @@
 	<insert id="insert" parameterType="z_tknight.oa.model.entity.TUserNotice">
 		insert into t_user_notice (
 			notice_no,
-			from_user_id,
-			to_user_id,
+			from_user_no,
+			to_user_no,
 			list_name,
 			board_space_no,
 			board_space_name,
@@ -155,8 +155,8 @@
 		)
 		values (
 			#{noticeNo, jdbcType=INTEGER},
-			#{fromUserId, jdbcType=INTEGER},
-			#{toUserId, jdbcType=INTEGER},
+			#{fromUserNo, jdbcType=INTEGER},
+			#{toUserNo, jdbcType=INTEGER},
 			#{listName, jdbcType=VARCHAR},
 			#{boardSpaceNo, jdbcType=INTEGER},
 			#{boardSpaceName, jdbcType=VARCHAR},
@@ -176,11 +176,11 @@
 			<if test="noticeNo != null">
 				notice_no,
 			</if>
-			<if test="fromUserId != null">
-				from_user_id,
+			<if test="fromUserNo != null">
+				from_user_no,
 			</if>
-			<if test="toUserId != null">
-				to_user_id,
+			<if test="toUserNo != null">
+				to_user_no,
 			</if>
 			<if test="listName != null">
 				list_name,
@@ -209,11 +209,11 @@
 			<if test="noticeNo != null">
 				#{noticeNo, jdbcType=INTEGER},
 			</if>
-			<if test="fromUserId != null">
-				#{fromUserId, jdbcType=INTEGER},
+			<if test="fromUserNo != null">
+				#{fromUserNo, jdbcType=INTEGER},
 			</if>
-			<if test="toUserId != null">
-				#{toUserId, jdbcType=INTEGER},
+			<if test="toUserNo != null">
+				#{toUserNo, jdbcType=INTEGER},
 			</if>
 			<if test="listName != null">
 				#{listName, jdbcType=VARCHAR},
@@ -278,11 +278,11 @@
 			<if test="record.noticeNo != null">
 				notice_no = #{record.noticeNo, jdbcType=INTEGER},
 			</if>
-			<if test="record.fromUserId != null">
-				from_user_id = #{record.fromUserId, jdbcType=INTEGER},
+			<if test="record.fromUserNo != null">
+				from_user_no = #{record.fromUserNo, jdbcType=INTEGER},
 			</if>
-			<if test="record.toUserId != null">
-				to_user_id = #{record.toUserId, jdbcType=INTEGER},
+			<if test="record.toUserNo != null">
+				to_user_no = #{record.toUserNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.listName != null">
 				list_name = #{record.listName, jdbcType=VARCHAR},
@@ -318,8 +318,8 @@
 		<!-- 修改属性，可修改主键 -->
 		set
 		notice_no = #{noticeNo, jdbcType=INTEGER},
-		from_user_id = #{fromUserId, jdbcType=INTEGER},
-		to_user_id = #{toUserId, jdbcType=INTEGER},
+		from_user_no = #{fromUserNo, jdbcType=INTEGER},
+		to_user_no = #{toUserNo, jdbcType=INTEGER},
 		list_name = #{listName, jdbcType=VARCHAR},
 		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
 		board_space_name = #{boardSpaceName, jdbcType=VARCHAR},
@@ -338,11 +338,11 @@
 		update t_user_notice
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
-			<if test="fromUserId != null">
-				from_user_id = #{fromUserId, jdbcType=INTEGER},
+			<if test="fromUserNo != null">
+				from_user_no = #{fromUserNo, jdbcType=INTEGER},
 			</if>
-			<if test="toUserId != null">
-				to_user_id = #{toUserId, jdbcType=INTEGER},
+			<if test="toUserNo != null">
+				to_user_no = #{toUserNo, jdbcType=INTEGER},
 			</if>
 			<if test="listName != null">
 				list_name = #{listName, jdbcType=VARCHAR},
@@ -376,8 +376,8 @@
 		update t_user_notice
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		from_user_id = #{fromUserId, jdbcType=INTEGER},
-		to_user_id = #{toUserId, jdbcType=INTEGER},
+		from_user_no = #{fromUserNo, jdbcType=INTEGER},
+		to_user_no = #{toUserNo, jdbcType=INTEGER},
 		list_name = #{listName, jdbcType=VARCHAR},
 		board_space_no = #{boardSpaceNo, jdbcType=INTEGER},
 		board_space_name = #{boardSpaceName, jdbcType=VARCHAR},

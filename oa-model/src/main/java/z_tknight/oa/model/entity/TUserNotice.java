@@ -11,12 +11,12 @@ public class TUserNotice {
 	/**
 	 * 操作用户
 	 */
-	private Integer fromUserId = null;
+	private Integer fromUserNo = null;
 
 	/**
 	 * 被操作用户
 	 */
-	private Integer toUserId = null;
+	private Integer toUserNo = null;
 
 	/**
 	 * 所属列表名称
@@ -61,20 +61,20 @@ public class TUserNotice {
 		return this.noticeNo;
 	}
 
-	public void setFromUserId(Integer fromUserId) {
-		this.fromUserId = fromUserId;
+	public void setFromUserNo(Integer fromUserNo) {
+		this.fromUserNo = fromUserNo;
 	}
 
-	public Integer getFromUserId() {
-		return this.fromUserId;
+	public Integer getFromUserNo() {
+		return this.fromUserNo;
 	}
 
-	public void setToUserId(Integer toUserId) {
-		this.toUserId = toUserId;
+	public void setToUserNo(Integer toUserNo) {
+		this.toUserNo = toUserNo;
 	}
 
-	public Integer getToUserId() {
-		return this.toUserId;
+	public Integer getToUserNo() {
+		return this.toUserNo;
 	}
 
 	public void setListName(String listName) {

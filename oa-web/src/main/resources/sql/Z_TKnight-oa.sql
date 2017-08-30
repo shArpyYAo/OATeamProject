@@ -125,7 +125,7 @@ create table t_department (														/* 【部门信息表】 */
 	dept_name varchar(20) not null comment '部门名称',							/* 部门名称 */
 	user_no int(4) not null comment '部门所有者编号',							/* 部门所有者编号 */
 	superior_dept_no int(4) comment '上级部门编号',								/* 上级部门编号 */
-	t_board_space int(4) not null comment '部门所属看板空间编号',				/* 部门所属看板空间编号 */
+	board_space_no int(4) not null comment '部门所属看板空间编号',				/* 部门所属看板空间编号 */
 	primary key(dept_no)														/* 主键 */
 ) comment = '部门信息表';
 
@@ -215,21 +215,22 @@ create table operation_log (													/* 【操作日志表】 */
 
 create table t_card_history (													/* 【卡片历史信息表】 */
 	history_no int(4) not null auto_increment comment '卡片操作记录编号',		/* 卡片操作记录编号 */
-	from_user_id int(4) not null comment '操作用户',							/* 操作用户 */
-	to_user_id int(4) not null comment '被操作用户',							/* 被操作用户 */
+	from_user_no int(4) not null comment '操作用户',							/* 操作用户 */
+	to_user_no int(4) not null comment '被操作用户',							/* 被操作用户 */
 	from_list_name varchar(100) not null comment '操作前所属列表名称',			/* 操作后所属列表名称 */
 	to_list_name varchar(100) not null comment '操作后所属列表名称',			/* 操作后所属列表名称 */
 	from_card_title varchar(4000) not null comment '操作前卡片内容',			/* 操作前卡片内容 */
 	to_card_title varchar(4000) not null comment '操作后卡片内容',				/* 操作后卡片内容 */
 	board_space_no int(4) not null comment '所属看板空间编号',					/* 所属看板空间编号 */
 	board_no int(4) not null comment '所属看板编号',							/* 所属看板编号 */
+	card_no int(4) not null comment '操作卡片编号',								/* 操作卡片编号 */
 	primary key(history_no)														/* 主键 */
 ) comment = '卡片历史信息表';
 
 create table t_user_notice (													/* 【用户通知表】 */
 	notice_no int(4) not null auto_increment comment '通知记录编号',			/* 通知记录编号 */
-	from_user_id int(4) not null comment '操作用户',							/* 操作用户 */
-	to_user_id int(4) not null comment '被操作用户',							/* 被操作用户 */
+	from_user_no int(4) not null comment '操作用户',							/* 操作用户 */
+	to_user_no int(4) not null comment '被操作用户',							/* 被操作用户 */
 	list_name varchar(100) not null comment '所属列表名称',						/* 所属列表名称 */
 	board_space_no int(4) comment '所属看板空间编号',							/* 所属看板空间编号 */
 	board_space_name varchar(70) comment '所属看板空间名称',					/* 所属看板空间名称 */

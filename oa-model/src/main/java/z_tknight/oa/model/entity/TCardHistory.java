@@ -11,12 +11,12 @@ public class TCardHistory {
 	/**
 	 * 操作用户
 	 */
-	private Integer fromUserId = null;
+	private Integer fromUserNo = null;
 
 	/**
 	 * 被操作用户
 	 */
-	private Integer toUserId = null;
+	private Integer toUserNo = null;
 
 	/**
 	 * 操作前所属列表名称
@@ -48,6 +48,11 @@ public class TCardHistory {
 	 */
 	private Integer boardNo = null;
 
+	/**
+	 * 操作卡片编号
+	 */
+	private Integer cardNo = null;
+
 	public void setHistoryNo(Integer historyNo) {
 		this.historyNo = historyNo;
 	}
@@ -56,20 +61,20 @@ public class TCardHistory {
 		return this.historyNo;
 	}
 
-	public void setFromUserId(Integer fromUserId) {
-		this.fromUserId = fromUserId;
+	public void setFromUserNo(Integer fromUserNo) {
+		this.fromUserNo = fromUserNo;
 	}
 
-	public Integer getFromUserId() {
-		return this.fromUserId;
+	public Integer getFromUserNo() {
+		return this.fromUserNo;
 	}
 
-	public void setToUserId(Integer toUserId) {
-		this.toUserId = toUserId;
+	public void setToUserNo(Integer toUserNo) {
+		this.toUserNo = toUserNo;
 	}
 
-	public Integer getToUserId() {
-		return this.toUserId;
+	public Integer getToUserNo() {
+		return this.toUserNo;
 	}
 
 	public void setFromListName(String fromListName) {
@@ -118,6 +123,14 @@ public class TCardHistory {
 
 	public Integer getBoardNo() {
 		return this.boardNo;
+	}
+
+	public void setCardNo(Integer cardNo) {
+		this.cardNo = cardNo;
+	}
+
+	public Integer getCardNo() {
+		return this.cardNo;
 	}
 
 }
