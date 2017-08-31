@@ -14,7 +14,7 @@ use z_tknight_oa;
 
 create table t_user (															/* 【用户信息表】 */
 	user_no int(4) not null auto_increment comment '用户编号',					/* 用户编号 */
-	user_name varchar(15) not null comment '用户名',							/* 用户名 */
+	user_name varchar(20) not null comment '用户名',							/* 用户名 */
 	password varchar(20) not null comment '密码',								/* 密码 */
 	nick_name varchar(20) not null comment '昵称',								/* 昵称 */
 	introduction varchar(250) comment '介绍',									/* 介绍 */

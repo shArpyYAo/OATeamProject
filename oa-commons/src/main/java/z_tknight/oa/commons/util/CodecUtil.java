@@ -40,7 +40,7 @@ public final class CodecUtil {
 	}
 	
 	/**
-	 * 编码html中的特殊字符成&#xxx;格式(8200ms)
+	 * 编码html中的字符成&#xxx;格式(8200ms)
 	 * @param source [String]输入数据源
 	 * @return
 	 */

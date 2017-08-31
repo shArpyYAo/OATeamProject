@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import z_tknight.oa.commons.util.CodecUtil;
 import z_tknight.oa.service.demo.TestDemoService;
 import z_tknight.oa.web.annotation.LogInfo;
 
