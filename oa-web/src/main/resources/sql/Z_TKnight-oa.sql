@@ -169,6 +169,8 @@ create table t_comment (														/* 【评论信息表】 */
 	comment varchar(20) not null comment '评论内容',							/* 评论内容 */
 	card_no int(4) not null comment '所属卡片编号',								/* 所属卡片编号 */
 	user_no int(4) not null comment '评论发起用户编号',							/* 评论发起用户编号 */
+	comment_time timestamp not null 
+	default current_timestamp comment '评论时间',								/* 评论时间 */
 	primary key(comment_no)														/* 主键 */
 ) comment = '评论信息表';
 

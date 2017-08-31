@@ -8,6 +8,7 @@
 		<result column="comment" property="comment" jdbcType="VARCHAR" />
 		<result column="card_no" property="cardNo" jdbcType="INTEGER" />
 		<result column="user_no" property="userNo" jdbcType="INTEGER" />
+		<result column="comment_time" property="commentTime" jdbcType="TIMESTAMP" />
 	</resultMap>
 
 	<!-- 条件从句 -->
@@ -96,7 +97,8 @@
 		comment_no,
 		comment,
 		card_no,
-		user_no
+		user_no,
+		comment_time
 	</sql>
 	<!-- 统计符合自定义条件的数据个数 -->
 	<select id="countByExample" parameterType="z_tknight.oa.model.entity.TCommentExample"
@@ -133,13 +135,15 @@
 			comment_no,
 			comment,
 			card_no,
-			user_no
+			user_no,
+			comment_time
 		)
 		values (
 			#{commentNo, jdbcType=INTEGER},
 			#{comment, jdbcType=VARCHAR},
 			#{cardNo, jdbcType=INTEGER},
-			#{userNo, jdbcType=INTEGER}
+			#{userNo, jdbcType=INTEGER},
+			#{commentTime, jdbcType=TIMESTAMP}
 		)
 	</insert>
 
@@ -161,6 +165,9 @@
 			<if test="userNo != null">
 				user_no,
 			</if>
+			<if test="commentTime != null">
+				comment_time,
+			</if>
 		</trim>
 		<!-- 插入内容 -->
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -175,6 +182,9 @@
 			</if>
 			<if test="userNo != null">
 				#{userNo, jdbcType=INTEGER},
+			</if>
+			<if test="commentTime != null">
+				#{commentTime, jdbcType=TIMESTAMP},
 			</if>
 		</trim>
 	</insert>
@@ -227,6 +237,9 @@
 			<if test="record.userNo != null">
 				user_no = #{record.userNo, jdbcType=INTEGER},
 			</if>
+			<if test="record.commentTime != null">
+				comment_time = #{record.commentTime, jdbcType=TIMESTAMP},
+			</if>
 		</set>
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
@@ -242,7 +255,8 @@
 		comment_no = #{commentNo, jdbcType=INTEGER},
 		comment = #{comment, jdbcType=VARCHAR},
 		card_no = #{cardNo, jdbcType=INTEGER},
-		user_no = #{userNo, jdbcType=INTEGER}
+		user_no = #{userNo, jdbcType=INTEGER},
+		comment_time = #{commentTime, jdbcType=TIMESTAMP}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -263,6 +277,9 @@
 			<if test="userNo != null">
 				user_no = #{userNo, jdbcType=INTEGER},
 			</if>
+			<if test="commentTime != null">
+				comment_time = #{commentTime, jdbcType=TIMESTAMP},
+			</if>
 		</set>
 		<!-- 主键作为条件 -->
 		where
@@ -276,7 +293,8 @@
 		set
 		comment = #{comment, jdbcType=VARCHAR},
 		card_no = #{cardNo, jdbcType=INTEGER},
-		user_no = #{userNo, jdbcType=INTEGER}
+		user_no = #{userNo, jdbcType=INTEGER},
+		comment_time = #{commentTime, jdbcType=TIMESTAMP}
 		<!-- 主键作为条件 -->
 		where
 		comment_no = #{commentNo, jdbcType=INTEGER} 

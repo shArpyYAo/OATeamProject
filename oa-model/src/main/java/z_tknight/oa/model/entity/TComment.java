@@ -1,5 +1,6 @@
 package z_tknight.oa.model.entity;
 
+import java.sql.Timestamp;
 
 public class TComment {
 
@@ -22,6 +23,11 @@ public class TComment {
 	 * 评论发起用户编号
 	 */
 	private Integer userNo = null;
+
+	/**
+	 * 评论时间
+	 */
+	private Timestamp commentTime = null;
 
 	public void setCommentNo(Integer commentNo) {
 		this.commentNo = commentNo;
@@ -53,6 +59,14 @@ public class TComment {
 
 	public Integer getUserNo() {
 		return this.userNo;
+	}
+
+	public void setCommentTime(Timestamp commentTime) {
+		this.commentTime = commentTime;
+	}
+
+	public Timestamp getCommentTime() {
+		return this.commentTime;
 	}
 
 }

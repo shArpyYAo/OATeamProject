@@ -1,5 +1,6 @@
 package z_tknight.oa.model.entity;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -801,6 +802,125 @@ public class TCommentExample {
 		 */
 		public Criteria andUserNoNotBetween(Integer value1, Integer value2) {
 			addCriterion("user_no not between", value1, value2, "userNo");
+			return (Criteria) this;
+		}
+		/**
+		 * comment_time字段为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCommentTimeIsNull() {
+			addCriterion("comment_time is null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * comment_time字段为不为null
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCommentTimeIsNotNull() {
+			addCriterion("comment_time is not null");
+			return (Criteria) this;
+		}
+
+		/**
+		 * comment_time等于传入值
+		 * @param value [Timestamp]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCommentTimeEqualTo(Timestamp value) {
+			addCriterion("comment_time =", value, "commentTime");
+			return (Criteria) this;
+		}
+
+		/**
+		 * comment_time不等于传入值
+		 * @param value [Timestamp]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCommentTimeNotEqualTo(Timestamp value) {
+			addCriterion("comment_time <>", value, "commentTime");
+			return (Criteria) this;
+		}
+
+		/**
+		 * comment_time大于传入值
+		 * @param value [Timestamp]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCommentTimeGreaterThan(Timestamp value) {
+			addCriterion("comment_time >", value, "commentTime");
+			return (Criteria) this;
+		}
+
+		/**
+		 * comment_time大于等于传入值
+		 * @param value [Timestamp]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCommentTimeGreaterThanOrEqualTo(Timestamp value) {
+			addCriterion("comment_time >=", value, "commentTime");
+			return (Criteria) this;
+		}
+
+		/**
+		 * comment_time小于传入值
+		 * @param value [Timestamp]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCommentTimeLessThan(Timestamp value) {
+			addCriterion("comment_time <", value, "commentTime");
+			return (Criteria) this;
+		}
+
+		/**
+		 * comment_time小于等于传入值
+		 * @param value [Timestamp]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCommentTimeLessThanOrEqualTo(Timestamp value) {
+			addCriterion("comment_time <=", value, "commentTime");
+			return (Criteria) this;
+		}
+
+		/**
+		 * comment_time在传入值之中
+		 * @param value [List<Timestamp>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCommentTimeIn(List<Timestamp> values) {
+			addCriterion("comment_time in", values, "commentTime");
+			return (Criteria) this;
+		}
+
+		/**
+		 * comment_time不在传入值之中
+		 * @param value [List<Timestamp>]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCommentTimeNotIn(List<Timestamp> values) {
+			addCriterion("comment_time not in", values, "commentTime");
+			return (Criteria) this;
+		}
+
+		/**
+		 * comment_time在传入值之间
+		 * @param value1 [Timestamp]传入值1
+		 * @param value2 [Timestamp]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCommentTimeBetween(Timestamp value1, Timestamp value2) {
+			addCriterion("comment_time between", value1, value2, "commentTime");
+			return (Criteria) this;
+		}
+
+		/**
+		 * comment_time不在传入值之间
+		 * @param value1 [Timestamp]传入值1
+		 * @param value2 [Timestamp]传入值2
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andCommentTimeNotBetween(Timestamp value1, Timestamp value2) {
+			addCriterion("comment_time not between", value1, value2, "commentTime");
 			return (Criteria) this;
 		}
 
