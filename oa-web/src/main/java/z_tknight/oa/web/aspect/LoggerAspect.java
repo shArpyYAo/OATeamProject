@@ -83,8 +83,6 @@ public class LoggerAspect {
 			beginTime = new Date().getTime();
 			log.setBeginTime(new Timestamp(beginTime));
 			_LOG.debug("方法起始时间：" + log.getBeginTime().toString());
-			// 执行方法
-			result = joinPoint.proceed(joinPoint.getArgs());
 			Class<?>[] params = ((MethodSignature) joinPoint.getSignature()).getMethod().getParameterTypes();
 			// 从上下文中获取request
 			HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
@@ -111,11 +109,19 @@ public class LoggerAspect {
 			// 传入参数
 			StringBuffer buf = new StringBuffer("");
 			for (Object param : joinPoint.getArgs()) {
-				String arg = JsonUtil.toJson(param);
-				_LOG.debug(arg);
+				String arg = null;
+				try {
+					arg = JsonUtil.toJson(param);
+					_LOG.debug(arg);
+				} catch(Exception e) {
+					_LOG.debug("参数转换JSON数据失败！" + e.getMessage());
+					continue;
+				}
 				buf.append("/" + arg);
 			}
 			log.setParams(StringUtil.isNotEmpty(buf.toString()) ? buf.toString() : "无");
+			// 执行方法
+			result = joinPoint.proceed(joinPoint.getArgs());
 			// 异常信息
 			log.setException("正常");
 		} catch (Throwable e) {

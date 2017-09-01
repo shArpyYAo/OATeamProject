@@ -157,6 +157,11 @@
 
 	<!-- 有选择的插入单条数据 -->
 	<insert id="insertSelective" parameterType="z_tknight.oa.model.entity.TBoardSpace">
+		
+		<selectKey keyProperty="boardSpaceNo" order="AFTER" resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		
 		insert into t_board_space
 		<!-- 前缀为"("、后缀为")"、去掉最后一个"," -->
 		<!-- 插入属性 -->

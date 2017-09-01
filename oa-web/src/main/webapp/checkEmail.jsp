@@ -4,14 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>主页</title>
+<title>Insert title here</title>
 </head>
 <body>
-	<h1>主页</h1>
-	<form action="/oa-web/user/login" method="post">
-		用户名：<input type="text" name="userName" />
-		密    码：<input type="text" name="password" />
-		<input type="submit" value="提交">
+
+	<form action="/oa-web/user/checkEmail" method="post">
+		<input type="text" name="email">
+		<input type="submit" value="验证">
 	</form>
 </body>
 </html>

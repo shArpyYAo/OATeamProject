@@ -86,21 +86,21 @@ public final class CaseUtil {
 	}
 	
 	/**
-	 * 转为int型
+	 * 转为Integer型
 	 * @param obj
 	 * @return
 	 */
-	public static int caseInt(Object obj) {
+	public static Integer caseInt(Object obj) {
 		return CaseUtil.caseInt(obj, 0);
 	}
 	
 	/**
-	 * 转为int型(提供默认值)
+	 * 转为Integer型(提供默认值)
 	 * @param obj
 	 * @param defaultValue
 	 * @return
 	 */
-	public static int caseInt(Object obj, int defaultValue) {
+	public static Integer caseInt(Object obj, Integer defaultValue) {
 		if(obj != null) {
 			String strValue = caseString(obj);
 			if(StringUtil.isNotEmpty(strValue)) {
