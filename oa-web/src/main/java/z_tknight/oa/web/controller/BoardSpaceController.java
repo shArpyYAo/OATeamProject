@@ -1,7 +1,6 @@
 package z_tknight.oa.web.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import z_tknight.oa.commons.util.CaseUtil;
 import z_tknight.oa.commons.util.ResponeResult;
-import z_tknight.oa.model.entity.BoardSpaceAndBoard;
+import z_tknight.oa.model.vo.BoardSpaceAndBoard;
 import z_tknight.oa.service.baseService.BoardSpaceService;
 import z_tknight.oa.web.annotation.LogInfo;
 
@@ -70,7 +69,7 @@ public class BoardSpaceController {
 		if(userNo == null) {
 			return ResponeResult.build(400, "用户没有登录");
 		}
-		if(newBoardSpaceName == null||newBoardSpaceName.equals("")) {
+		if(newBoardSpaceName == null || newBoardSpaceName.equals("")) {
 			return ResponeResult.build(400, "面板空间不能为空");
 		}
 		ResponeResult result = boardSpaceService.updateBoardSpace(userNo, boardSpaceNo, newBoardSpaceName, newSummary);

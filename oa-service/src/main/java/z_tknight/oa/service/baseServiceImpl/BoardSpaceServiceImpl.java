@@ -6,15 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import z_tknight.oa.model.entity.TBoardExample;
-import z_tknight.oa.model.entity.TBoardSpace;
 import z_tknight.oa.commons.util.ExceptionUtil;
 import z_tknight.oa.commons.util.ResponeResult;
-import z_tknight.oa.model.entity.BoardSpaceAndBoard;
 import z_tknight.oa.model.entity.TBoard;
+import z_tknight.oa.model.entity.TBoardExample;
+import z_tknight.oa.model.entity.TBoardSpace;
 import z_tknight.oa.model.entity.TBoardSpaceExample;
 import z_tknight.oa.model.entity.TBoardSpaceExample.Criteria;
-import z_tknight.oa.model.entity.TUser;
+import z_tknight.oa.model.vo.BoardSpaceAndBoard;
 import z_tknight.oa.persist.mapper.TBoardMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceMapper;
 import z_tknight.oa.persist.mapper.TUserMapper;
@@ -81,8 +80,8 @@ public class BoardSpaceServiceImpl implements BoardSpaceService  {
 	}
 
 	/**
-	 * @Description: 判断用户名是否为面板的所有人
-	 * 判断面板空间是否可删
+	 * @Description: 判断用户名是否为面板的所有人<br/>
+	 * 判断面板空间是否可删<br/>
 	 * 根据面板空间编号删除面板空间
 	 * @author：XHX
 	 */
@@ -126,7 +125,7 @@ public class BoardSpaceServiceImpl implements BoardSpaceService  {
 			boardSpace.setIsDelete(false);
 			boardSpace.setSummary(boardSpaceName);
 			boardSpace.setUserNo(userNo);
-			boardSpace.setCategoryNo(2);
+			boardSpace.setCategoryNo(2); // 普通项目
 			
 			tBoardSpaceMapper.insertSelective(boardSpace);
 			
