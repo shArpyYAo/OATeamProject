@@ -3,7 +3,7 @@ package z_tknight.oa.service.baseService;
 import java.util.List;
 
 import z_tknight.oa.commons.util.ResponeResult;
-import z_tknight.oa.model.vo.BoardSpaceAndBoard;
+import z_tknight.oa.model.entity.BoardSpaceAndBoard;
 
 public interface BoardSpaceService {
 

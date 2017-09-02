@@ -121,4 +121,12 @@ public class TBoard {
 		return this.listOrder;
 	}
 
+	@Override
+	public String toString() {
+		return "TBoard [boardNo=" + boardNo + ", boardName=" + boardName + ", displayNo=" + displayNo + ", startTime="
+				+ startTime + ", endTime=" + endTime + ", boardSpaceNo=" + boardSpaceNo + ", isDelete=" + isDelete
+				+ ", userNo=" + userNo + ", listOrder=" + listOrder + "]";
+	}
+	
+
 }
