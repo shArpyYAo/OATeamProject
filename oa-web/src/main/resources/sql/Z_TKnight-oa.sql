@@ -46,6 +46,13 @@ create table t_board_space_user (												/* 【看板空间和用户关系�
 	primary key(relation_no)													/* 主键 */
 ) comment = '看板空间和用户关系表';
 
+create table t_board_user (														/* 【看板和用户关系表】 */
+	relation_no int(4) not null auto_increment comment '关系编号',				/* 关系编号 */
+	board__no int(4) not null comment '看板编号',								/* 看板编号 */
+	user_no int(4) not null comment '用户编号',									/* 用户编号 */
+	primary key(relation_no)													/* 主键 */
+) comment = '看板和用户关系表';
+
 create table t_card_user (														/* 【卡片和用户关系表】 */
 	relation_no int(4) not null auto_increment comment '关系编号',				/* 关系编号 */
 	card_no int(4) not null comment '卡片编号',									/* 卡片编号 */
@@ -121,13 +128,18 @@ create table t_board (															/* 【看板信息表】 */
 	display_no int(4) not null comment '看板可见性编号',						/* 看板可见性编号 */
 	start_time timestamp not null 
 	default current_timestamp comment '看板有效起始时间',						/* 看板有效起始时间 */
-	end_time datetime not null comment '看板有效截止时间',						/* 看板有效截止时间 */
+	end_time timestamp not null comment '看板有效截止时间',						/* 看板有效截止时间 */
 	board_space_no int(4) not null comment '所属看板空间编号',					/* 所属看板空间编号 */
 	is_delete bit(1) not null comment '删除标记',								/* 删除标记 */
 	user_no int(4) not null comment '看板所有者编号',							/* 看板所有者编号 */
 	list_order text comment '列表顺序',											/* 列表顺序 */
 	primary key(board_no)														/* 主键 */
 ) comment = '看板信息表';
+
+/* 通过触发器为t_board表中end_time字段设置默认值为:当前时间 + 15天 */
+create trigger end_time_insert before insert on t_board
+	for each row
+	set new.end_time = date_add(current_timestamp, interval 15 day);
 
 create table t_list (															/* 【列表信息表】 */
 	list_no int(4) not null auto_increment comment '列表编号',					/* 列表编号 */

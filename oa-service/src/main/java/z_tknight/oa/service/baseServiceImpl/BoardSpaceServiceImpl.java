@@ -6,15 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import z_tknight.oa.model.entity.TBoardExample;
-import z_tknight.oa.model.entity.TBoardSpace;
 import z_tknight.oa.commons.util.ExceptionUtil;
 import z_tknight.oa.commons.util.ResponeResult;
-import z_tknight.oa.model.entity.BoardSpaceAndBoard;
 import z_tknight.oa.model.entity.TBoard;
+import z_tknight.oa.model.entity.TBoardExample;
+import z_tknight.oa.model.entity.TBoardSpace;
 import z_tknight.oa.model.entity.TBoardSpaceExample;
 import z_tknight.oa.model.entity.TBoardSpaceExample.Criteria;
-import z_tknight.oa.model.entity.TUser;
+import z_tknight.oa.model.vo.BoardSpaceAndBoard;
 import z_tknight.oa.persist.mapper.TBoardMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceMapper;
 import z_tknight.oa.persist.mapper.TUserMapper;

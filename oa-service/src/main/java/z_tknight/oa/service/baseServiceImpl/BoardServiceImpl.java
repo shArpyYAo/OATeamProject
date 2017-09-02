@@ -10,8 +10,8 @@ import z_tknight.oa.commons.util.ExceptionUtil;
 import z_tknight.oa.commons.util.ResponeResult;
 import z_tknight.oa.model.entity.TBoard;
 import z_tknight.oa.model.entity.TBoardSpace;
-import z_tknight.oa.model.entity.TBoardSpaceUserExample;
 import z_tknight.oa.model.entity.TBoardSpaceUser;
+import z_tknight.oa.model.entity.TBoardSpaceUserExample;
 import z_tknight.oa.persist.mapper.TBoardMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceUserMapper;
@@ -143,6 +143,12 @@ public class BoardServiceImpl implements BoardService {
 		}catch(Exception e) {
 			return ResponeResult.build(500, ExceptionUtil.getStackTrace(e));
 		}
+	}
+
+	@Override
+	public ResponeResult updateBoardOrder() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

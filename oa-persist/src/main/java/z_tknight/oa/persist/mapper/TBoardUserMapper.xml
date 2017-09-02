@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="z_tknight.oa.persist.mapper.TUserMapper" >
+<mapper namespace="z_tknight.oa.persist.mapper.TBoardUserMapper" >
 
 	<!-- pojo类属性和对应表的结果集映射关系 -->
-	<resultMap id="BaseResultMap" type="z_tknight.oa.model.entity.TUser">
-		<id column="user_no" property="userNo" jdbcType="INTEGER" />
-		<result column="user_name" property="userName" jdbcType="VARCHAR" />
-		<result column="password" property="password" jdbcType="VARCHAR" />
-		<result column="nick_name" property="nickName" jdbcType="VARCHAR" />
-		<result column="introduction" property="introduction" jdbcType="VARCHAR" />
-		<result column="dept_no" property="deptNo" jdbcType="INTEGER" />
-		<result column="back_up" property="backUp" jdbcType="INTEGER" />
+	<resultMap id="BaseResultMap" type="z_tknight.oa.model.entity.TBoardUser">
+		<id column="relation_no" property="relationNo" jdbcType="INTEGER" />
+		<result column="board__no" property="boardNo" jdbcType="INTEGER" />
+		<result column="user_no" property="userNo" jdbcType="INTEGER" />
 	</resultMap>
 
 	<!-- 条件从句 -->
@@ -96,18 +92,14 @@
 	</sql>
 
 	<sql id="Base_Column_List">
-		user_no,
-		user_name,
-		password,
-		nick_name,
-		introduction,
-		dept_no,
-		back_up
+		relation_no,
+		board__no,
+		user_no
 	</sql>
 	<!-- 统计符合自定义条件的数据个数 -->
-	<select id="countByExample" parameterType="z_tknight.oa.model.entity.TUserExample"
+	<select id="countByExample" parameterType="z_tknight.oa.model.entity.TBoardUserExample"
 		resultType="java.lang.Integer">
-		select count(*) from t_user
+		select count(*) from t_board_user
 		<!-- _parameter代表的时传入参数 -->
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
@@ -116,8 +108,8 @@
 	</select>
 
 	<!-- 自定义条件删除数据 -->
-	<delete id="deleteByExample" parameterType="z_tknight.oa.model.entity.TUserExample">
-		delete from t_user
+	<delete id="deleteByExample" parameterType="z_tknight.oa.model.entity.TBoardUserExample">
+		delete from t_board_user
 		<!-- _parameter代表的时传入参数 -->
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
@@ -127,94 +119,59 @@
 
 	<!-- 根据主键删除单条数据 -->
 	<delete id="deleteByPrimaryKey">
-		delete from t_user
+		delete from t_board_user
 		<!-- 传入主键作为条件 -->
 		where
-		user_no = #{userNo, jdbcType=INTEGER} 
+		relation_no = #{relationNo, jdbcType=INTEGER} 
 	</delete>
 
 	<!-- 插入单条数据 -->
-	<insert id="insert" parameterType="z_tknight.oa.model.entity.TUser">
-		insert into t_user (
-			user_no,
-			user_name,
-			password,
-			nick_name,
-			introduction,
-			dept_no,
-			back_up
+	<insert id="insert" parameterType="z_tknight.oa.model.entity.TBoardUser">
+		insert into t_board_user (
+			relation_no,
+			board__no,
+			user_no
 		)
 		values (
-			#{userNo, jdbcType=INTEGER},
-			#{userName, jdbcType=VARCHAR},
-			#{password, jdbcType=VARCHAR},
-			#{nickName, jdbcType=VARCHAR},
-			#{introduction, jdbcType=VARCHAR},
-			#{deptNo, jdbcType=INTEGER},
-			#{backUp, jdbcType=INTEGER}
+			#{relationNo, jdbcType=INTEGER},
+			#{boardNo, jdbcType=INTEGER},
+			#{userNo, jdbcType=INTEGER}
 		)
 	</insert>
 
 	<!-- 有选择的插入单条数据 -->
-	<insert id="insertSelective" parameterType="z_tknight.oa.model.entity.TUser">
-		<selectKey keyProperty="userNo" order="AFTER" resultType="java.lang.Integer">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
-		insert into t_user
+	<insert id="insertSelective" parameterType="z_tknight.oa.model.entity.TBoardUser">
+		insert into t_board_user
 		<!-- 前缀为"("、后缀为")"、去掉最后一个"," -->
 		<!-- 插入属性 -->
 		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="relationNo != null">
+				relation_no,
+			</if>
+			<if test="boardNo != null">
+				board__no,
+			</if>
 			<if test="userNo != null">
 				user_no,
-			</if>
-			<if test="userName != null">
-				user_name,
-			</if>
-			<if test="password != null">
-				password,
-			</if>
-			<if test="nickName != null">
-				nick_name,
-			</if>
-			<if test="introduction != null">
-				introduction,
-			</if>
-			<if test="deptNo != null">
-				dept_no,
-			</if>
-			<if test="backUp != null">
-				back_up,
 			</if>
 		</trim>
 		<!-- 插入内容 -->
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="relationNo != null">
+				#{relationNo, jdbcType=INTEGER},
+			</if>
+			<if test="boardNo != null">
+				#{boardNo, jdbcType=INTEGER},
+			</if>
 			<if test="userNo != null">
 				#{userNo, jdbcType=INTEGER},
-			</if>
-			<if test="userName != null">
-				#{userName, jdbcType=VARCHAR},
-			</if>
-			<if test="password != null">
-				#{password, jdbcType=VARCHAR},
-			</if>
-			<if test="nickName != null">
-				#{nickName, jdbcType=VARCHAR},
-			</if>
-			<if test="introduction != null">
-				#{introduction, jdbcType=VARCHAR},
-			</if>
-			<if test="deptNo != null">
-				#{deptNo, jdbcType=INTEGER},
-			</if>
-			<if test="backUp != null">
-				#{backUp, jdbcType=INTEGER},
 			</if>
 		</trim>
 	</insert>
 
 	<!-- 查询符合自定义条件的数据 -->
 	<select id="selectByExample" resultMap="BaseResultMap"
-		parameterType="z_tknight.oa.model.entity.TUserExample">
+		parameterType="z_tknight.oa.model.entity.TBoardUserExample">
 		select
 		<!-- 判断是否使用distinct查询 -->
 		<if test="distinct">
@@ -222,7 +179,7 @@
 		</if>
 		<!-- 查询字段 -->
 		<include refid="Base_Column_List" />
-		from t_user
+		from t_board_user
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Example_Where_Clause" />
@@ -237,37 +194,25 @@
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from t_user
+		from t_board_user
 		<!-- #表示占位符、$表示拼接 -->
 		where
-		user_no = #{userNo, jdbcType=INTEGER} 
+		relation_no = #{relationNo, jdbcType=INTEGER} 
 	</select>
 
 	<!-- 自定义条件的有选择性的修改某些属性，可修改主键 -->
 	<update id="updateByExampleSelective">
-		update t_user
+		update t_board_user
 		<!-- 修改属性，可修改主键 -->
 		<set>
+			<if test="record.relationNo != null">
+				relation_no = #{record.relationNo, jdbcType=INTEGER},
+			</if>
+			<if test="record.boardNo != null">
+				board__no = #{record.boardNo, jdbcType=INTEGER},
+			</if>
 			<if test="record.userNo != null">
 				user_no = #{record.userNo, jdbcType=INTEGER},
-			</if>
-			<if test="record.userName != null">
-				user_name = #{record.userName, jdbcType=VARCHAR},
-			</if>
-			<if test="record.password != null">
-				password = #{record.password, jdbcType=VARCHAR},
-			</if>
-			<if test="record.nickName != null">
-				nick_name = #{record.nickName, jdbcType=VARCHAR},
-			</if>
-			<if test="record.introduction != null">
-				introduction = #{record.introduction, jdbcType=VARCHAR},
-			</if>
-			<if test="record.deptNo != null">
-				dept_no = #{record.deptNo, jdbcType=INTEGER},
-			</if>
-			<if test="record.backUp != null">
-				back_up = #{record.backUp, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 自定义条件 -->
@@ -278,16 +223,12 @@
 
 	<!-- 自定义条件修改所有属性，可修改主键 -->
 	<update id="updateByExample">
-		update t_user
+		update t_board_user
 		<!-- 修改属性，可修改主键 -->
 		set
-		user_no = #{userNo, jdbcType=INTEGER},
-		user_name = #{userName, jdbcType=VARCHAR},
-		password = #{password, jdbcType=VARCHAR},
-		nick_name = #{nickName, jdbcType=VARCHAR},
-		introduction = #{introduction, jdbcType=VARCHAR},
-		dept_no = #{deptNo, jdbcType=INTEGER},
-		back_up = #{backUp, jdbcType=INTEGER}
+		relation_no = #{relationNo, jdbcType=INTEGER},
+		board__no = #{boardNo, jdbcType=INTEGER},
+		user_no = #{userNo, jdbcType=INTEGER}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
@@ -295,47 +236,31 @@
 	</update>
 
 	<!-- 通过主键有选择性的修改某该属性，不可以修改主键 -->
-	<update id="updateByPrimaryKeySelective" parameterType="z_tknight.oa.model.entity.TUser">
-		update t_user
+	<update id="updateByPrimaryKeySelective" parameterType="z_tknight.oa.model.entity.TBoardUser">
+		update t_board_user
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
-			<if test="userName != null">
-				user_name = #{userName, jdbcType=VARCHAR},
+			<if test="boardNo != null">
+				board__no = #{boardNo, jdbcType=INTEGER},
 			</if>
-			<if test="password != null">
-				password = #{password, jdbcType=VARCHAR},
-			</if>
-			<if test="nickName != null">
-				nick_name = #{nickName, jdbcType=VARCHAR},
-			</if>
-			<if test="introduction != null">
-				introduction = #{introduction, jdbcType=VARCHAR},
-			</if>
-			<if test="deptNo != null">
-				dept_no = #{deptNo, jdbcType=INTEGER},
-			</if>
-			<if test="backUp != null">
-				back_up = #{backUp, jdbcType=INTEGER},
+			<if test="userNo != null">
+				user_no = #{userNo, jdbcType=INTEGER},
 			</if>
 		</set>
 		<!-- 主键作为条件 -->
 		where
-		user_no = #{userNo, jdbcType=INTEGER} 
+		relation_no = #{relationNo, jdbcType=INTEGER} 
 	</update>
 
 	<!-- 通过主键修改属性，不可以修改主键 -->
-	<update id="updateByPrimaryKey" parameterType="z_tknight.oa.model.entity.TUser">
-		update t_user
+	<update id="updateByPrimaryKey" parameterType="z_tknight.oa.model.entity.TBoardUser">
+		update t_board_user
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		user_name = #{userName, jdbcType=VARCHAR},
-		password = #{password, jdbcType=VARCHAR},
-		nick_name = #{nickName, jdbcType=VARCHAR},
-		introduction = #{introduction, jdbcType=VARCHAR},
-		dept_no = #{deptNo, jdbcType=INTEGER},
-		back_up = #{backUp, jdbcType=INTEGER}
+		board__no = #{boardNo, jdbcType=INTEGER},
+		user_no = #{userNo, jdbcType=INTEGER}
 		<!-- 主键作为条件 -->
 		where
-		user_no = #{userNo, jdbcType=INTEGER} 
+		relation_no = #{relationNo, jdbcType=INTEGER} 
 	</update>
 </mapper>

@@ -1,7 +1,10 @@
-package z_tknight.oa.model.entity;
+package z_tknight.oa.model.vo;
 
+import java.util.List;
 
-public class TBoardSpace {
+import z_tknight.oa.model.entity.TBoard;
+
+public class BoardSpaceAndBoard {
 
 	/**
 	 * 看板空间编号
@@ -27,16 +30,8 @@ public class TBoardSpace {
 	 * 看板空间所有者编号
 	 */
 	private Integer userNo = null;
-
-	/**
-	 * 删除标记
-	 */
-	private Boolean isDelete = null;
-
-	/**
-	 * 看板顺序
-	 */
-	private String boardOrder = null;
+	
+	private List<TBoard> tBoard = null;
 
 	public void setBoardSpaceNo(Integer boardSpaceNo) {
 		this.boardSpaceNo = boardSpaceNo;
@@ -78,20 +73,12 @@ public class TBoardSpace {
 		return this.userNo;
 	}
 
-	public void setIsDelete(Boolean isDelete) {
-		this.isDelete = isDelete;
+	public List<TBoard> gettBoard() {
+		return tBoard;
 	}
 
-	public Boolean isIsDelete() {
-		return this.isDelete;
-	}
-
-	public void setBoardOrder(String boardOrder) {
-		this.boardOrder = boardOrder;
-	}
-
-	public String getBoardOrder() {
-		return this.boardOrder;
+	public void settBoard(List<TBoard> tBoard) {
+		this.tBoard = tBoard;
 	}
 
 }

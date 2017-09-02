@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="z_tknight.oa.persist.complex.mapper.BoardSpaceAndBoardMapper" >
+
+	<!-- pojo类属性和对应表的结果集映射关系 -->
+	<resultMap id="BaseResultMap" type="z_tknight.oa.model.dto.BoardSpaceAndBoardDto">
+		<id column="board.board_no" property="boardNo" jdbcType="INTEGER" />
+		<result column="board.board_name" property="boardName" jdbcType="VARCHAR" />
+		<result column="board.display_no" property="displayNo" jdbcType="INTEGER" />
+		<result column="board.start_time" property="startTime" jdbcType="TIMESTAMP" />
+		<result column="board.end_time" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="board.board_space_no" property="boardSpaceNo" jdbcType="INTEGER" />
+		<result column="board.is_delete" property="isDelete" jdbcType="BIT" />
+		<result column="board.user_no" property="userNo" jdbcType="INTEGER" />
+		<result column="board.list_order" property="listOrder" jdbcType="CLOB" />
+		<result column="boardSpace.board_space_no" property="boardSpaceNo" jdbcType="INTEGER" />
+		<result column="boardSpace.board_space_name" property="boardSpaceName" jdbcType="VARCHAR" />
+		<result column="boardSpace.summary" property="summary" jdbcType="VARCHAR" />
+		<result column="boardSpace.category_no" property="categoryNo" jdbcType="INTEGER" />
+		<result column="boardSpace.user_no" property="userNo" jdbcType="INTEGER" />
+		<result column="boardSpace.is_delete" property="isDelete" jdbcType="BIT" />
+		<result column="boardSpace.board_order" property="boardOrder" jdbcType="CLOB" />
+	</resultMap>
+
+	<!-- 查询用户可以查看的所有看板空间信息和看板信息 -->
+	<select id="selectBoardSpaceDetail" resultMap="BaseResultMap">
+		(select tbs.*, tb.* from t_board_space tbs join t_board tb 
+		on tbs.board_space_no = tb.board_space_no and tbs.user_no = #{userNo} and
+			tbs.is_delete = false and tb.is_delete = false)
+		union all
+		(select tbs.* from t_board_space tbs 
+		join (select board.* from t_board board, 
+			(select board_no from t_board_user where user_no = #{userNo}) as tbu
+			where board.board_no = tbu.board_no and 
+			(board.display_no > 1 or (board.display_no = 1 and tbu.user_no = #{userNo}))) tb
+		on tbs.board_space_no = tb.board_space_no and 
+			tbs.is_delete = false and tb.is_delete = false)
+	</select>
+	
+</mapper>
