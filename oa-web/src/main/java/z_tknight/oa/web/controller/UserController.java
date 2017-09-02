@@ -18,7 +18,7 @@ import z_tknight.oa.service.baseService.UserService;
 
 @Controller
 @RequestMapping("/user")
-public class UserContriller {
+public class UserController {
 
 	@Autowired
 	private UserService userService;

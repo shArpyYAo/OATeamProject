@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="z_tknight.oa.persist.mapper.SelectBoardSpaceByUserNoMapper" >
+	<select id="selectBoardSpaceByUserNo" parameterType="int" resultType="z_tknight.oa.model.entity.TBoardSpace">
+		SELECT t_board_space.* 
+FROM t_board_space,t_board_space_user 
+WHERE t_board_space.board_space_no=t_board_space_user.board_space_no AND t_board_space_user.user_no=#{id}
+	</select>
+</mapper>
