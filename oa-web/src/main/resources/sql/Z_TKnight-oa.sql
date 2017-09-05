@@ -48,7 +48,7 @@ create table t_board_space_user (												/* 【看板空间和用户关系�
 
 create table t_board_user (														/* 【看板和用户关系表】 */
 	relation_no int(4) not null auto_increment comment '关系编号',				/* 关系编号 */
-	board__no int(4) not null comment '看板编号',								/* 看板编号 */
+	board_no int(4) not null comment '看板编号',								/* 看板编号 */
 	user_no int(4) not null comment '用户编号',									/* 用户编号 */
 	primary key(relation_no)													/* 主键 */
 ) comment = '看板和用户关系表';

@@ -94,4 +94,11 @@ public class TBoardSpace {
 		return this.boardOrder;
 	}
 
+	@Override
+	public String toString() {
+		return "TBoardSpace [boardSpaceNo=" + boardSpaceNo + ", boardSpaceName=" + boardSpaceName + ", summary="
+				+ summary + ", categoryNo=" + categoryNo + ", userNo=" + userNo + ", isDelete=" + isDelete
+				+ ", boardOrder=" + boardOrder + "]";
+	}
+
 }

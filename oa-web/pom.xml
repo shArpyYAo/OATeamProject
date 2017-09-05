@@ -21,6 +21,12 @@
 			<groupId>z_tknight.oa</groupId>
 			<artifactId>oa-service</artifactId>
 		</dependency>
+		<!-- Spring 测试包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<!-- SpringMVC 基础组件 -->
 		<dependency>
 			<groupId>org.springframework</groupId>

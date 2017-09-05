@@ -4,37 +4,41 @@
 
 	<!-- pojo类属性和对应表的结果集映射关系 -->
 	<resultMap id="BaseResultMap" type="z_tknight.oa.model.dto.BoardSpaceAndBoardDto">
-		<id column="board.board_no" property="boardNo" jdbcType="INTEGER" />
-		<result column="board.board_name" property="boardName" jdbcType="VARCHAR" />
-		<result column="board.display_no" property="displayNo" jdbcType="INTEGER" />
-		<result column="board.start_time" property="startTime" jdbcType="TIMESTAMP" />
-		<result column="board.end_time" property="endTime" jdbcType="TIMESTAMP" />
-		<result column="board.board_space_no" property="boardSpaceNo" jdbcType="INTEGER" />
-		<result column="board.is_delete" property="isDelete" jdbcType="BIT" />
-		<result column="board.user_no" property="userNo" jdbcType="INTEGER" />
-		<result column="board.list_order" property="listOrder" jdbcType="CLOB" />
-		<result column="boardSpace.board_space_no" property="boardSpaceNo" jdbcType="INTEGER" />
-		<result column="boardSpace.board_space_name" property="boardSpaceName" jdbcType="VARCHAR" />
-		<result column="boardSpace.summary" property="summary" jdbcType="VARCHAR" />
-		<result column="boardSpace.category_no" property="categoryNo" jdbcType="INTEGER" />
-		<result column="boardSpace.user_no" property="userNo" jdbcType="INTEGER" />
-		<result column="boardSpace.is_delete" property="isDelete" jdbcType="BIT" />
-		<result column="boardSpace.board_order" property="boardOrder" jdbcType="CLOB" />
+		<id column="board_no" property="board.boardNo" jdbcType="INTEGER" />
+		<result column="board_name" property="board.boardName" jdbcType="VARCHAR" />
+		<result column="display_no" property="board.displayNo" jdbcType="INTEGER" />
+		<result column="start_time" property="board.startTime" jdbcType="TIMESTAMP" />
+		<result column="end_time" property="board.endTime" jdbcType="TIMESTAMP" />
+		<result column="board_space_no" property="board.boardSpaceNo" jdbcType="INTEGER" />
+		<result column="is_delete" property="board.isDelete" jdbcType="BIT" />
+		<result column="user_no" property="board.userNo" jdbcType="INTEGER" />
+		<result column="list_order" property="board.listOrder" jdbcType="CLOB" />
+		<result column="board_space_no" property="boardSpace.boardSpaceNo" jdbcType="INTEGER" />
+		<result column="board_space_name" property="boardSpace.boardSpaceName" jdbcType="VARCHAR" />
+		<result column="summary" property="boardSpace.summary" jdbcType="VARCHAR" />
+		<result column="category_no" property="boardSpace.categoryNo" jdbcType="INTEGER" />
+		<result column="user_no" property="boardSpace.userNo" jdbcType="INTEGER" />
+		<result column="is_delete" property="boardSpace.isDelete" jdbcType="BIT" />
+		<result column="board_order" property="boardSpace.boardOrder" jdbcType="CLOB" />
 	</resultMap>
 
 	<!-- 查询用户可以查看的所有看板空间信息和看板信息 -->
-	<select id="selectBoardSpaceDetail" resultMap="BaseResultMap">
-		(select tbs.*, tb.* from t_board_space tbs join t_board tb 
-		on tbs.board_space_no = tb.board_space_no and tbs.user_no = #{userNo} and
-			tbs.is_delete = false and tb.is_delete = false)
-		union all
-		(select tbs.* from t_board_space tbs 
-		join (select board.* from t_board board, 
-			(select board_no from t_board_user where user_no = #{userNo}) as tbu
-			where board.board_no = tbu.board_no and 
-			(board.display_no > 1 or (board.display_no = 1 and tbu.user_no = #{userNo}))) tb
-		on tbs.board_space_no = tb.board_space_no and 
-			tbs.is_delete = false and tb.is_delete = false)
+	<select id="selectBoardSpaceAndBoardDetail" resultMap="BaseResultMap">
+		select * from 
+			<!-- 查询所有可见度大于1,且属于用户所在看板空间的看板 -->
+			(select tb.* from 
+				(select * from t_board where display_no > 1 and user_no != #{userNo}) tb join 
+				(select board_space_no from t_board_space_user where user_no = 1) tbs 
+				on tb.board_space_no = tbs.board_space_no
+				<!-- 去重过滤 -->
+				union
+			<!-- 查询所有用户是看板成员的看板 -->
+			select tb.* from t_board tb join t_board_user tbu 
+			on tbu.user_no = #{userNo} and tbu.board_no = tb.board_no
+				union all
+			<!-- 查询所有用户创建的看板 -->
+			select * from t_board where user_no = #{userNo}) as tb join t_board_space tbs 
+		on tb.board_space_no = tbs.board_space_no and tb.is_delete = 0 and tbs.is_delete = 0;
 	</select>
 	
 </mapper>

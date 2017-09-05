@@ -5,7 +5,7 @@
 	<!-- pojo类属性和对应表的结果集映射关系 -->
 	<resultMap id="BaseResultMap" type="z_tknight.oa.model.entity.TBoardUser">
 		<id column="relation_no" property="relationNo" jdbcType="INTEGER" />
-		<result column="board__no" property="boardNo" jdbcType="INTEGER" />
+		<result column="board_no" property="boardNo" jdbcType="INTEGER" />
 		<result column="user_no" property="userNo" jdbcType="INTEGER" />
 	</resultMap>
 
@@ -93,7 +93,7 @@
 
 	<sql id="Base_Column_List">
 		relation_no,
-		board__no,
+		board_no,
 		user_no
 	</sql>
 	<!-- 统计符合自定义条件的数据个数 -->
@@ -129,7 +129,7 @@
 	<insert id="insert" parameterType="z_tknight.oa.model.entity.TBoardUser">
 		insert into t_board_user (
 			relation_no,
-			board__no,
+			board_no,
 			user_no
 		)
 		values (
@@ -149,7 +149,7 @@
 				relation_no,
 			</if>
 			<if test="boardNo != null">
-				board__no,
+				board_no,
 			</if>
 			<if test="userNo != null">
 				user_no,
@@ -209,7 +209,7 @@
 				relation_no = #{record.relationNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.boardNo != null">
-				board__no = #{record.boardNo, jdbcType=INTEGER},
+				board_no = #{record.boardNo, jdbcType=INTEGER},
 			</if>
 			<if test="record.userNo != null">
 				user_no = #{record.userNo, jdbcType=INTEGER},
@@ -227,7 +227,7 @@
 		<!-- 修改属性，可修改主键 -->
 		set
 		relation_no = #{relationNo, jdbcType=INTEGER},
-		board__no = #{boardNo, jdbcType=INTEGER},
+		board_no = #{boardNo, jdbcType=INTEGER},
 		user_no = #{userNo, jdbcType=INTEGER}
 		<!-- 自定义条件 -->
 		<if test="_parameter != null">
@@ -241,7 +241,7 @@
 		<!-- 修改属性，不可以修改主键 -->
 		<set>
 			<if test="boardNo != null">
-				board__no = #{boardNo, jdbcType=INTEGER},
+				board_no = #{boardNo, jdbcType=INTEGER},
 			</if>
 			<if test="userNo != null">
 				user_no = #{userNo, jdbcType=INTEGER},
@@ -257,7 +257,7 @@
 		update t_board_user
 		<!-- 修改属性，不可以修改主键 -->
 		set
-		board__no = #{boardNo, jdbcType=INTEGER},
+		board_no = #{boardNo, jdbcType=INTEGER},
 		user_no = #{userNo, jdbcType=INTEGER}
 		<!-- 主键作为条件 -->
 		where

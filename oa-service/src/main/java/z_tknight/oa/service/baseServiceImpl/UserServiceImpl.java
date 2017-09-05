@@ -2,12 +2,14 @@ package z_tknight.oa.service.baseServiceImpl;
 
 import java.util.List;
 
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import z_tknight.oa.commons.util.ExceptionUtil;
 import z_tknight.oa.commons.util.ResponeResult;
+import z_tknight.oa.commons.util.StreamUtil;
 import z_tknight.oa.model.entity.TBoardSpace;
 import z_tknight.oa.model.entity.TUser;
 import z_tknight.oa.model.entity.TUserExample;
@@ -19,6 +21,11 @@ import z_tknight.oa.service.baseService.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 
+	/**
+	 * slf4j日志配置
+	 */
+	private static final Logger _LOG = LoggerFactory.getLogger(UserServiceImpl.class);
+	
 	@Autowired
 	TUserMapper userMapper;
 	@Autowired
@@ -66,7 +73,7 @@ public class UserServiceImpl implements UserService {
 			TBoardSpace boardSpace = new TBoardSpace();
 			boardSpace.setBoardSpaceName("个人面板");
 			
-			System.err.println("新增用户的编号："+user.getUserNo());
+			_LOG.debug("新增用户的编号："+user.getUserNo());
 			
 			boardSpace.setUserNo(user.getUserNo());
 			boardSpace.setSummary("个人面板");
