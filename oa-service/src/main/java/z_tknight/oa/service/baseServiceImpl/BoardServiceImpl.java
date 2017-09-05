@@ -145,10 +145,47 @@ public class BoardServiceImpl implements BoardService {
 		}
 	}
 
+	/**
+	 * @Description: 判断看板空间是否已经被删除
+	 * 判断用户是否为看板空间的所有人或面板空间的成员
+	 * 判断原面板顺序是否正确
+	 * 修改面板空间上面板的排序顺序
+	 * @author：XHX
+	 */
 	@Override
-	public ResponeResult updateBoardOrder() {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponeResult updateBoardOrder(String boardOrder, String newBoardOrder, Integer boardSpaceNo, Integer userNo) {
+
+		try {
+			TBoardSpace boardSpace = boardSpaceMapper.selectByPrimaryKey(boardSpaceNo);
+			//判断面板空间是否已经被删除
+			if(boardSpace.isIsDelete()) {
+				return ResponeResult.build(400, "面板已经删除");
+			}
+			//判断用户是否是面板空间的所有人
+			if(boardSpace.getUserNo() != userNo) {
+				TBoardSpaceUserExample  boardSpaceUserExample = new TBoardSpaceUserExample();
+				TBoardSpaceUserExample.Criteria criteria = boardSpaceUserExample.createCriteria();
+				criteria.andUserNoEqualTo(userNo);
+				criteria.andBoardSpaceNoEqualTo(boardSpaceNo);
+				List<TBoardSpaceUser> boardSpaceUsers = boardSpaceUserMapper.selectByExample(boardSpaceUserExample);
+				//判断用户是否是面板空间的成员
+				if(boardSpaceUsers==null || boardSpaceUsers.size()==0) {
+					return ResponeResult.build(400, "没有权限修改面板顺序");
+				}
+			}
+			//判断原面板顺序是否正确
+			if(!boardSpace.getBoardOrder().equals(boardOrder)) {
+				return ResponeResult.build(400, "面板顺序出错");
+			}else {
+				boardSpace.setBoardOrder(newBoardOrder);
+				boardSpaceMapper.updateByPrimaryKeySelective(boardSpace);
+				return ResponeResult.ok("修改面板顺序成功");
+			}
+		}catch(Exception e) {
+			return ResponeResult.build(500, ExceptionUtil.getStackTrace(e));
+		}
+		
 	}
+
 
 }

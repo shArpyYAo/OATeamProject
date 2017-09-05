@@ -12,5 +12,47 @@
 		<input type="text" name="email">
 		<input type="submit" value="验证">
 	</form>
+	
+	<form action="/oa-web/board/updateBoardOrder" method="post">
+		原顺序:<input type="text" name="boardOrder">
+		新的顺序:<input type="text" name="newBoardOrder">
+		面板空间编号：<input type="text" name="boardSpaceNo">
+		<input type="submit" value="验证">
+	</form>
+	
+	<form action="/oa-web/list/addList" method="post">
+		列表名称:<input type="text" name="listName">
+		面板编号：<input type="text" name="boardNo">
+		<input type="submit" value="验证">
+	</form>
+	
+	<form action="/oa-web/list/updateListName" method="post">
+		列表新名称:<input type="text" name="newListName">
+		列表编号：<input type="text" name="listNo">
+		<input type="submit" value="修改">
+	</form>
+	
+	<form action="/oa-web/list/deleteList" method="post">
+		列表编号：<input type="text" name="listNo">
+		<input type="submit" value="删除">
+	</form>
+	
+	<form action="/oa-web/card/addCard" method="post">
+		列表编号：<input type="text" name="listNo">
+		卡片名称：<input type="text" name="cardName">
+		<input type="submit" value="新增">
+	</form>
+	
+	<form action="/oa-web/card/deleteCard" method="post">
+		卡片编号：<input type="text" name="cardNo">
+		<input type="submit" value="删除">
+	</form>
+	
+	<form action="/oa-web/card/updateCardName" method="post">
+		卡片编号：<input type="text" name="cardNo">
+		卡片新名称：<input type="text" name="newCardName">
+		<input type="submit" value="修改">
+	</form>
+	
 </body>
 </html>
