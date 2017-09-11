@@ -40,7 +40,7 @@
 	<!-- 访问静态资源 -->
 	<mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
 	<mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
-<!-- 	<mvc:resources location="/WEB-INF/view/" mapping="/view/**"/> -->
+	<mvc:resources location="/WEB-INF/view/" mapping="/view/**"/>
 	<mvc:default-servlet-handler />
 
 	<!-- ====================================================================================== -->
