@@ -7,6 +7,30 @@ window.onload = function()
 	var overLay = document.getElementById("overLay");
 	var borderList = document.getElementById("boardList");
 	
+	$.ajax(
+	{
+        cache: false,
+        type: "POST",
+        url: "/oa-web/user",
+        data:$('#loginForm').serialize(),
+        async: false,
+        error: function(request) 
+        {
+            alert("Connection error");
+        },
+        success: function(data) 
+        {
+        	if(data["status"] == 200)
+        	{
+        		window.location = "index1.html";
+        	}
+        	else if(data["status"] == 400)
+        	{
+        		alert(data["msg"]);
+        	}
+        }
+    });
+	
 	function fomatFloat(src,pos){   
        return Math.round(src*Math.pow(10, pos))/Math.pow(10, pos);   
     } 
@@ -18,6 +42,7 @@ window.onload = function()
 		for(let i = 0;i < borderList.children.length;i++)
 		{
 			temp[i].style.animation = "borderAppear 0.6s " + s + "s";
+			temp[i].style.animationFillMode = "forwards";
 			s = s + 0.2;
 			s = fomatFloat(s, 1)
 		}

@@ -125,8 +125,9 @@ body
 	box-shadow: -2px -2px 20px rgba(0, 0, 0, 0.4);
 	outline: none;
 	border: none;
-	/*opacity: 0;*/
+	/* opacity: 0; */
 	transition: 0.4s;
+	cursor: pointer;
 }
 #RegisterButton
 {
@@ -162,12 +163,14 @@ animation-fill-mode: forwards;*/
     	top: 310px;
     	left: 160px;
     	color: white;
+    	cursor: pointer;
     }
     #PRegisterBtn
     {
     	top: 330px;
     	left: 160px;
     	color: white;
+    	cursor: pointer;
     }
     input:focus 		
     { 
@@ -178,10 +181,12 @@ animation-fill-mode: forwards;*/
         margin-left: 42%;
         margin-top: 6%;
         display: inline-block;
+        cursor: pointer;
     }
     #registerPage
     {
     	margin-left: 120px;
+    	cursor: pointer;
     }
     a
    {
@@ -249,11 +254,11 @@ animation-fill-mode: forwards;*/
 	border:4px solid red; 
 	width:32px; 
 	height:32px; 
-	display:block; 
 	position:absolute;
-	top: -10px;
-	left: 314px;
-	display: none;
+	top: 54px;
+	left: 310px;
+	display: inline-block;
+	opacity: 0;
 }
 .demoSpan1:before, .demoSpan1:after
 {

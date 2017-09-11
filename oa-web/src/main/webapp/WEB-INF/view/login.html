@@ -7,37 +7,38 @@
     <link rel="stylesheet" type="text/css" href="../css/OALoginAndRegister.css" />
     <body>
         <div id="artical">
-        	<a href="#" id="loginPage">登录</a>
-        	<a href="#" id="registerPage">注册</a>
+        	<a id="loginPage">登录</a>
+        	<a id="registerPage">注册</a>
             <div id="head">
-                <form action="/oa-web/user/login" id="loginForm" method="post">
+                <form action="#" id="loginForm" method="post">
                 	<input id="nameTextLogin" type="text" value="" name="userName"/>
                 	<p id="PLoginName">用户名</p>
                 	<input id="passwordTextLogin" type="text" value="" name="password"/>
                 	<p id="PLoginPassword">密码</p>
-                	<input id="LoginButton" type="submit" value=""/>
+                	<input id="LoginButton" type="button" value=""/>
                 	<p id="PLoginBtn">登录</p>
                 </form>
             </div>
             
             <div id="foot">
-            	<form action="/oa-web/user/register" id="registerForm">
-                	<input id="emailTextRegister" type="text" value=""/>
-                	<p id="PRegisterEmail">邮箱<span class="demoSpan1"></p>
-                	<input id="passwordTextRegister" type="text" value=""/>
+            	<form action="#" id="registerForm">
+                	<input id="emailTextRegister" type="text" value="" name="userName"/>
+                	<p id="PRegisterEmail">邮箱</p>
+                	<span class="demoSpan1"></span>
+                	<input id="passwordTextRegister" type="text" value="" name="password"/>
                 	<p id="PRegisterPassword">密码</p>
-                	<input id="passwordTextRegisterComfirm" type="text" value=""/>
+                	<input id="passwordTextRegisterComfirm" type="text" value="" />
                 	<p id="PRegisterPasswordComfirm">确认密码</p>
-                	<input id="nameTextRegister" type="text" value=""/>
+                	<input id="nameTextRegister" type="text" value="" name="nickName"/>
                 	<p id="PRegisterName">用户名</p>
-                	<input id="RegisterButton" type="submit" value=""/>
+                	<input id="RegisterButton" type="button" value="" />
                 	<p id="PRegisterBtn">注册</p>
                 </form>
             </div>
              
             
         </div>
-        <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="../js/OALoginAndRegister.js"></script>
     </body>   
 </html>  

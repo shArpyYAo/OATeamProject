@@ -92,6 +92,7 @@ body
 	margin-top: 20px;
 	margin-left: 10px;
 	display: inline-block;
+	opacity: 0;
 }
 #boardList div:hover
 {
@@ -260,6 +261,6 @@ nav ul
 }
 @keyframes borderAppear 
 {
-	0% { transform: scale(0); }
-	100% { transform: scale(1); }
+	0% { transform: scale(0);opacity: 0; }
+	100% { transform: scale(1); opacity: 1;}
 }

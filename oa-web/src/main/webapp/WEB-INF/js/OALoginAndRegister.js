@@ -125,12 +125,63 @@ $(document).ready(function()
 		var temp = Text[0].val();
 		if(isEmail(temp))
 		{
-			$(".demoSpan1").css("display","none");
+			$(".demoSpan1").css("opacity","0");
 		}
 		else
 		{
-			$(".demoSpan1").css("display","block");
+			$(".demoSpan1").css("opacity","1");
 		}
 	});
-		
+	document.getElementById("LoginButton").addEventListener("click",function()
+	{
+		$.ajax(
+		{
+            cache: false,
+            type: "POST",
+            url: "/oa-web/user/login",
+            data:$('#loginForm').serialize(),
+            async: false,
+            error: function(request) 
+            {
+                alert("Connection error");
+            },
+            success: function(data) 
+            {
+            	if(data["status"] == 200)
+            	{
+            		window.location = "index1.html";
+            	}
+            	else if(data["status"] == 400)
+            	{
+            		alert(data["msg"]);
+            	}
+            }
+        });
+	},false);
+	document.getElementById("RegisterButton").addEventListener("click",function()
+	{
+		$.ajax(
+		{
+            cache: false,
+            type: "POST",
+            url: "/oa-web/user/register",
+            data:$('#registerForm').serialize(),
+            async: false,
+            error: function(request) 
+            {
+                alert("Connection error");
+            },
+            success: function(data) 
+            {
+            	if(data["status"] == 200)
+            	{
+            		window.location = "index1.html";
+            	}
+            	else if(data["status"] == 400)
+            	{
+            		alert(data["msg"]);
+            	}
+            }
+        });
+	},false);
 });
