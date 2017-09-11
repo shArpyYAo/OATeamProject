@@ -1,21 +1,30 @@
 package z_tknight.oa.service.baseServiceImpl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import z_tknight.oa.commons.util.ArrayUtil;
+import z_tknight.oa.commons.util.CollectionUtil;
 import z_tknight.oa.commons.util.ExceptionUtil;
 import z_tknight.oa.commons.util.ResponeResult;
+import z_tknight.oa.commons.util.StringUtil;
 import z_tknight.oa.model.entity.TBoard;
 import z_tknight.oa.model.entity.TBoardSpace;
 import z_tknight.oa.model.entity.TBoardSpaceUser;
 import z_tknight.oa.model.entity.TBoardSpaceUserExample;
+import z_tknight.oa.model.entity.TList;
+import z_tknight.oa.model.entity.TListExample;
 import z_tknight.oa.persist.mapper.TBoardMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceUserMapper;
+import z_tknight.oa.persist.mapper.TListMapper;
 import z_tknight.oa.service.baseService.BoardService;
+import z_tknight.oa.service.helper.PermissionHelper;
+import z_tknight.oa.service.helper.ResponseResultHelper;
 
 /**
  * 
@@ -34,6 +43,65 @@ public class BoardServiceImpl implements BoardService {
 	private TBoardSpaceMapper boardSpaceMapper;
 	@Autowired
 	private TBoardSpaceUserMapper boardSpaceUserMapper;
+	@Autowired
+	private TListMapper listMapper;
+
+	/**
+	 * 查询指定看板的所有列表，以及列表的所有卡片
+	 * @param userNo [Integer]用户编号
+	 * @param boardNo [Integer]看板编号
+	 * @return
+	 */
+	public ResponeResult selectBoard(Integer userNo, Integer boardNo) {
+		if(PermissionHelper.canSelectBoard(userNo, boardNo)) {
+			// 查询看板及其列表、卡片信息
+			return selectBoardDetail(boardNo);
+		} else {
+			// 用户无权进行此操作
+			return ResponseResultHelper.forbidden();
+		}
+	}
+	
+	/**
+	 * 查询指定看板的所有列表，以及列表的所有卡片
+	 * @param boardNo [Integer]看板编号
+	 * @return
+	 */
+	private ResponeResult selectBoardDetail(Integer boardNo) {
+		TBoard board = boardMapper.selectByPrimaryKey(boardNo);
+		if(board == null || !board.isIsDelete()) {
+			return ResponseResultHelper.badRequest("看板不存在");
+		} else {
+			// 获取列表
+			List<TList> lists = getListByBoard(board);
+			
+		}
+		
+		
+		
+		return null;
+	}
+	
+	/**
+	 * 获取指定看板的所有的列表集合
+	 * @param board [TBoard]看板信息
+	 * @return [List<TList>]查询成功返回列表集合
+	 */
+	private List<TList> getListByBoard(TBoard board) {
+		// 获取所有列表编号
+		List<Integer> listNos = ArrayUtil.getIntList(
+				StringUtil.split(board.getListOrder(), ","));
+		// 获取列表
+		if(CollectionUtil.isNotEmpty(listNos)) {
+			TListExample example = new TListExample();
+			TListExample.Criteria criteria = example.createCriteria();
+			criteria.andListNoIn(listNos);
+			return listMapper.selectByExample(example);
+		} else {
+			// 看板中无列表返回空集合
+			return new ArrayList<TList>();
+		}
+	}
 	
 	/**
 	 * @Description: 判断用户是否是看板空间的所有人或成员
@@ -43,7 +111,6 @@ public class BoardServiceImpl implements BoardService {
 	 */
 	@Override
 	public ResponeResult addBoard(Integer boardSpaceNo, String boardName, Integer userNo) {
-
 		try{
 			
 			TBoardSpace boardSpace = boardSpaceMapper.selectByPrimaryKey(boardSpaceNo);

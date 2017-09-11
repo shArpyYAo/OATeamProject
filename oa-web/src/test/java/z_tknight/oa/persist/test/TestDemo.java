@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-import z_tknight.oa.model.dto.BoardSpaceAndBoardDto;
+import z_tknight.oa.model.entity.TBoardSpace;
 import z_tknight.oa.persist.complex.mapper.BoardSpaceAndBoardMapper;
 
 @ContextConfiguration("classpath:config/spring/spring-*.xml")
@@ -19,11 +19,10 @@ public class TestDemo extends AbstractJUnit4SpringContextTests {
 	
 	@Test
 	public void test() {
-		List<BoardSpaceAndBoardDto> result = mapper.selectBoardSpaceAndBoardDetail(17);
-		for(BoardSpaceAndBoardDto dto : result) {
-			System.out.println("[" + dto.getBoard().toString() + "]");
-			System.out.println("[" + dto.getBoardSpace().toString() + "]");
+		List<TBoardSpace> tbsList = mapper.selectBoardSpaceByUserNo(2);
+		for(TBoardSpace tbs : tbsList) {
+			System.out.println(tbs.toString());
 		}
-		System.err.println("共计" + result.size() + "条记录");
+		System.out.println("共计" + tbsList.size() + "个看板空间");
 	}
 }

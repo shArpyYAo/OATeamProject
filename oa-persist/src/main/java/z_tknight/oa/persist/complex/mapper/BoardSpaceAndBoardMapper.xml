@@ -22,6 +22,17 @@
 		<result column="board_order" property="boardSpace.boardOrder" jdbcType="CLOB" />
 	</resultMap>
 
+	<!-- pojo类属性和对应表的结果集映射关系 -->
+	<resultMap id="TBoardSpaceResultMap" type="z_tknight.oa.model.entity.TBoardSpace">
+		<id column="board_space_no" property="boardSpaceNo" jdbcType="INTEGER" />
+		<result column="board_space_name" property="boardSpaceName" jdbcType="VARCHAR" />
+		<result column="summary" property="summary" jdbcType="VARCHAR" />
+		<result column="category_no" property="categoryNo" jdbcType="INTEGER" />
+		<result column="user_no" property="userNo" jdbcType="INTEGER" />
+		<result column="is_delete" property="isDelete" jdbcType="BIT" />
+		<result column="board_order" property="boardOrder" jdbcType="CLOB" />
+	</resultMap>
+
 	<!-- 查询用户可以查看的所有看板空间信息和看板信息 -->
 	<select id="selectBoardSpaceAndBoardDetail" resultMap="BaseResultMap">
 		select * from 
@@ -39,6 +50,16 @@
 			<!-- 查询所有用户创建的看板 -->
 			select * from t_board where user_no = #{userNo}) as tb join t_board_space tbs 
 		on tb.board_space_no = tbs.board_space_no and tb.is_delete = 0 and tbs.is_delete = 0;
+	</select>
+	
+	<select id="selectBoardSpaceByUserNo" resultMap="TBoardSpaceResultMap">
+		<!-- 查询指定用户创建的看板空间 -->
+		select * from t_board_space where user_no = #{userNo}
+			union all
+		<!-- 查询指定用户是看板空间成员的普通项目类型看板空间 -->
+		select tbs.* from t_board_space tbs join 
+			(select board_space_no from t_board_space_user where user_no = #{userNo}) tbsu 
+			on (tbs.board_space_no = tbsu.board_space_no and tbs.category_no > 1)
 	</select>
 	
 </mapper>

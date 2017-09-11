@@ -6,14 +6,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import z_tknight.oa.commons.util.CaseUtil;
+import z_tknight.oa.commons.util.CollectionUtil;
 import z_tknight.oa.commons.util.ExceptionUtil;
 import z_tknight.oa.commons.util.ResponeResult;
+import z_tknight.oa.commons.util.StringUtil;
+import z_tknight.oa.model.dto.BoardSpaceAndBoardDto;
 import z_tknight.oa.model.entity.TBoard;
 import z_tknight.oa.model.entity.TBoardExample;
 import z_tknight.oa.model.entity.TBoardSpace;
-import z_tknight.oa.model.entity.TBoardSpaceExample;
-import z_tknight.oa.model.entity.TBoardSpaceExample.Criteria;
 import z_tknight.oa.model.vo.BoardSpaceAndBoard;
+import z_tknight.oa.persist.complex.mapper.BoardSpaceAndBoardMapper;
 import z_tknight.oa.persist.mapper.TBoardMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceMapper;
 import z_tknight.oa.persist.mapper.TUserMapper;
@@ -36,6 +39,8 @@ public class BoardSpaceServiceImpl implements BoardSpaceService  {
 	private TBoardMapper tBoardMapper;
 	@Autowired
 	private TUserMapper userMapper;
+	@Autowired
+	private BoardSpaceAndBoardMapper bsbmapper;
 	
 	/**
 	 * @Description: 根据用户名查询用户相关的面板空间以及面板，再进行排序
@@ -43,42 +48,105 @@ public class BoardSpaceServiceImpl implements BoardSpaceService  {
 	 */
 	@Override
 	public List<BoardSpaceAndBoard> selectBoardSpaceByUserId(int userId) {
-
-		List<BoardSpaceAndBoard> boardSpaceAndBoardList = new ArrayList<BoardSpaceAndBoard>();
+		// 获取所有用户需要显示的看板空间,并继而获得需要查询的看板编号
+		List<TBoardSpace> tbsList = bsbmapper.selectBoardSpaceByUserNo(userId);
+		List<Integer> boardNos = new ArrayList<Integer>();
 		
-		TBoardSpaceExample boardSpaceExample = new TBoardSpaceExample();
-		Criteria criteria1 = boardSpaceExample.createCriteria();
-		criteria1.andUserNoEqualTo(userId);
-		List<TBoardSpace> boardSpaceList = tBoardSpaceMapper.selectByExample(boardSpaceExample);
-		
-		TBoardExample boardExample = new TBoardExample();
-		TBoardExample.Criteria criteria2 = boardExample.createCriteria();
-		criteria2.andUserNoEqualTo(userId);
-		List<TBoard> boardList = tBoardMapper.selectByExample(boardExample);
-		
-		for(int i = 0;i < boardSpaceList.size();i++){
-			String[] boardOrder = boardSpaceList.get(i).getBoardOrder().split(",");
-			List<TBoard> board = new ArrayList<TBoard>();
-			
-			for(int k = 0; k < boardOrder.length;k++){
-				for(int j = 0; j < boardList.size(); j++){
-					if(boardList.get(j).getBoardNo().toString().equals(boardOrder[k])
-							&&boardList.get(j).getBoardSpaceNo().equals(boardSpaceList.get(i).getBoardSpaceNo())){
-						board.add(boardList.get(j));
-					}
-				}
-			}
-			BoardSpaceAndBoard boardSpaceAndBoard = new BoardSpaceAndBoard();
-			boardSpaceAndBoard.settBoard(board);
-			boardSpaceAndBoard.setBoardSpaceNo(boardSpaceList.get(i).getBoardSpaceNo());
-			boardSpaceAndBoard.setBoardSpaceName(boardSpaceList.get(i).getBoardSpaceName());
-			boardSpaceAndBoardList.add(boardSpaceAndBoard);
-			
+		for(TBoardSpace tbs : tbsList) {
+			getBoardNoByOrder(boardNos, tbs.getBoardOrder());
 		}
+		// 查询看板信息
+		TBoardExample example = new TBoardExample();
+		if(CollectionUtil.isNotEmpty(boardNos)) {
+			TBoardExample.Criteria c = example.createCriteria();
+			c.andBoardNoIn(boardNos);
+		}
+		List<TBoard> boards = tBoardMapper.selectByExample(example);
 		
-		return boardSpaceAndBoardList;
+		return getOrderlyBoardSpaceAndBoard(tbsList, boards);
 	}
-
+	
+	/**
+	 * 获取一个有序的看板空间及其看板信息对象集合
+	 * @param tbsList [List<TBoardSpace>]看板空间集合
+	 * @param boards [List<TBoard>]看板集合
+	 * @return
+	 */
+	private static List<BoardSpaceAndBoard> getOrderlyBoardSpaceAndBoard(
+			List<TBoardSpace> tbsList, List<TBoard> boards) {
+		// 返回结果集
+		List<BoardSpaceAndBoard> tbsbList = new ArrayList<BoardSpaceAndBoard>(tbsList.size());
+		BoardSpaceAndBoard tbsb;
+		int index = -1;
+		// 获取个人看板空间的下标
+		for(int i = 0; i < tbsList.size(); i ++) {
+			if(tbsList.get(i).getCategoryNo() == 1) {
+				index = i;
+				break;
+			}
+		}
+		// 把个人空间放在第一位
+		if(index != -1 && index != 0) {
+			TBoardSpace tmp = tbsList.get(0);
+			tbsList.set(0, tbsList.get(index));
+			tbsList.set(index, tmp);
+		}
+		// 看板分类和排序
+		for(int i = 0; i < tbsList.size(); i ++) {
+			tbsb = new BoardSpaceAndBoard();
+			setAttributes(tbsb, tbsList.get(i));
+			String[] boardNos = StringUtil.split(tbsList.get(i).getBoardOrder(), ",");
+			for(String boardNo : boardNos) {
+				tbsb.gettBoard().add(remove(boards, CaseUtil.caseInt(boardNo)));
+			}
+			tbsbList.add(tbsb);
+		}
+		return tbsbList;
+	}
+	
+	/**
+	 * 给看板空间及其看板数据对象安装数据
+	 * @param tbsb [BoardSpaceAndBoard]看板空间及其看板数据对象
+	 * @param tbs [TBoardSpace]待安装的看板空间信息
+	 */
+	private static void setAttributes(BoardSpaceAndBoard tbsb, TBoardSpace tbs) {
+		tbsb.setBoardSpaceName(tbs.getBoardSpaceName());
+		tbsb.setBoardSpaceNo(tbs.getBoardSpaceNo());
+		tbsb.setCategoryNo(tbs.getCategoryNo());
+		tbsb.setSummary(tbs.getSummary());
+		tbsb.setUserNo(tbs.getUserNo());
+	}
+	
+	/**
+	 * 返回集合中指定看板编号的看板
+	 * @param boards [List<TBoard>]看板列表
+	 * @param boardSpaceNo [int]看板编号
+	 * @return
+	 */
+	private static TBoard remove(List<TBoard> boards, int boardNo) {
+		for(int i = 0; i < boards.size(); i ++) {
+			if(boards.get(i).getBoardNo() == boardNo) {
+				return boards.remove(i);
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * 通过看板顺序字符串获取看板编号
+	 * <pre>
+	 * 看板顺序格式为:[编号],[编号],[编号],...[编号]
+	 * </pre>
+	 * @param boardNos [List<Integer>]看板编号列表
+	 * @param order [String]看板顺序字符串
+	 */
+	private static void getBoardNoByOrder(List<Integer> boardNos, String order) {
+		String[] nos = StringUtil.split(order, ",");
+		for(String no : nos) {
+			boardNos.add(CaseUtil.caseInt(no));
+		}
+	}
+	
 	/**
 	 * @Description: 判断用户名是否为面板的所有人
 	 * 判断面板空间是否可删
