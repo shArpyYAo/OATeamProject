@@ -10,12 +10,12 @@
         	<a href="#" id="loginPage">登录</a>
         	<a href="#" id="registerPage">注册</a>
             <div id="head">
-                <form action="/oa-web/user/login" id="loginForm" method="post">
+                <form action="#" id="loginForm" method="post">
                 	<input id="nameTextLogin" type="text" value="" name="userName"/>
                 	<p id="PLoginName">用户名</p>
                 	<input id="passwordTextLogin" type="text" value="" name="password"/>
                 	<p id="PLoginPassword">密码</p>
-                	<input id="LoginButton" type="submit" value=""/>
+                	<input id="LoginButton" type="button" value=""/>
                 	<p id="PLoginBtn">登录</p>
                 </form>
             </div>
@@ -39,5 +39,26 @@
         </div>
         <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="../js/OALoginAndRegister.js"></script>
+        <script type="text/javascript">
+        	document.getElementById("LoginButton").addEventListener("click",function()
+        	{
+        		$.ajax({
+    	            cache: false,
+    	            type: "POST",
+    	            url: "/oa-web/user/login",
+    	            data:$('#loginForm').serialize(),
+    	            async: false,
+    	            error: function(request) {
+    	                alert("Connection error");
+    	            },
+    	            success: function(data) {
+    	            	alert(data["status"]);
+    	            	if(data["status"] == 200) {
+    	            		alert(data);
+    	            	}
+    	            }
+    	        });
+        	},false);
+        </script>
     </body>   
 </html>  
