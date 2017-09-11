@@ -19,7 +19,7 @@ public class TestDemo extends AbstractJUnit4SpringContextTests {
 	
 	@Test
 	public void test() {
-		List<BoardSpaceAndBoardDto> result = mapper.selectBoardSpaceAndBoardDetail(1);
+		List<BoardSpaceAndBoardDto> result = mapper.selectBoardSpaceAndBoardDetail(17);
 		for(BoardSpaceAndBoardDto dto : result) {
 			System.out.println("[" + dto.getBoard().toString() + "]");
 			System.out.println("[" + dto.getBoardSpace().toString() + "]");

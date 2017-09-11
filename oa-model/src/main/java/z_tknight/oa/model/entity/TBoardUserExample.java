@@ -447,122 +447,122 @@ public class TBoardUserExample {
 			return (Criteria) this;
 		}
 		/**
-		 * board__no字段为null
+		 * board_no字段为null
 		 * @return [Criteria]更新后的criteria
 		 */
 		public Criteria andBoardNoIsNull() {
-			addCriterion("board__no is null");
+			addCriterion("board_no is null");
 			return (Criteria) this;
 		}
 
 		/**
-		 * board__no字段为不为null
+		 * board_no字段为不为null
 		 * @return [Criteria]更新后的criteria
 		 */
 		public Criteria andBoardNoIsNotNull() {
-			addCriterion("board__no is not null");
+			addCriterion("board_no is not null");
 			return (Criteria) this;
 		}
 
 		/**
-		 * board__no等于传入值
+		 * board_no等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
 		public Criteria andBoardNoEqualTo(Integer value) {
-			addCriterion("board__no =", value, "boardNo");
+			addCriterion("board_no =", value, "boardNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * board__no不等于传入值
+		 * board_no不等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
 		public Criteria andBoardNoNotEqualTo(Integer value) {
-			addCriterion("board__no <>", value, "boardNo");
+			addCriterion("board_no <>", value, "boardNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * board__no大于传入值
+		 * board_no大于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
 		public Criteria andBoardNoGreaterThan(Integer value) {
-			addCriterion("board__no >", value, "boardNo");
+			addCriterion("board_no >", value, "boardNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * board__no大于等于传入值
+		 * board_no大于等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
 		public Criteria andBoardNoGreaterThanOrEqualTo(Integer value) {
-			addCriterion("board__no >=", value, "boardNo");
+			addCriterion("board_no >=", value, "boardNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * board__no小于传入值
+		 * board_no小于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
 		public Criteria andBoardNoLessThan(Integer value) {
-			addCriterion("board__no <", value, "boardNo");
+			addCriterion("board_no <", value, "boardNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * board__no小于等于传入值
+		 * board_no小于等于传入值
 		 * @param value [Integer]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
 		public Criteria andBoardNoLessThanOrEqualTo(Integer value) {
-			addCriterion("board__no <=", value, "boardNo");
+			addCriterion("board_no <=", value, "boardNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * board__no在传入值之中
+		 * board_no在传入值之中
 		 * @param value [List<Integer>]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
 		public Criteria andBoardNoIn(List<Integer> values) {
-			addCriterion("board__no in", values, "boardNo");
+			addCriterion("board_no in", values, "boardNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * board__no不在传入值之中
+		 * board_no不在传入值之中
 		 * @param value [List<Integer>]传入值
 		 * @return [Criteria]更新后的criteria
 		 */
 		public Criteria andBoardNoNotIn(List<Integer> values) {
-			addCriterion("board__no not in", values, "boardNo");
+			addCriterion("board_no not in", values, "boardNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * board__no在传入值之间
+		 * board_no在传入值之间
 		 * @param value1 [Integer]传入值1
 		 * @param value2 [Integer]传入值2
 		 * @return [Criteria]更新后的criteria
 		 */
 		public Criteria andBoardNoBetween(Integer value1, Integer value2) {
-			addCriterion("board__no between", value1, value2, "boardNo");
+			addCriterion("board_no between", value1, value2, "boardNo");
 			return (Criteria) this;
 		}
 
 		/**
-		 * board__no不在传入值之间
+		 * board_no不在传入值之间
 		 * @param value1 [Integer]传入值1
 		 * @param value2 [Integer]传入值2
 		 * @return [Criteria]更新后的criteria
 		 */
 		public Criteria andBoardNoNotBetween(Integer value1, Integer value2) {
-			addCriterion("board__no not between", value1, value2, "boardNo");
+			addCriterion("board_no not between", value1, value2, "boardNo");
 			return (Criteria) this;
 		}
 		/**

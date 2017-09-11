@@ -8,6 +8,18 @@
 </head>
 <body>
 
+	<script type="text/javascript">
+		var xmlhttp;
+		if (window.XMLHttpRequest) {
+		  xmlhttp=new XMLHttpRequest();
+		  }
+		else {// 兼容IE6,IE5
+		  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		  }
+		xmlhttp.open("GET","test1.txt",true);
+		xmlhttp.open("GET","demo_get.asp?t=" + Math.random(),true);
+		xmlhttp.send();
+	</script>
 	<form action="/oa-web/user/checkEmail" method="post">
 		<input type="text" name="email">
 		<input type="submit" value="验证">
@@ -52,6 +64,18 @@
 		卡片编号：<input type="text" name="cardNo">
 		卡片新名称：<input type="text" name="newCardName">
 		<input type="submit" value="修改">
+	</form>
+	
+	<form action="/oa-web/comment/addComment" method="post">
+		卡片编号：<input type="text" name="cardNo">
+		评论：<input type="text" name="comment">
+		<input type="submit" value="评论">
+	</form>
+	
+	<form action="/oa-web/comment/deleteComment" method="post">
+		卡片编号：<input type="text" name="cardNo">
+		评论编号：<input type="text" name="commentNo">
+		<input type="submit" value="删除">
 	</form>
 	
 </body>
