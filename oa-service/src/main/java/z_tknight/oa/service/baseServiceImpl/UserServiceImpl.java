@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 		if(!password.equals(user.getPassword())){
 			return ResponeResult.build(400, "用户名或密码错误");
 		}
-		return ResponeResult.ok(userList.get(0).getUserNo());
+		return ResponeResult.ok();
 	}
 
 	@Override

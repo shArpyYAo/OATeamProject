@@ -1,5 +1,6 @@
 package z_tknight.oa.model.vo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import z_tknight.oa.model.entity.TBoard;
@@ -31,7 +32,8 @@ public class BoardSpaceAndBoard {
 	 */
 	private Integer userNo = null;
 	
-	private List<TBoard> tBoard = null;
+	/** 看板空间中的看板 */
+	private List<TBoard> tBoard = new ArrayList<TBoard>();
 
 	public void setBoardSpaceNo(Integer boardSpaceNo) {
 		this.boardSpaceNo = boardSpaceNo;

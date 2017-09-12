@@ -210,11 +210,16 @@ public class CreateTestData extends AbstractJUnit4SpringContextTests {
 		TBoardSpaceUserExample.Criteria c = example.createCriteria();
 		c.andBoardSpaceNoEqualTo(bsNo);
 		c.andUserNoEqualTo(userNo);
+		// 项目中是否存在看板用户
 		if(CollectionUtil.isEmpty(bsumapper.selectByExample(example))) {
-			TBoardSpaceUser bsu = new TBoardSpaceUser();
-			bsu.setBoardSpaceNo(bsNo);
-			bsu.setUserNo(userNo);
-			bsumapper.insert(bsu);
+			TBoardSpace tbs = bsmapper.selectByPrimaryKey(bsNo);
+			// 该用户是否是看板空间所有人
+			if(tbs == null || tbs.getUserNo() != userNo) {
+				TBoardSpaceUser bsu = new TBoardSpaceUser();
+				bsu.setBoardSpaceNo(bsNo);
+				bsu.setUserNo(userNo);
+				bsumapper.insert(bsu);
+			}
 		}
 	}
 	

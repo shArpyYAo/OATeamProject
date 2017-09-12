@@ -1,6 +1,7 @@
 package z_tknight.oa.commons.util;
 
-import org.apache.commons.lang3.ArrayUtils;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 数组工具类
@@ -26,6 +27,23 @@ public final class ArrayUtil {
 	 */
 	public static boolean isNotEmpty(Object[] objs) {
 		return !isEmpty(objs);
+	}
+	
+	/**
+	 * 把数组转换成元素为Integer类型的list
+	 * @param array [Object[]]待转换数组
+	 * @return [List<Integer>]整型列表
+	 */
+	public static List<Integer> getIntList(Object[] array) {
+		if(isNotEmpty(array)) {
+			List<Integer> list = new ArrayList<Integer>(array.length);
+			for(Object obj : array) {
+				list.add(CaseUtil.caseInt(obj));
+			}
+			return list;
+		} else {
+			return null;
+		}
 	}
 	
 }

@@ -23,6 +23,11 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@RequestMapping("/index")
+	public String showIndex(Model model) {
+		
+		return "index";
+	}
 	@RequestMapping("/checkEmail")
 	@ResponseBody
 	public ResponeResult userCheckEmail(@RequestParam(value="email",required=true) String email) {
@@ -34,6 +39,9 @@ public class UserController {
 	@RequestMapping(value="/register", method={RequestMethod.POST})
 	@ResponseBody
 	public ResponeResult userRegister(TUser user) {
+		
+		System.err.println("用户名"+user.getUserName());
+		System.err.println("昵称"+user.getNickName());
 		
 		if(StringUtil.isEmpty(user.getPassword()) ||
 				StringUtil.isEmpty(user.getUserName()) ||
@@ -48,7 +56,8 @@ public class UserController {
 		}
 		
 	}
-
+	
+	
 	@RequestMapping(value="/login", method={RequestMethod.POST})
 	@ResponseBody
 	public ResponeResult userLogin(String userName, String password, HttpServletRequest request) {
@@ -57,12 +66,13 @@ public class UserController {
 				StringUtil.isEmpty(password)) {
 			return ResponeResult.build(400, "数据不能为空");
 		} else {
+		
 			ResponeResult result = userService.userLogin(userName, password);
 			if(result.getStatus().equals(200)){
-				Integer userNo = (Integer)result.getData();
-				request.getSession().setAttribute("userNo", userNo);
+				request.getSession().setAttribute("userName", userName);
 			}
 			return result;
 		}
+		
 	}
 }

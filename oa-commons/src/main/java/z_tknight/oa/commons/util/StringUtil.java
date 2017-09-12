@@ -145,4 +145,18 @@ public final class StringUtil {
 		return String.valueOf(s);
 	}
 	
+	/**
+	 * 分割函数,根据指定分隔符把字符串分割成数组
+	 * @param str [String]带分割字符串
+	 * @param regex [String]分隔字符的正则表达式
+	 * @return [String[]]返回分割后的数组
+	 */
+	public static String[] split(String str, String regex) {
+		if(isEmpty(str)) {
+			return new String[0];
+		} else {
+			return str.split(regex);
+		}
+	}
+	
 }

@@ -26,11 +26,17 @@ public class BoardSpaceController {
 	private BoardSpaceService boardSpaceService;
 
 	@LogInfo("查询个人所有看板空间和看板")
-	@RequestMapping("/selectBoardSpaceByUserId/{id}")
+	@RequestMapping(value="/selectBoardSpaceByUserId", method={RequestMethod.POST})
 	@ResponseBody
-	public List<BoardSpaceAndBoard> selectBoardSpaceByUserId(@PathVariable("id") int userId) {
+	public ResponeResult selectBoardSpaceByUserId(HttpServletRequest request) {
+		Integer userNo = 
+				CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
 		
-		return boardSpaceService.selectBoardSpaceByUserId(userId);
+		if(userNo == null) {
+			return ResponeResult.build(400, "用户没有登录");
+		}
+		return ResponeResult.build(
+				200, "操作成功", boardSpaceService.selectBoardSpaceByUserId(userNo));
 	}
 	
 	@LogInfo("删除面板空间")
