@@ -8,28 +8,20 @@ window.onload = function()
 	var borderList = document.getElementById("boardList");
 	
 	$.ajax(
-	{
-        cache: false,
-        type: "POST",
-        url: "/oa-web/user",
-        data:$('#loginForm').serialize(),
-        async: false,
-        error: function(request) 
-        {
-            alert("Connection error");
-        },
-        success: function(data) 
-        {
-        	if(data["status"] == 200)
-        	{
-        		window.location = "index1.html";
-        	}
-        	else if(data["status"] == 400)
-        	{
-        		alert(data["msg"]);
-        	}
-        }
-    });
+			{
+		        cache: false,
+		        type: "post",
+		        dataType: "json",
+		        url: "/oa-web/boardSpace/selectBoardSpaceByUserId",
+		        error: function(request) 
+		        {
+		            alert("Connection error");
+		        },
+		        success: function(data) 
+		        {
+		        	alert("Connection success:" + data["data"]);
+		        }
+		    });
 	
 	function fomatFloat(src,pos){   
        return Math.round(src*Math.pow(10, pos))/Math.pow(10, pos);   
