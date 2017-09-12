@@ -28,9 +28,7 @@ public class CardController {
 			return ResponeResult.build(400, "卡片名称不能为空");
 		}
 		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
-		if(userNo == null) {
-			return ResponeResult.build(400, "用户没有登录");
-		}
+		
 		return cardService.addCard(cardName, userNo, listNo);
 	}
 	
@@ -40,9 +38,7 @@ public class CardController {
 	public ResponeResult deleteCard(HttpServletRequest request, Integer cardNo){
 		
 		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
-		if(userNo == null) {
-			return ResponeResult.build(400, "用户没有登录");
-		}
+		
 		return cardService.deleteCard(cardNo, userNo);
 	}
 	
@@ -56,9 +52,6 @@ public class CardController {
 		}
 		
 		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
-		if(userNo == null) {
-			return ResponeResult.build(400, "用户没有登录");
-		}
 		
 		return cardService.updateCardName(userNo, newCardName, cardNo);
 	}
@@ -70,9 +63,7 @@ public class CardController {
 			String cardOrderTo, String newcardOrderFrom, String newcardOrderTo) {
 		
 		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
-		if(userNo == null) {
-			return ResponeResult.build(400, "用户没有登录");
-		}
+		
 		return cardService.updateCardOrder(listNoFrom, listNoTo, cardOrderFrom, cardOrderTo, newcardOrderFrom, newcardOrderTo, userNo);
 	}
 	

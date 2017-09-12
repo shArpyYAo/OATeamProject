@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,11 +22,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping("/index")
-	public String showIndex(Model model) {
-		
-		return "index";
-	}
 	@RequestMapping("/checkEmail")
 	@ResponseBody
 	public ResponeResult userCheckEmail(@RequestParam(value="email",required=true) String email) {
@@ -39,9 +33,6 @@ public class UserController {
 	@RequestMapping(value="/register", method={RequestMethod.POST})
 	@ResponseBody
 	public ResponeResult userRegister(TUser user) {
-		
-		System.err.println("用户名"+user.getUserName());
-		System.err.println("昵称"+user.getNickName());
 		
 		if(StringUtil.isEmpty(user.getPassword()) ||
 				StringUtil.isEmpty(user.getUserName()) ||

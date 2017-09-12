@@ -33,12 +33,8 @@ public class BoardController {
 	public ResponeResult selectBoardDetailByNo(
 			HttpServletRequest request, @PathVariable("userNo") Integer boardNo) {
 		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
-		//判断是否登录，判断面板名称是否为空
-		if(userNo == null) {
-			return ResponeResult.build(400, "用户没有登录");
-		} else {
-			return boardService.selectBoard(userNo, boardNo);
-		}
+		
+		return boardService.selectBoard(userNo, boardNo);
 	}
 	
 	@LogInfo("新增看板")
@@ -48,10 +44,7 @@ public class BoardController {
 			String newBoardName, Integer boardSpaceNo) {
 
 		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
-		//判断是否登录，判断面板名称是否为空
-		if(userNo == null) {
-			return ResponeResult.build(400, "用户没有登录");
-		}
+		
 		if(newBoardName==null || newBoardName.equals("")) {
 			return ResponeResult.build(400, "面板名称不能为空");
 		}
@@ -65,10 +58,7 @@ public class BoardController {
 	public ResponeResult deleteBoard(HttpServletRequest request, Integer boardNo) {
 		
 		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
-		//判断是否登录，判断面板名称是否为空
-		if(userNo == null) {
-			return ResponeResult.build(400, "用户没有登录");
-		}
+		
 		return boardService.deleteBoard(userNo, boardNo);
 	}
 	
@@ -79,10 +69,6 @@ public class BoardController {
 			String newBoardOrder, Integer boardSpaceNo) {
 		
 		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
-		//判断是否登录
-		if(userNo == null) {
-			return ResponeResult.build(400, "用户没有登录");
-		}
 		
 		return boardService.updateBoardOrder(boardOrder, newBoardOrder, boardSpaceNo, userNo);
 	}

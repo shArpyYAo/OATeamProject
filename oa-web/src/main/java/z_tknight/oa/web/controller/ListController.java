@@ -28,11 +28,9 @@ public class ListController {
 		if(listName ==null || listName.equals("")) {
 			return ResponeResult.build(400, "列表名称不能为空");
 		}
-		request.getSession().setAttribute("userNo", "1");
+		
 		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
-		if(userNo == null) {
-			return ResponeResult.build(400, "用户没有登录");
-		}
+		
 		return listService.addList(userNo, listName, boardNo);
 	}
 	
@@ -45,9 +43,7 @@ public class ListController {
 			return ResponeResult.build(400, "列表名称不能为空");
 		}
 		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
-		if(userNo == null) {
-			return ResponeResult.build(400, "用户没有登录");
-		}
+		
 		return listService.updateListName(userNo, newListName, listNo);
 	}
 	
@@ -57,9 +53,7 @@ public class ListController {
 	public ResponeResult deleteList(HttpServletRequest request, Integer listNo) {
 		
 		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
-		if(userNo == null) {
-			return ResponeResult.build(400, "用户没有登录");
-		}
+		
 		return listService.deleteList(listNo, userNo);
 	}
 	
@@ -70,10 +64,7 @@ public class ListController {
 			String newListOrder, Integer boardNo) {
 		
 		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
-		//判断是否登录
-		if(userNo == null) {
-			return ResponeResult.build(400, "用户没有登录");
-		}
+		
 		return listService.updateListOrder(listOrder, newListOrder, boardNo, userNo);
 	}
 }

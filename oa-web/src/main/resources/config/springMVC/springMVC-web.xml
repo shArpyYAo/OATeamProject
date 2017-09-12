@@ -57,8 +57,10 @@
 	<!-- 拦截器配置 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<!-- 拦截订单类请求 -->
 			<mvc:mapping path="/boardSpace/**"/>
+			<mvc:mapping path="/board/**"/>
+			<mvc:mapping path="/card/**"/>
+			<mvc:mapping path="/list/**"/>
 			<bean class="z_tknight.oa.web.interceptor.LoginInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
