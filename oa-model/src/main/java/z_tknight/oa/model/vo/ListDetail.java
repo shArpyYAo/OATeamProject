@@ -3,7 +3,7 @@ package z_tknight.oa.model.vo;
 import java.util.ArrayList;
 import java.util.List;
 
-import z_tknight.oa.model.entity.TCard;
+import z_tknight.oa.model.entity.TList;
 
 /**
  * 列表相信信息
@@ -29,6 +29,13 @@ public class ListDetail {
 	/** 卡片详细信息 */
 	private List<CardDetail> cards = new ArrayList<CardDetail>();
 
+	public ListDetail() {}
+	
+	public ListDetail(TList list) {
+		this.listNo = list.getListNo();
+		this.listName = list.getListName();
+	}
+	
 	public Integer getListNo() {
 		return listNo;
 	}

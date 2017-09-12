@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="z_tknight.oa.persist.complex.mapper.CardAndTagMapper" >
+
+
+	<!-- pojo类属性和对应表的结果集映射关系 -->
+	<resultMap id="BaseResultMap" type="z_tknight.oa.model.vo.TagDetail">
+		<id column="tag_no" property="tagNo" jdbcType="INTEGER" />
+		<result column="tag_name" property="tagName" jdbcType="VARCHAR" />
+		<result column="card_no" property="cardNo" jdbcType="INTEGER" />
+		<result column="board_no" property="boardNo" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<!-- 查询用户可以查看的所有看板空间信息和看板信息 -->
+	<select id="selectTagsByCards" resultMap="BaseResultMap">
+		select t.*, ct.* 
+		from t_tag t join t_card_tag ct 
+		on t.tag_no = ct.tag_no and t.board_no in
+		<foreach collection="cardNos" item="cardNo" 
+			open="(" close=")" separator=",">
+			#{listItem}
+		</foreach>
+	</select>
+	
+</mapper>

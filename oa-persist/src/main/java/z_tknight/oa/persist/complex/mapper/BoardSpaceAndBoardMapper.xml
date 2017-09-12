@@ -52,6 +52,7 @@
 		on tb.board_space_no = tbs.board_space_no and tb.is_delete = 0 and tbs.is_delete = 0;
 	</select>
 	
+	<!-- 查询用户可以查看的所有看板空间信息和看板信息 -->
 	<select id="selectBoardSpaceByUserNo" resultMap="TBoardSpaceResultMap">
 		<!-- 查询指定用户创建的看板空间 -->
 		select * from t_board_space where user_no = #{userNo}

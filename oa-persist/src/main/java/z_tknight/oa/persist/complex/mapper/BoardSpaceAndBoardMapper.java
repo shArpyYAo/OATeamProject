@@ -8,7 +8,7 @@ import z_tknight.oa.model.dto.BoardSpaceAndBoardDto;
 import z_tknight.oa.model.entity.TBoardSpace;
 
 /**
- * 权限判断数据库操作接口
+ * 看板空间和看板复杂SQL操作
  * 
  * @author 随心
  *
