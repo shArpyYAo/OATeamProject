@@ -147,6 +147,7 @@ $(document).ready(function()
             },
             success: function(data) 
             {
+            	alert("Login success:" + data);
             	if(data["status"] == 200)
             	{
             		window.location = "index1.html";

@@ -8,8 +8,7 @@
 </head>
 <body>
 
-	<form action="/oa-web/boardSpace/deleteBoardSpace" method="post">
-		<input type="text" name="boardSpaceNo" value="4">
+	<form action="/oa-web/boardSpace/selectBoardSpaceByUserId" method="post">
 		<input type="submit">
 	</form>
 	

@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 		if(!password.equals(user.getPassword())){
 			return ResponeResult.build(400, "用户名或密码错误");
 		}
-		return ResponeResult.ok();
+		return ResponeResult.ok(user.getUserNo());
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		
-		return ResponeResult.ok("注册成功");
+		return ResponeResult.ok(user.getUserNo());
 	}
 
 }

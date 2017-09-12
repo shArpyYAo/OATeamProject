@@ -32,7 +32,7 @@ public class UserController {
 	
 	@RequestMapping(value="/register", method={RequestMethod.POST})
 	@ResponseBody
-	public ResponeResult userRegister(TUser user) {
+	public ResponeResult userRegister(HttpServletRequest request,TUser user) {
 		
 		if(StringUtil.isEmpty(user.getPassword()) ||
 				StringUtil.isEmpty(user.getUserName()) ||
@@ -41,6 +41,7 @@ public class UserController {
 		} else {
 			ResponeResult result = userService.userCheckEmail(user.getUserName());
 			if(result.getStatus() == 200) { 
+				request.getSession().setAttribute("userNo", result.getData());
 				return userService.userRegister(user);
 			}
 			return result;
@@ -60,7 +61,7 @@ public class UserController {
 		
 			ResponeResult result = userService.userLogin(userName, password);
 			if(result.getStatus().equals(200)){
-				request.getSession().setAttribute("userName", userName);
+				request.getSession().setAttribute("userNo", result.getData());
 			}
 			return result;
 		}
