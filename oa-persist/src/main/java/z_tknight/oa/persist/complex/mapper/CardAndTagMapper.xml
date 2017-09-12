@@ -18,7 +18,7 @@
 		on t.tag_no = ct.tag_no and t.board_no in
 		<foreach collection="cardNos" item="cardNo" 
 			open="(" close=")" separator=",">
-			#{listItem}
+			#{cardNo}
 		</foreach>
 	</select>
 	

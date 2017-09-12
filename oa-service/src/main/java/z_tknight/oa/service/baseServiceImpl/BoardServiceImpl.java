@@ -87,7 +87,7 @@ public class BoardServiceImpl implements BoardService {
 	 */
 	private ResponeResult getBoardDetail(Integer boardNo) {
 		TBoard board = boardMapper.selectByPrimaryKey(boardNo);
-		if(board == null || !board.isIsDelete()) {
+		if(board == null || board.isIsDelete()) {
 			return ResponseResultHelper.badRequest("看板不存在");
 		} else {
 			// 看板详细信息对象
@@ -206,14 +206,16 @@ public class BoardServiceImpl implements BoardService {
 	 * @return
 	 */
 	private String orderByNo(String fieldName, List<Integer> nos) {
-		if(CollectionUtil.isEmpty(nos)) return null;
-		StringBuilder sBuilder = new StringBuilder(fieldName + " (");
-		sBuilder.append(nos.get(0));
-		for(int i = 1; i < nos.size(); i ++) {
-			sBuilder.append(nos.get(i));
+		if(CollectionUtil.isEmpty(nos)) {
+			return null;
+		} else {
+			StringBuilder sBuilder = new StringBuilder("field(" + fieldName + "");
+			for(int i = 0; i < nos.size(); i ++) {
+				sBuilder.append("," + nos.get(i));
+			}
+			sBuilder.append(")");
+			return sBuilder.toString();
 		}
-		sBuilder.append(")");
-		return sBuilder.toString();
 	}
 	
 	/**
