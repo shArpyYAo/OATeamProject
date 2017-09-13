@@ -55,7 +55,7 @@
 	</bean>
 	
 	<!-- 拦截器配置 -->
-	<mvc:interceptors>
+	<!-- <mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/boardSpace/**"/>
 			<mvc:mapping path="/board/**"/>
@@ -63,5 +63,5 @@
 			<mvc:mapping path="/list/**"/>
 			<bean class="z_tknight.oa.web.interceptor.LoginInterceptor"/>
 		</mvc:interceptor>
-	</mvc:interceptors>
+	</mvc:interceptors> -->
 </beans>

@@ -84,6 +84,13 @@ body
 	margin: 80px auto;
 	position: absolute;
 }
+h3
+{
+	display: inline-block;
+	margin-top: 24%;
+	margin-left: 38%;
+	color: white;
+}
 #boardList div
 {
 	width: 200px;
@@ -94,23 +101,26 @@ body
 	display: inline-block;
 	opacity: 0;
 }
+
 #boardList div:hover
 {
 	
 }
 #boardList div .demoSpanJ
 {
-	top: 44%;
-	left: 44%;
+	top: 6px;
+	left: 8px;
 }
 #boardList div .demoSpanX
 {
-	
+	top: -42%;
+	left: 20%;
 }
 h2
 {
 	position: absolute;
 	left: 100px;
+	animation: titleAppear 0.6s;
 }
 #right
 {
@@ -219,6 +229,7 @@ a
 	text-decoration: none;
 	color: dimgrey;
 	font-size: 22px;
+	cursor: pointer;
 }
 nav ul
 {
@@ -263,4 +274,12 @@ nav ul
 {
 	0% { transform: scale(0);opacity: 0; }
 	100% { transform: scale(1); opacity: 1;}
+}
+@keyframes titleAppear 
+{
+	0% { top: 10px; left: 100px; opacity: 0;}
+	25%{ top: -6px; left: 110px; opacity: 0.2;}
+	50% { top: 8px; left: 90px; opacity: 0.4;}
+	75%{ top: -4px; left: 106px; opacity: 0.6;}
+	100% { top: 0px; left: 100px; opacity: 1;}
 }

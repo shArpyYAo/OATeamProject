@@ -27,9 +27,15 @@ public class BoardSpaceController {
 	public ResponeResult selectBoardSpaceByUserId(HttpServletRequest request) {
 		Integer userNo = 
 				CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
-		System.err.println("进入后台");
-		return ResponeResult.build(
-				200, "操作成功", boardSpaceService.selectBoardSpaceByUserId(userNo));
+		if(userNo == null) 
+		{
+			return ResponeResult.build(400, "用户未登录");
+		} 
+		else 
+		{
+			return ResponeResult.build(
+					200, "操作成功", boardSpaceService.selectBoardSpaceByUserId(userNo));
+		}
 	}
 	
 	@LogInfo("删除面板空间")
