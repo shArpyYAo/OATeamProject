@@ -28,13 +28,16 @@ public class BoardController {
 	 * @return
 	 */
 	@LogInfo("查询看板内容")
-	@RequestMapping(value="/findBoard/{userNo}", method={RequestMethod.POST})
+	@RequestMapping(value="/findBoard/{boardNo}", method={RequestMethod.GET})
 	@ResponseBody
 	public ResponeResult selectBoardDetailByNo(
-			HttpServletRequest request, @PathVariable("userNo") Integer boardNo) {
+			HttpServletRequest request, @PathVariable("boardNo") Integer boardNo) {
 		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
-		
-		return boardService.selectBoard(userNo, boardNo);
+		if(userNo == null) {
+			return ResponeResult.build(400, "无操作权限");
+		} else {
+			return boardService.selectBoard(userNo, boardNo);
+		}
 	}
 	
 	@LogInfo("新增看板")
