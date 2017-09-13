@@ -16,11 +16,19 @@ import z_tknight.oa.model.entity.TBoard;
 import z_tknight.oa.model.entity.TBoardSpace;
 import z_tknight.oa.model.entity.TBoardSpaceUser;
 import z_tknight.oa.model.entity.TBoardSpaceUserExample;
+import z_tknight.oa.model.entity.TCard;
+import z_tknight.oa.model.entity.TCardExample;
 import z_tknight.oa.model.entity.TList;
 import z_tknight.oa.model.entity.TListExample;
+import z_tknight.oa.model.vo.BoardDetail;
+import z_tknight.oa.model.vo.CardDetail;
+import z_tknight.oa.model.vo.ListDetail;
+import z_tknight.oa.model.vo.TagDetail;
+import z_tknight.oa.persist.complex.mapper.CardAndTagMapper;
 import z_tknight.oa.persist.mapper.TBoardMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceUserMapper;
+import z_tknight.oa.persist.mapper.TCardMapper;
 import z_tknight.oa.persist.mapper.TListMapper;
 import z_tknight.oa.service.baseService.BoardService;
 import z_tknight.oa.service.helper.PermissionHelper;
@@ -37,14 +45,24 @@ import z_tknight.oa.service.helper.ResponseResultHelper;
 @Service
 public class BoardServiceImpl implements BoardService {
 
+	/** 看板持久层接口 */
 	@Autowired
 	private TBoardMapper boardMapper;
+	/** 看板空间持久层接口 */
 	@Autowired
 	private TBoardSpaceMapper boardSpaceMapper;
+	/** 看板空间和用户关系持久层接口 */
 	@Autowired
 	private TBoardSpaceUserMapper boardSpaceUserMapper;
+	/** 列表持久层接口 */
 	@Autowired
 	private TListMapper listMapper;
+	/** 卡片持久层接口 */
+	@Autowired
+	private TCardMapper cardMapper;
+	/** 卡片和标签持久层接口 */
+	@Autowired
+	private CardAndTagMapper cardTagMapper;
 
 	/**
 	 * 查询指定看板的所有列表，以及列表的所有卡片
@@ -55,7 +73,7 @@ public class BoardServiceImpl implements BoardService {
 	public ResponeResult selectBoard(Integer userNo, Integer boardNo) {
 		if(PermissionHelper.canSelectBoard(userNo, boardNo)) {
 			// 查询看板及其列表、卡片信息
-			return selectBoardDetail(boardNo);
+			return getBoardDetail(boardNo);
 		} else {
 			// 用户无权进行此操作
 			return ResponseResultHelper.forbidden();
@@ -67,39 +85,136 @@ public class BoardServiceImpl implements BoardService {
 	 * @param boardNo [Integer]看板编号
 	 * @return
 	 */
-	private ResponeResult selectBoardDetail(Integer boardNo) {
+	private ResponeResult getBoardDetail(Integer boardNo) {
 		TBoard board = boardMapper.selectByPrimaryKey(boardNo);
-		if(board == null || !board.isIsDelete()) {
+		if(board == null || board.isIsDelete()) {
 			return ResponseResultHelper.badRequest("看板不存在");
 		} else {
-			// 获取列表
+			// 看板详细信息对象
+			BoardDetail boardDetail = new BoardDetail(board);
+			// 按看板对象中列表顺序获得列表对象集合
 			List<TList> lists = getListByBoard(board);
-			
+			if(CollectionUtil.isEmpty(lists)) {
+				return ResponeResult.build(200, "查询成功",boardDetail);
+			} else {
+				// 按列表对象中卡片编号顺序获得卡片对象集合
+				List<CardDetail> cards = getCardByLists(lists);
+				// 遍历安装数据
+				ListDetail listDetail = null;
+				CardDetail cardDetail = null;
+				int cardIndex = 0;
+				for(int i = 0; i < lists.size(); i ++) {
+					listDetail = new ListDetail(lists.get(i));
+					for(; cardIndex < cards.size(); cardIndex ++) {
+						cardDetail = cards.get(cardIndex);
+						if(cardDetail.getListNo() == listDetail.getListNo()) {
+							// 安装卡片详细信息到列表详细信息中
+							listDetail.getCards().add(cardDetail);
+						} else {
+							break;
+						}
+					}
+					// 安装列表详细信息到看板详细信息中
+					boardDetail.getLists().add(listDetail);
+				}
+			}
+			return ResponeResult.build(200, "查询成功",boardDetail);
 		}
-		
-		
-		
-		return null;
+	}
+	
+	/**
+	 * 根据列表集合按顺序获取列表中所有的卡片
+	 * @param lists [List<TList>]列表顺序
+	 * @return [List<TCard>] 返回有顺序的卡片集合,如果为空则返回null
+	 */
+	private List<CardDetail> getCardByLists(List<TList> lists) {
+		if(CollectionUtil.isEmpty(lists)) {
+			return null;
+		} else {
+			// 需要查询的卡片编号(需要顺序排列)
+			List<Integer> cardNos = new ArrayList<Integer>();
+			for(TList list : lists) {
+				// 按顺序解析当前列表的卡片编号
+				cardNos.addAll(ArrayUtil.getIntList(
+						StringUtil.split(list.getCardOrder(), ",")));
+			}
+			if(CollectionUtil.isEmpty(cardNos)) {
+				return null;
+			} else {
+				// 查询卡片信息
+				TCardExample example = new TCardExample();
+				TCardExample.Criteria criteria = example.createCriteria();
+				criteria.andCardNoIn(cardNos);
+				example.setOrderByClause(orderByNo("card_no", cardNos)); // 排序
+				// 获取有序的卡片对象
+				List<TCard> cards = cardMapper.selectByExample(example);
+				List<TagDetail> tagDetails = cardTagMapper.selectTagsByCards(cardNos);
+				List<CardDetail> cardDetails = new ArrayList<CardDetail>(cards.size());
+				// 遍历创建卡片详细信息对象并安装标签详细信息
+				CardDetail cDetail = null;
+				TagDetail tDetail = null;
+				for(int i = 0, k = 0; i < cards.size(); i ++) {
+					cDetail = new CardDetail(cards.get(i));
+					for(; k < tagDetails.size(); k ++) {
+						tDetail = tagDetails.get(k);
+						if(tDetail.getCardNo() == cDetail.getCardNo()) {
+							// 安装标签详细信息
+							cDetail.getTags().add(tDetail);
+						}
+					}
+					// 卡片详细信息载入列表
+					cardDetails.add(cDetail);
+				}
+				return cardDetails;
+			}
+		}
 	}
 	
 	/**
 	 * 获取指定看板的所有的列表集合
 	 * @param board [TBoard]看板信息
-	 * @return [List<TList>]查询成功返回列表集合
+	 * @return [List<TList>]查询成功返回列表集合,如果集合为空返回null
 	 */
 	private List<TList> getListByBoard(TBoard board) {
-		// 获取所有列表编号
-		List<Integer> listNos = ArrayUtil.getIntList(
-				StringUtil.split(board.getListOrder(), ","));
-		// 获取列表
-		if(CollectionUtil.isNotEmpty(listNos)) {
-			TListExample example = new TListExample();
-			TListExample.Criteria criteria = example.createCriteria();
-			criteria.andListNoIn(listNos);
-			return listMapper.selectByExample(example);
+		if(board == null) {
+			return null;
 		} else {
-			// 看板中无列表返回空集合
-			return new ArrayList<TList>();
+			// 获取所有列表编号
+			List<Integer> listNos = ArrayUtil.getIntList(
+					StringUtil.split(board.getListOrder(), ","));
+			// 获取列表
+			if(CollectionUtil.isNotEmpty(listNos)) {
+				TListExample example = new TListExample();
+				TListExample.Criteria criteria = example.createCriteria();
+				criteria.andListNoIn(listNos);
+				example.setOrderByClause(orderByNo("list_no", listNos)); // 排序
+				return listMapper.selectByExample(example);
+			} else {
+				// 看板中无列表返回空集合
+				return null;
+			}
+		}
+	}
+	
+	/**
+	 * 拼接出field函数排序使用到的语句
+	 * <pre>
+	 * 该方法用于获取特定顺序的列表数据、卡片数据
+	 * </pre>
+	 * @param fieldName [String]字段名
+	 * @param nos [List<Integer>]编号列表
+	 * @return
+	 */
+	private String orderByNo(String fieldName, List<Integer> nos) {
+		if(CollectionUtil.isEmpty(nos)) {
+			return null;
+		} else {
+			StringBuilder sBuilder = new StringBuilder("field(" + fieldName + "");
+			for(int i = 0; i < nos.size(); i ++) {
+				sBuilder.append("," + nos.get(i));
+			}
+			sBuilder.append(")");
+			return sBuilder.toString();
 		}
 	}
 	

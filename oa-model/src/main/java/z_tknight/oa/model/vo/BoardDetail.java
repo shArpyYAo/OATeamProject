@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import z_tknight.oa.model.entity.TBoard;
+
 /**
  * 看板详细信息
  * <pre>
@@ -53,6 +55,18 @@ public class BoardDetail {
 	/** 看板中列表详细信息 */
 	private List<ListDetail> lists = new ArrayList<ListDetail>();
 
+	public BoardDetail() {};
+	
+	public BoardDetail(TBoard board) {
+		this.boardNo = board.getBoardNo();
+		this.boardName = board.getBoardName();
+		this.boardSpaceNo = board.getBoardSpaceNo();
+		this.displayNo = board.getDisplayNo();
+		this.endTime = board.getEndTime();
+		this.startTime = board.getStartTime();
+		this.userNo = board.getUserNo();
+	}
+	
 	public Integer getBoardNo() {
 		return boardNo;
 	}
