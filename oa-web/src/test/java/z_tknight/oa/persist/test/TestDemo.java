@@ -25,4 +25,21 @@ public class TestDemo extends AbstractJUnit4SpringContextTests {
 		}
 		System.out.println("共计" + tbsList.size() + "个看板空间");
 	}
+	
+	static int hash(int h) {    
+        h ^= (h >>> 20) ^ (h >>> 12);    
+        return h ^ (h >>> 7) ^ (h >>> 4);    
+    }  
+
+	
+	public static void main(String[] args) {
+		System.out.println(hash(122156));
+		System.out.println(hash(122157));
+		System.out.println(hash(122158));
+		System.out.println(hash(122159));
+		System.out.println(hash(-122156));
+		System.out.println(hash(-122157));
+		System.out.println(hash(-122158));
+		System.out.println(hash(-122159));
+	}
 }
