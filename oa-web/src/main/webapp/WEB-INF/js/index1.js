@@ -19,7 +19,7 @@ window.onload = function()
 		        },
 		        success: function(data) 
 		        {
-		        	alert("Connection success:" + data["data"]);
+		        	alert("Connection success:" + data["boardSpaceName"]);
 		        }
 		    });
 	
