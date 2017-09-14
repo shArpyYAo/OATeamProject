@@ -22,9 +22,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping("/checkEmail")
+	@RequestMapping(value="/checkEmail", method={RequestMethod.POST})
 	@ResponseBody
-	public ResponeResult userCheckEmail(@RequestParam(value="email",required=true) String email) {
+	public ResponeResult userCheckEmail(@RequestParam("email") String email) {
 		
 		return userService.userCheckEmail(email);
 		
@@ -62,6 +62,7 @@ public class UserController {
 			ResponeResult result = userService.userLogin(userName, password);
 			if(result.getStatus().equals(200)){
 				request.getSession().setAttribute("userNo", result.getData());
+				result.setData(null); // 不返回任何数据
 			}
 			return result;
 		}

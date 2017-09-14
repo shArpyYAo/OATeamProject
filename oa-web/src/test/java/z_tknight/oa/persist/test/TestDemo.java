@@ -1,5 +1,6 @@
 package z_tknight.oa.persist.test;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,6 +9,7 @@ import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
+import z_tknight.oa.model.entity.TBoard;
 import z_tknight.oa.model.entity.TBoardSpace;
 import z_tknight.oa.persist.complex.mapper.BoardSpaceAndBoardMapper;
 
@@ -24,5 +26,19 @@ public class TestDemo extends AbstractJUnit4SpringContextTests {
 			System.out.println(tbs.toString());
 		}
 		System.out.println("共计" + tbsList.size() + "个看板空间");
+	}
+	
+	static int hash(int h) {    
+        h ^= (h >>> 20) ^ (h >>> 12);    
+        return h ^ (h >>> 7) ^ (h >>> 4);    
+    }  
+
+	
+	public static void main(String[] args) {
+		Class<?> clazz = TBoard.class;
+		Field[] fields = clazz.getDeclaredFields();
+		for(Field field : fields) {
+			System.out.println("    	" + field.getName() + ": ,");
+		}
 	}
 }

@@ -128,7 +128,7 @@ public class LoggerAspect {
 			state = false;
 			// 异常信息
 			log.setException(e + "");
-			_LOG.debug("异常信息:" + e);
+//			_LOG.debug("异常信息:" + e);
 			throw e;
 		} finally {
 			endTime = new Date().getTime();

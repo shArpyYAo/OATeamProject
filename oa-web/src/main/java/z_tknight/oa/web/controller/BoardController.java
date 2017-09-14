@@ -34,7 +34,7 @@ public class BoardController {
 			HttpServletRequest request, @PathVariable("boardNo") Integer boardNo) {
 		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
 		if(userNo == null) {
-			return ResponeResult.build(400, "无操作权限");
+			return ResponeResult.build(400, "参数不合法");
 		} else {
 			return boardService.selectBoard(userNo, boardNo);
 		}

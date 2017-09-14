@@ -19,7 +19,12 @@
 		<foreach collection="cardNos" item="cardNo" 
 			open="(" close=")" separator=",">
 			#{cardNo}
-		</foreach>
+		</foreach> 
+		order by field(ct.card_no,
+		<foreach collection="cardNos" item="cardNo" 
+			close=")" separator=",">
+			#{cardNo}
+		</foreach> 
 	</select>
 	
 </mapper>
