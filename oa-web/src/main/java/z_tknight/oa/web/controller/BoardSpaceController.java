@@ -27,12 +27,9 @@ public class BoardSpaceController {
 	public ResponeResult selectBoardSpaceByUserId(HttpServletRequest request) {
 		Integer userNo = 
 				CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
-		if(userNo == null) 
-		{
+		if(userNo == null) {
 			return ResponeResult.build(400, "用户未登录");
-		} 
-		else 
-		{
+		} else {
 			return ResponeResult.build(
 					200, "操作成功", boardSpaceService.selectBoardSpaceByUserId(userNo));
 		}
@@ -69,8 +66,6 @@ public class BoardSpaceController {
 		if(newBoardSpaceName == null||newBoardSpaceName.equals("")) {
 			return ResponeResult.build(400, "面板空间不能为空");
 		}
-		ResponeResult result = boardSpaceService.updateBoardSpace(userNo, boardSpaceNo, newBoardSpaceName, newSummary);
-		
-		return result;
+		return boardSpaceService.updateBoardSpace(userNo, boardSpaceNo, newBoardSpaceName, newSummary);
 	}
 }

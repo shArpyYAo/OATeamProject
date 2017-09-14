@@ -24,7 +24,7 @@ public class UserController {
 	
 	@RequestMapping(value="/checkEmail", method={RequestMethod.POST})
 	@ResponseBody
-	public ResponeResult userCheckEmail(@RequestParam(value="email",required=true) String email) {
+	public ResponeResult userCheckEmail(@RequestParam("email") String email) {
 		
 		return userService.userCheckEmail(email);
 		

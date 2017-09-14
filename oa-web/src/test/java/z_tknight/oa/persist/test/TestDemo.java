@@ -1,5 +1,6 @@
 package z_tknight.oa.persist.test;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,6 +9,7 @@ import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
+import z_tknight.oa.model.entity.TBoard;
 import z_tknight.oa.model.entity.TBoardSpace;
 import z_tknight.oa.persist.complex.mapper.BoardSpaceAndBoardMapper;
 
@@ -33,13 +35,10 @@ public class TestDemo extends AbstractJUnit4SpringContextTests {
 
 	
 	public static void main(String[] args) {
-		System.out.println(hash(122156));
-		System.out.println(hash(122157));
-		System.out.println(hash(122158));
-		System.out.println(hash(122159));
-		System.out.println(hash(-122156));
-		System.out.println(hash(-122157));
-		System.out.println(hash(-122158));
-		System.out.println(hash(-122159));
+		Class<?> clazz = TBoard.class;
+		Field[] fields = clazz.getDeclaredFields();
+		for(Field field : fields) {
+			System.out.println("    	" + field.getName() + ": ,");
+		}
 	}
 }

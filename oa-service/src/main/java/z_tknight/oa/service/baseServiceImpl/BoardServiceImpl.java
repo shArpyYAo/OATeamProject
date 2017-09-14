@@ -267,11 +267,11 @@ public class BoardServiceImpl implements BoardService {
 			
 			boardSpaceMapper.updateByPrimaryKeySelective(boardSpace);
 			
+			return ResponeResult.build(200, "新建面板成功", board);
 		}catch(Exception e) {
 			return ResponeResult.build(500, ExceptionUtil.getStackTrace(e));
 		}
 		
-		return ResponeResult.ok("新建面板成功");
 	}
 
 	/**
