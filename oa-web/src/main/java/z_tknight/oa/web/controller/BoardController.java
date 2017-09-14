@@ -28,7 +28,7 @@ public class BoardController {
 	 * @return
 	 */
 	@LogInfo("查询看板内容")
-	@RequestMapping(value="/findBoard/{boardNo}", method={RequestMethod.GET})
+	@RequestMapping(value="/findBoard/{boardNo}", method={RequestMethod.POST})
 	@ResponseBody
 	public ResponeResult selectBoardDetailByNo(
 			HttpServletRequest request, @PathVariable("boardNo") Integer boardNo) {
