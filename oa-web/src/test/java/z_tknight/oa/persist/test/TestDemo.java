@@ -9,8 +9,8 @@ import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-import z_tknight.oa.model.entity.TBoard;
 import z_tknight.oa.model.entity.TBoardSpace;
+import z_tknight.oa.model.entity.TCard;
 import z_tknight.oa.persist.complex.mapper.BoardSpaceAndBoardMapper;
 
 @ContextConfiguration("classpath:config/spring/spring-*.xml")
@@ -35,7 +35,7 @@ public class TestDemo extends AbstractJUnit4SpringContextTests {
 
 	
 	public static void main(String[] args) {
-		Class<?> clazz = TBoard.class;
+		Class<?> clazz = TCard.class;
 		Field[] fields = clazz.getDeclaredFields();
 		for(Field field : fields) {
 			System.out.println("    	" + field.getName() + ": ,");

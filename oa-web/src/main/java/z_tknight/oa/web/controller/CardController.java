@@ -57,14 +57,14 @@ public class CardController {
 	}
 	
 	@LogInfo("修改卡片顺序")
-	@RequestMapping(value="/updateCardOrder", method={RequestMethod.POST})
+	@RequestMapping(value="/ ", method={RequestMethod.POST})
 	@ResponseBody
-	public ResponeResult updateCardOrder(HttpServletRequest request, Integer listNoFrom, Integer listNoTo, String cardOrderFrom, 
+	public ResponeResult updateCardOrder(HttpServletRequest request, Integer cardNo, Integer listNoFrom, Integer listNoTo, String cardOrderFrom, 
 			String cardOrderTo, String newcardOrderFrom, String newcardOrderTo) {
 		
 		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
 		
-		return cardService.updateCardOrder(listNoFrom, listNoTo, cardOrderFrom, cardOrderTo, newcardOrderFrom, newcardOrderTo, userNo);
+		return cardService.updateCardOrder(cardNo, listNoFrom, listNoTo, cardOrderFrom, cardOrderTo, newcardOrderFrom, newcardOrderTo, userNo);
 	}
 	
 }
