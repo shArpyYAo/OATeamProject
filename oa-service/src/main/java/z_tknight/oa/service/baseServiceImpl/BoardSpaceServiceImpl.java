@@ -62,7 +62,7 @@ public class BoardSpaceServiceImpl implements BoardSpaceService  {
 			c.andBoardNoIn(boardNos);
 		}
 		List<TBoard> boards = tBoardMapper.selectByExample(example);
-		
+		// 获取有序的看板空间及看板信息
 		return getOrderlyBoardSpaceAndBoard(tbsList, boards);
 	}
 	

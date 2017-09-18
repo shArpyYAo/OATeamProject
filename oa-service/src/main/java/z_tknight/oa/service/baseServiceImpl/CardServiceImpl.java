@@ -209,14 +209,14 @@ public class CardServiceImpl implements CardService {
 
 	
 	@Override
-	public ResponeResult updateCardOrder(Integer listNoFrom, Integer listNoTo, String cardOrderFrom, String cardOrderTo,
+	public ResponeResult updateCardOrder(Integer cardNo, Integer listNoFrom, Integer listNoTo, String cardOrderFrom, String cardOrderTo,
 			String newcardOrderFrom, String newcardOrderTo, Integer userNo) {
-
 		try {
+			TCard card = cardMapper.selectByPrimaryKey(cardNo);
 			TList listFrom = listMapper.selectByPrimaryKey(listNoFrom);
 			TList listTo = listMapper.selectByPrimaryKey(listNoTo);
-			//判断列表是否已经被删除
-			if(listFrom == null || listTo == null) {
+			//判断列表和卡片是否已经被删除
+			if(card == null || listFrom == null || listTo == null) {
 				return ResponeResult.build(400, "数据不合法");
 			}
 			//判断两个列表是否在同一个面板里面
@@ -248,6 +248,11 @@ public class CardServiceImpl implements CardService {
 				listTo.setCardOrder(newcardOrderTo);
 				listMapper.updateByPrimaryKeySelective(listFrom);
 				listMapper.updateByPrimaryKeySelective(listTo);
+				// 修改卡片信息
+				if(listNoFrom != listNoTo) {
+					card.setListNo(listNoTo);
+					cardMapper.updateByPrimaryKey(card);
+				}
 				return ResponeResult.ok("修改卡片顺序成功");
 			}
 		}catch(Exception e) {
