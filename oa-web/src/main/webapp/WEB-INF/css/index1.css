@@ -90,14 +90,14 @@ h3
 	margin: 0 auto;
 	color: white;
 	line-height:120px;
-	cursor: pointer;
+	cursor: default;
 	/*border: 1px solid red;*/
 }
 .demoSpanJ + h3
 {
 	opacity: 0;
 }
-.borderNameInput
+.borderNameInput,.proNameInput
 {
 	position: absolute;
 	margin: 34px -52px;
@@ -110,7 +110,13 @@ h3
 	z-index: 10;
 	border-radius:6px;
 }
-.borderNameButton
+.proNameInput
+{
+	margin-top: -40px;
+	margin-left: -110px;
+	opacity: 0;
+}
+.borderNameButton,.proNameButton
 {
 	position: absolute;
 	margin: 0 auto;
@@ -123,7 +129,13 @@ h3
 	width: 60px;
 	height: 32px;
 }
-#boardList div
+.proNameButton
+{
+	margin-top: -36px;
+	margin-left: 20px;	
+	opacity: 0;
+}
+#boardList .div
 {
 	width: 200px;
 	height: 120px;
@@ -170,14 +182,18 @@ h2
 span
 {
 	display:inline-block; 
-	position:relative;
+	position:absolute;
 	cursor: pointer;
 	transition: 0.4s;
 } 
+#right span
+{
+	position:relative;
+}
 #boardList div .demoSpanJ
 {
-	top: 6%;
-	left: -2%;
+	top: 72px;
+	left: 86px;
 }
 .demoSpanJ:before, .demoSpanJ:after
 {
@@ -203,8 +219,8 @@ span
 }
 #boardList div .demoSpanX
 {
-	top: -42%;
-	left: 20%;
+	top: 16px;
+	left: 168px;
 }
 .demoSpanX:before, .demoSpanX:after
 {
