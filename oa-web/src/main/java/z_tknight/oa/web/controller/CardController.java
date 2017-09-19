@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import z_tknight.oa.commons.util.CaseUtil;
 import z_tknight.oa.commons.util.ResponeResult;
+import z_tknight.oa.commons.util.StringUtil;
 import z_tknight.oa.service.baseService.CardService;
 import z_tknight.oa.web.annotation.LogInfo;
 
@@ -19,6 +20,17 @@ public class CardController {
 
 	@Autowired
 	private CardService cardService;
+	
+	@LogInfo("查询卡片详细信息")
+	@RequestMapping(value="/selectCard", method={RequestMethod.POST})
+	@ResponseBody
+	public ResponeResult selectCardInfoByCardNo(HttpServletRequest request, Integer cardNo) {
+		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
+		if(cardNo == null || userNo == null) {
+			return ResponeResult.build(400, "参数不合法");
+		}
+		return cardService.selectCardInfoByCardNo(userNo, cardNo);
+	}
 	
 	@LogInfo("新增卡片")
 	@RequestMapping(value="/addCard", method={RequestMethod.POST})
@@ -42,22 +54,23 @@ public class CardController {
 		return cardService.deleteCard(cardNo, userNo);
 	}
 	
-	@LogInfo("修改卡片名称")
-	@RequestMapping(value="/updateCardName", method={RequestMethod.POST})
+	@LogInfo("修改卡片信息")
+	@RequestMapping(value="/updateCardInfo", method={RequestMethod.POST})
 	@ResponseBody
-	public ResponeResult updateCardName(HttpServletRequest request, Integer cardNo, String newCardName) {
+	public ResponeResult updateCardInfo(HttpServletRequest request, Integer cardNo, 
+			String newCardName, Double workLoad, Long endTime) {
 		
-		if(newCardName ==null || newCardName.equals("")) {
-			return ResponeResult.build(400, "卡片名称不能为空");
+		if(StringUtil.isEmpty(newCardName) && workLoad == null && endTime == null) {
+			return ResponeResult.build(400, "数据不能全为空");
 		}
 		
 		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
 		
-		return cardService.updateCardName(userNo, newCardName, cardNo);
+		return cardService.updateCardInfo(userNo, newCardName, workLoad, endTime, cardNo);
 	}
 	
 	@LogInfo("修改卡片顺序")
-	@RequestMapping(value="/ ", method={RequestMethod.POST})
+	@RequestMapping(value="/updateCardOrder", method={RequestMethod.POST})
 	@ResponseBody
 	public ResponeResult updateCardOrder(HttpServletRequest request, Integer cardNo, Integer listNoFrom, Integer listNoTo, String cardOrderFrom, 
 			String cardOrderTo, String newcardOrderFrom, String newcardOrderTo) {

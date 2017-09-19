@@ -1,5 +1,7 @@
 package z_tknight.oa.service.baseServiceImpl;
 
+	
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,13 +9,18 @@ import org.springframework.stereotype.Service;
 
 import z_tknight.oa.commons.util.ExceptionUtil;
 import z_tknight.oa.commons.util.ResponeResult;
+import z_tknight.oa.commons.util.StringUtil;
 import z_tknight.oa.model.entity.TBoard;
 import z_tknight.oa.model.entity.TBoardSpace;
 import z_tknight.oa.model.entity.TBoardUser;
 import z_tknight.oa.model.entity.TBoardUserExample;
-import z_tknight.oa.model.entity.TList;
 import z_tknight.oa.model.entity.TBoardUserExample.Criteria;
 import z_tknight.oa.model.entity.TCard;
+import z_tknight.oa.model.entity.TList;
+import z_tknight.oa.model.vo.CardDetail;
+import z_tknight.oa.model.vo.CommentDetail;
+import z_tknight.oa.persist.complex.mapper.AuthorizationMapper;
+import z_tknight.oa.persist.complex.mapper.CardDetailMapper;
 import z_tknight.oa.persist.mapper.TBoardMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceMapper;
 import z_tknight.oa.persist.mapper.TBoardUserMapper;
@@ -42,6 +49,38 @@ public class CardServiceImpl implements CardService {
 	private TBoardUserMapper boardUserMapper;
 	@Autowired
 	private TBoardSpaceMapper boardSpaceMapper;
+	/** 授权持久层接口 */
+	@Autowired
+	private AuthorizationMapper authorizMapper;
+	/** 卡片详情持久层接口 */
+	@Autowired
+	private CardDetailMapper cardDetailMapper;
+	
+	/**
+	 * 根据卡片编号查询卡片详情
+	 * @param userNo [Integer]用户编号
+	 * @param cardNo [Integer]卡片编号
+	 */
+	@Override
+	public ResponeResult selectCardInfoByCardNo(Integer userNo, Integer cardNo) {
+		TCard card = cardMapper.selectByPrimaryKey(cardNo);
+		if(card == null) {
+			return ResponeResult.build(400, "卡片不存在");
+		} else {
+			// 查询用户是否是有权限查看卡片详情
+			if(authorizMapper.canSelectBoard(userNo, card.getBoardNo()) == 0) {
+				return ResponeResult.build(403, "用户无权限操作此卡片");
+			} else {
+				// 获取卡片的所有评论
+				List<CommentDetail> commentDetails = 
+						cardDetailMapper.selectCommentsByCardNo(card.getCardNo());
+				// 创建卡片详情对象
+				CardDetail cardDetail = new CardDetail(card);
+				cardDetail.setComments(commentDetails);
+				return ResponeResult.build(200, "操作成功", cardDetail);
+			}
+		}
+	}
 	
 	/**
 	 * @Description: 判断列表编号是否存在
@@ -170,16 +209,17 @@ public class CardServiceImpl implements CardService {
 
 	/**
 	 * @Description: 判断用户是否看板的所有人或成员，或看板空间的所有人
-	 * 根据卡片编号修改卡片名称
+	 * 根据卡片编号修改卡片信息
 	 * @author：XHX
 	 */
 	@Override
-	public ResponeResult updateCardName(Integer userNo, String newCardName, Integer cardNo) {
+	public ResponeResult updateCardInfo(Integer userNo, String newCardName, 
+			Double workLoad, Long endTime, Integer cardNo) {
 
 		try {
-			
+			// 获取卡片信息
 			TCard card = cardMapper.selectByPrimaryKey(cardNo);
-			
+			// 获取看板信息
 			TBoard board = boardMapper.selectByPrimaryKey(card.getBoardNo());
 			//判断用户是否是面板的所有人
 			if(board.getUserNo() != userNo) {
@@ -193,14 +233,24 @@ public class CardServiceImpl implements CardService {
 				if(boardUserList == null || boardUserList.size() == 0) {
 					//判断用户是否是面板空间的所有人
 					if(boardSpace.getUserNo() != userNo) {
-						return ResponeResult.build(400, "没权限修改卡片名称");
+						return ResponeResult.build(400, "没权限修改卡片信息");
 					}
 				}
 			}
-			//修改列表名称
-			card.setCardTitle(newCardName);
+			if(StringUtil.isNotEmpty(newCardName)) {
+				//修改列表名称
+				card.setCardTitle(newCardName);
+			}
+			if(workLoad != null) {
+				// 修改工作量
+				card.setWorkLoad(workLoad);
+			}
+			if(endTime != null) {
+				// 修改截至时间
+				card.setEndTime(new Timestamp(endTime));
+			}
 			cardMapper.updateByPrimaryKeySelective(card);
-			return ResponeResult.ok("修改卡片名称成功");
+			return ResponeResult.ok("修改卡片信息成功");
 		}catch(Exception e) {
 			return ResponeResult.build(500, ExceptionUtil.getStackTrace(e));
 		}

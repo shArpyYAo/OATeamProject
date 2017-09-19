@@ -22,5 +22,10 @@
 		<input type="submit" value="修改">
 	</form>
 	
+		<form action="/oa-web/card/selectCard" method="post">
+		<input type="text" name="cardNo">
+		<input type="submit" value="查询">
+	</form>
+	
 </body>
 </html>

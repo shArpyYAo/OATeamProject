@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="z_tknight.oa.persist.complex.mapper.AuthorizationMapper" >
+	
+	<!-- 用户是否有权限查看看板信息详情 -->
+	<select id="canSelectBoard" resultType="java.lang.Integer">
+		select case
+			when 
+				<!-- 是否是看板空间所有人 -->
+				(select count(*) from t_board_space tbs join 
+				(select board_space_no from t_board where board_no = #{boardNo}) as bsNo
+				on tbs.board_space_no = bsNo.board_space_no and tbs.user_no = #{userNo}) = 1 
+			then 1
+			when 
+				<!-- 是否是看板所有人 -->
+				(select count(*) from t_board where board_no = #{boardNo} and user_no = #{userNo}) = 1 
+			then 2
+			when 
+				<!-- 是否是看板成员 -->
+				(select count(*) from t_board tb join t_board_user tbu 
+				on tb.board_no = tbu.board_no and tbu.user_no = #{userNo} and tb.board_no = #{boardNo}) = 1 
+			then 3
+			when 
+				<!-- 可见性为2时，是否是看板空间成员 -->
+				(select count(*) from t_board tb join t_board_space_user tbsu 
+				on tb.display_no = 2 and tb.board_space_no = tbsu.board_space_no 
+				and tbsu.user_no = #{userNo} and tb.board_no = #{boardNo}) 
+			then 4
+		else 0 end
+	</select>
+	
+</mapper>
