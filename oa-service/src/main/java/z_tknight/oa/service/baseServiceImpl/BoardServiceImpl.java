@@ -256,7 +256,7 @@ public class BoardServiceImpl implements BoardService {
 			board.setUserNo(userNo);
 			
 			boardMapper.insertSelective(board);
-			
+			System.out.println(board.getBoardNo());
 			//修改面板空间的顺序
 			if(boardSpace.getBoardOrder() == null || boardSpace.getBoardOrder().equals("")) {
 				boardSpace.setBoardOrder(board.getBoardNo().toString());
