@@ -20,6 +20,10 @@ window.onload = function()
 	var index; /*= new Array(TaskList.length * 2);*/
 	var TotalLength = 0;
 	var Selected;
+	var url = window.location.href;
+	var borderNo = url.substring(url.lastIndexOf('=')+1, url.length);
+	
+	begPersonalJsonData();
 	
 	function findBiggest()
 	{
@@ -32,13 +36,130 @@ window.onload = function()
 			}
 		}
 	}
+	
+	function begPersonalJsonData()
+	{
+		$.ajax(
+		{
+	        cache: false,
+	        type: "post",
+	        dataType: "json",
+	        url: "/oa-web/board/findBoard/" + borderNo,
+	        error: function(request) 
+	        {
+	            alert("Connection error");
+	        },
+	        success: function(data) 
+	        {
+	        	//alert("Connection ok:" + data["data"]["lists"].length);
+	        	init(data);
+	        }
+	    });
+	}
+	
+	function init(json)
+	{
+		var temp = 0;
+		var StartAndEnd = 0;
+		var temp1 = 0;
+		cList(json["data"]["lists"].length);
+		TaskList = TaskArea.children;
+		index = new Array(TaskList.length * 2);
+		findBiggest();
+		for(let i = 1;i < TaskList.length + 1;i++)
+		{
+			cBorder(i, json["data"]["lists"][i - 1]["cards"].length,json["data"]["lists"][i - 1]);
+			cForm("#","添加卡片", i, temp1++);
+			cForm("#","删除列表", i, temp1++);
+			cTitleForm("#",json["data"]["lists"][i - 1]["listName"],"保存",i);
+			divTask = TaskList[i - 1].children;
+			index[StartAndEnd] = temp;
+			StartAndEnd++;
+			for(let j = 0; j < divTask.length;j++)
+			{
+				$("#" + divTask[j].id).css("width","240px");
+				$("#" + divTask[j].id).css("height","100px");
+				$("#" + divTask[j].id).css("position","absolute");
+				$("#" + divTask[j].id).css("background","lightsteelblue");
+				$("#" + divTask[j].id).css("borderRadius","4px");
+				$("#" + divTask[j].id).css("top",((j * 110) + 90) + "px");
+				$("#" + divTask[j].id).css("left",(((i - 1) * 318) + 66) + "px");
+				Task[temp] = divTask[j].id;
+				next[temp] = temp + 1;
+				if(i == TaskList.length && j == divTask.length - 1)
+				{
+					next[temp] = 0;
+				}
+				temp++;
+			}
+			index[StartAndEnd] = temp - 1;
+			StartAndEnd++;
+			if(divTask.length == Biggest)
+			{
+				if(document.getElementById("TaskList" + i))
+				{
+					$("#TaskList" + i).css("height",(divTask.length * 110) + 20 + "px");
+				}
+			}
+			else
+			{
+				if(document.getElementById("TaskList" + i))
+				{
+					$("#TaskList" + i).css("height",(divTask.length * 110) + 10 + "px");
+					$("#TaskList" + i).css("margin-bottom",((Biggest - divTask.length) * 110) + 10 + "px");
+				}
+			}
+			TotalLength = TotalLength + divTask.length;
+		}
+		/*for(let i = 0;i < 4;i++)
+		{
+			alert(index[i]);
+		}*/
+		for(let j = 0;j < TaskList.length;j++)
+		{
+			divTask = TaskList[j].children;
+			for(let i = 0;i < divTask.length;i++)
+			{
+				divTask[i].addEventListener("mousedown", function(event)
+				{
+					OnOff = 1;
+					MousePositionX = event.clientX;
+					MousePositionY = event.clientY;
+					TaskArea.addEventListener("mousemove",mouseMove,false);
+				},false);
+				divTask[i].addEventListener("mouseup", function(event)
+				{
+					//alert("松开");
+					OnOff = 0;
+					mouseMove(event);
+					TaskArea.removeEventListener("mousemove",mouseMove,false);
+				},false);
+				
+				divTask[i].addEventListener("mouseover", function(event)
+				{
+					$("#" + this.id).css("background","cadetblue");
+					$("#" + this.id).css("boxShadow","4px 4px 2px #c0c0c0");
+				},false);
+				divTask[i].addEventListener("mouseout", function(event)
+				{
+					$("#" + this.id).css("background","lightsteelblue");
+					$("#" + this.id).css("boxShadow","none");
+				},false);
+				document.getElementById("TaskList" + (j + 1) + "TaskDelete" + (i + 1)).addEventListener("click",function(event)
+				{
+					deleteBorder(event, j);
+				},false);
+			}
+		}
+	}
+	
 	function addBorder(temp, event)
 	{
 		var div;
 		var list;
 		var tt;
 		var k = 0;
-		var img;
+		var img,h3;
 		div = document.createElement("div");
 		list = document.getElementById("TaskList" + (temp + 1));
 		div.id = "TaskList" + (temp + 1) + "Task" + (list.children.length + 1);
@@ -46,12 +167,37 @@ window.onload = function()
 		img.id = "TaskList" + (temp + 1) + "TaskDelete" + (list.children.length + 1);
 		img.className = "rubish";
 		img.src = "../img/rubish.png";
+		h3 = document.createElement("h3");
+		h3.innerHTML = "新建卡片";
 		list.appendChild(div);
 		div.appendChild(img);
+		div.appendChild(h3);
 		document.getElementById(img.id).addEventListener("click",function(event)
 		{
 			deleteBorder(event, temp);
 		},false);
+////////////////////////////////////////////////////////////
+		$.ajax(
+		{
+	        cache: false,
+	        type: "post",
+	        dataType: "json",
+	        url: "/oa-web/board/addBoard",
+	        data:
+	        {
+	        	newBoardName:"新建卡片",
+	        	boardSpaceNo:borderNo
+	        },
+	        error: function(request) 
+	        {
+	            alert("Connection error");
+	        },
+	        success: function(data) 
+	        {
+	        	alert("Connection ok:" + data["msg"]);
+	        }
+	    });		
+	////////////////////////////////////////////////////////////
 		divTask = TaskList[temp].children;
 		//alert(divTask.length);next,//task index
 		Task[TotalLength] = div.id;
@@ -190,15 +336,15 @@ window.onload = function()
 	function cForm(url, value, temp, id)
 	{
 		temp--;
-		var form;
+		//var form;
 		var input1;
 		input1 = document.createElement("input");
-		form = document.createElement("form");
+		/*form = document.createElement("form");
 		form.action = url;
 		form.method = "get";
 		form.className = "List";
-		form.id = "List" + id;
-		top.appendChild(form);
+		form.id = "List" + id;*/
+		top.appendChild(input1);
 		input1.type = "submit"; 
 		input1.className = "Listsubmit"; 
 		if(value == "删除列表")
@@ -210,7 +356,7 @@ window.onload = function()
 			input1.id = "Listsubmit" + temp;
 		}
 		input1.value = value;
-		form.appendChild(input1); 
+		//form.appendChild(input1); 
 		$(".Listsubmit").css("top","40px");//40
 		if(temp == 0)
 		{	
@@ -302,11 +448,11 @@ window.onload = function()
 			
 		},false);
 	}
-	function cBorder(i,num)
+	function cBorder(i,num,jsonMin)
 	{
 		var div;
 		var list;
-		var img;
+		var img,h3;
 		list = document.getElementById("TaskList" + i);
 		for(let k = 1;k <= num;k++)
 		{
@@ -316,6 +462,10 @@ window.onload = function()
 			img.id = "TaskList" + i + "TaskDelete" + k;
 			img.className = "rubish";
 			img.src = "../img/rubish.png";
+			h3  = document.createElement("h3");
+			h3.innerHTML = jsonMin["cards"][k - 1]["cardTitle"];
+			list.appendChild(div);
+			div.appendChild(h3);
 			list.appendChild(div);
 			div.appendChild(img);
 		}
@@ -331,65 +481,7 @@ window.onload = function()
 			TaskArea.appendChild(div);
 		}
 	}
-	function init()
-	{
-		var temp = 0;
-		var StartAndEnd = 0;
-		var temp1 = 0;
-		cList(4);
-		TaskList = TaskArea.children;
-		index = new Array(TaskList.length * 2);
-		findBiggest();
-		for(let i = 1;i < TaskList.length + 1;i++)
-		{
-			cBorder(i, 3);
-			cForm("#","添加卡片", i, temp1++);
-			cForm("#","删除列表", i, temp1++);
-			cTitleForm("#","待解决","保存",i);
-			divTask = TaskList[i - 1].children;
-			index[StartAndEnd] = temp;
-			StartAndEnd++;
-			for(let j = 0; j < divTask.length;j++)
-			{
-				$("#" + divTask[j].id).css("width","240px");
-				$("#" + divTask[j].id).css("height","100px");
-				$("#" + divTask[j].id).css("position","absolute");
-				$("#" + divTask[j].id).css("background","lightsteelblue");
-				$("#" + divTask[j].id).css("borderRadius","4px");
-				$("#" + divTask[j].id).css("top",((j * 110) + 90) + "px");
-				$("#" + divTask[j].id).css("left",(((i - 1) * 318) + 66) + "px");
-				Task[temp] = divTask[j].id;
-				next[temp] = temp + 1;
-				if(i == TaskList.length && j == divTask.length - 1)
-				{
-					next[temp] = 0;
-				}
-				temp++;
-			}
-			index[StartAndEnd] = temp - 1;
-			StartAndEnd++;
-			if(divTask.length == Biggest)
-			{
-				if(document.getElementById("TaskList" + i))
-				{
-					$("#TaskList" + i).css("height",(divTask.length * 110) + 20 + "px");
-				}
-			}
-			else
-			{
-				if(document.getElementById("TaskList" + i))
-				{
-					$("#TaskList" + i).css("height",(divTask.length * 110) + 10 + "px");
-					$("#TaskList" + i).css("margin-bottom",((Biggest - divTask.length) * 110) + 10 + "px");
-				}
-			}
-			TotalLength = TotalLength + divTask.length;
-		}
-		/*for(let i = 0;i < 4;i++)
-		{
-			alert(index[i]);
-		}*/
-	}
+	
 	function ConfirmTarget(id ,Selected)
 	{
 		for(let i = 0;i < TotalLength;i++)
@@ -764,8 +856,7 @@ window.onload = function()
 		}
 	}
 	
-	init();
-	for(let j = 0;j < TaskList.length;j++)
+	/*for(let j = 0;j < TaskList.length;j++)
 	{
 		divTask = TaskList[j].children;
 		for(let i = 0;i < divTask.length;i++)
@@ -800,13 +891,13 @@ window.onload = function()
 				deleteBorder(event, j);
 			},false);
 		}
-	}
+	}*/
 	
 	
 	
 	menuButton.addEventListener("mouseover", function(event)
 	{
-		$(".Click").css("animation", "shakeClick 0.3s infinite");
+		$(".Click").css("animation",	 "shakeClick 0.3s infinite");
 		$(".It").css("animation", "shakeIt 0.3s infinite");
 	},false);
 	menuButton.addEventListener("mouseout", function(event)

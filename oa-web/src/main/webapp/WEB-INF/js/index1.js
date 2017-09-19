@@ -119,16 +119,21 @@ window.onload = function()
 			id = event.target.getAttribute("id");
 			title.innerHTML = document.getElementById(id).innerHTML;
 			temp = id.replace(/[^0-9]/ig,"");
-			/*let k = 0;
-			for(let j = 0;j < json["data"][temp]["tBoard"].length;j++)
-			{
-				k = k + 0.2;
-				$("#boardList:nth-child(" + (j + 1) +")").css("animation","borderAppear 0.6s " + k + "s");
-				$("#boardList:nth-child(" + (j + 1) +")").css("animationFillMode","forwards");
-			}*/
 			$("#boardList .div").css("display","none");
 			$("#boardList #div" + temp + " .div").css("display","inline-block");
 			$("#divJButton" + temp).css("display","inline-block");
+			/*let k = 0;
+			for(let j = 0;j < json["data"][temp]["tBoard"].length;j++)
+			{
+				$("#div" + temp +":nth-child(" + (j + 1) +")").css("animation","none");
+				$("#div" + temp +":nth-child(" + (j + 1) +")").css("animationFillMode","none");
+				$("#div" + temp +":nth-child(" + (j + 1) +")").css("animation","borderAppear 0.6s " + k + "s");
+				$("#div" + temp +":nth-child(" + (j + 1) +")").css("animationFillMode","forwards");
+				k = k + 0.2;
+				k = fomatFloat(k, 1);
+			}
+			$("#divJButton" + temp).css("animation","borderAppear 0.6s " + k + "s");
+			$("#divJButton" + temp).css("animationFillMode","forwards");*/
 		},false);
 		document.getElementById("proSpanJ").addEventListener("click",addSpace,false);
 		document.getElementById("proNameButton").addEventListener("click",comfirmSpace,false);
@@ -141,14 +146,17 @@ window.onload = function()
 		div = document.createElement("div");
 		divSpace = document.getElementById("div" + i);
 		h3 = document.createElement("h3");
-		/*input = document.createElement("input");
-		input.type = "text";
-		input.className = "borderNameInput";
-		input.style.display = "none";*/
 		h3.innerHTML = borderName;
+		h3.id = j;
 		h3.addEventListener("click",function(event)
 		{
-			
+			var temp = 0,i;
+			i = event.target.getAttribute("id");
+			temp = event.target.parentNode;
+			temp = temp.parentNode.id;
+			temp = temp.replace(/[^0-9]/ig,"");
+			temp = json["data"][temp]["tBoard"][i]["boardNo"];
+			window.location = "TaskList.html?id=" + temp;
 		},false);
 		span = document.createElement("span");
 		span.className = "demoSpanX";
@@ -157,13 +165,6 @@ window.onload = function()
 		else if(where == 0)
 			span.id = "border" + i + "SpanX" + json["data"][i]["tBoard"].length;
 		span.addEventListener("click",deleteBorder,false);
-		/*div.appendChild(input);
-		input = document.createElement("input");
-		input.type = "button";
-		input.className = "borderNameButton";
-		input.value = "保存";
-		input.style.display = "none";
-		div.appendChild(input);*/
 		div.appendChild(h3);
 		div.appendChild(span);
 		if(i != 0 && where == 1)
@@ -175,6 +176,7 @@ window.onload = function()
 			{
 				temp = temp + 0.2;
 			}
+			temp = fomatFloat(temp, 1);
 		}
 		else if(where == 0)
 		{
@@ -243,6 +245,7 @@ window.onload = function()
 		{
 			temp = temp + 0.2;
 		}
+		temp = fomatFloat(temp, 1);
 		div.style.animation = "borderAppear 0.6s " + temp + "s";
 		div.style.animationFillMode = "forwards";
 		divSpace.appendChild(div);
@@ -330,7 +333,7 @@ window.onload = function()
 	        }
 	    });
 		where = 0;
-		initBorder(input,div,h3,span,No,0,borderName,where)
+		initBorder(input,div,h3,span,No,json["data"][No]["tBoard"].length,borderName,where)
 		input1.style.display = "none";
 		input2.style.display = "none";
 		input1.removeEventListener("click",add,false);
