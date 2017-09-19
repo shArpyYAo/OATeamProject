@@ -94,7 +94,7 @@ public class BoardServiceImpl implements BoardService {
 			BoardDetail boardDetail = new BoardDetail(board);
 			// 按看板对象中列表顺序获得列表对象集合
 			List<TList> lists = getListByBoard(board);
-			if(CollectionUtil.isEmpty(lists)) {
+			if(CollectionUtil.isEmpty(lists)) { // 列表为空,提前返回
 				return ResponeResult.build(200, "查询成功",boardDetail);
 			} else {
 				// 按列表对象中卡片编号顺序获得卡片对象集合
@@ -105,7 +105,8 @@ public class BoardServiceImpl implements BoardService {
 				int cardIndex = 0;
 				for(int i = 0; i < lists.size(); i ++) {
 					listDetail = new ListDetail(lists.get(i));
-					for(; cardIndex < cards.size(); cardIndex ++) {
+					// 判断卡片集合是否为空,避免空指针异常
+					for(; cards != null && cardIndex < cards.size(); cardIndex ++) {
 						cardDetail = cards.get(cardIndex);
 						if(cardDetail.getListNo() == listDetail.getListNo()) {
 							// 安装卡片详细信息到列表详细信息中
@@ -117,8 +118,8 @@ public class BoardServiceImpl implements BoardService {
 					// 安装列表详细信息到看板详细信息中
 					boardDetail.getLists().add(listDetail);
 				}
+				return ResponeResult.build(200, "查询成功", boardDetail);
 			}
-			return ResponeResult.build(200, "查询成功",boardDetail);
 		}
 	}
 	
@@ -133,10 +134,14 @@ public class BoardServiceImpl implements BoardService {
 		} else {
 			// 需要查询的卡片编号(需要顺序排列)
 			List<Integer> cardNos = new ArrayList<Integer>();
+			String[] order;
 			for(TList list : lists) {
-				// 按顺序解析当前列表的卡片编号
-				cardNos.addAll(ArrayUtil.getIntList(
-						StringUtil.split(list.getCardOrder(), ",")));
+				// 避免空指针
+				order = StringUtil.split(list.getCardOrder(), ",");
+				if(ArrayUtil.isNotEmpty(order)) {
+					// 按顺序解析当前列表的卡片编号
+					cardNos.addAll(ArrayUtil.getIntList(order));
+				}
 			}
 			if(CollectionUtil.isEmpty(cardNos)) {
 				return null;
