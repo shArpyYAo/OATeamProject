@@ -22,8 +22,8 @@ window.onload = function()
 	var Selected;
 	var url = window.location.href;
 	var borderNo = url.substring(url.lastIndexOf('=')+1, url.length);
-	
-	begPersonalJsonData();
+	var json,first = 1,updateBor = 0,div,len,t;
+	initPersonalJsonData(div,len,t);
 	
 	function findBiggest()
 	{
@@ -37,7 +37,17 @@ window.onload = function()
 		}
 	}
 	
-	function begPersonalJsonData()
+	function updateBorder(div,len,t,json)
+	{
+		alert(div);
+		alert(len);
+		alert(t);
+		alert(json["data"]["lists"][t]["cards"][len - 1]["cardNo"])
+		div.setAttribute("idvalue",json["data"]["lists"][t]["cards"][len - 1]["cardNo"]);
+		updateBor = 0;
+	}
+	
+	function initPersonalJsonData(div,len,t)
 	{
 		$.ajax(
 		{
@@ -52,12 +62,16 @@ window.onload = function()
 	        success: function(data) 
 	        {
 	        	//alert("Connection ok:" + data["data"]["lists"].length);
-	        	init(data);
+	        	json = data;
+	        	if(first == 1)
+	        		init();
+	        	if(updateBor == 1)
+	        		updateBorder(div,len,t,json);
 	        }
 	    });
 	}
 	
-	function init(json)
+	function init()
 	{
 		var temp = 0;
 		var StartAndEnd = 0;
@@ -69,8 +83,8 @@ window.onload = function()
 		for(let i = 1;i < TaskList.length + 1;i++)
 		{
 			cBorder(i, json["data"]["lists"][i - 1]["cards"].length,json["data"]["lists"][i - 1]);
-			cForm("#","添加卡片", i, temp1++);
-			cForm("#","删除列表", i, temp1++);
+			cForm("#","添加卡片", i, temp1++,json);
+			cForm("#","删除列表", i, temp1++,json);
 			cTitleForm("#",json["data"]["lists"][i - 1]["listName"],"保存",i);
 			divTask = TaskList[i - 1].children;
 			index[StartAndEnd] = temp;
@@ -147,7 +161,7 @@ window.onload = function()
 				},false);
 				document.getElementById("TaskList" + (j + 1) + "TaskDelete" + (i + 1)).addEventListener("click",function(event)
 				{
-					deleteBorder(event, j);
+					deleteBorder(event, j,json);
 				},false);
 			}
 		}
@@ -159,7 +173,9 @@ window.onload = function()
 		var list;
 		var tt;
 		var k = 0;
-		var img,h3;
+		var img,h3,listNo;
+		listNo = json["data"]["lists"][temp]["listNo"];
+		//alert(listNo);
 		div = document.createElement("div");
 		list = document.getElementById("TaskList" + (temp + 1));
 		div.id = "TaskList" + (temp + 1) + "Task" + (list.children.length + 1);
@@ -174,7 +190,9 @@ window.onload = function()
 		div.appendChild(h3);
 		document.getElementById(img.id).addEventListener("click",function(event)
 		{
-			deleteBorder(event, temp);
+			alert("temp:" + temp);
+			deleteBorder(event, temp,json);
+			alert("here1");
 		},false);
 ////////////////////////////////////////////////////////////
 		$.ajax(
@@ -182,11 +200,11 @@ window.onload = function()
 	        cache: false,
 	        type: "post",
 	        dataType: "json",
-	        url: "/oa-web/board/addBoard",
+	        url: "/oa-web/card/addCard",
 	        data:
 	        {
-	        	newBoardName:"新建卡片",
-	        	boardSpaceNo:borderNo
+	        	cardName:"新建卡片",
+	        	listNo:listNo
 	        },
 	        error: function(request) 
 	        {
@@ -194,7 +212,12 @@ window.onload = function()
 	        },
 	        success: function(data) 
 	        {
-	        	alert("Connection ok:" + data["msg"]);
+	        	//alert("Connection ok:" + data["msg"]);
+	        	var len;
+	        	first = 0;
+	        	updateBor = 1;
+	        	len = json["data"]["lists"][temp]["cards"].length;
+	        	initPersonalJsonData(div,len,temp);
 	        }
 	    });		
 	////////////////////////////////////////////////////////////
@@ -253,7 +276,7 @@ window.onload = function()
 			TaskArea.removeEventListener("mousemove",mouseMove,false);
 		},false);
 	}
-	function deleteBorder(event, IndexJ)
+	function deleteBorder(event, IndexJ,json)
 	{
 		var id;
 		var rubish
@@ -261,13 +284,43 @@ window.onload = function()
 		var granpar;
 		var k = 0;
 		var last;
-		var temp;
+		var temp,cardNo;
+		//cardNo = json["data"]["list"]
 		id = event.target.getAttribute("id");
+		alert(id);
 		rubish = document.getElementById(id);
+		alert("rubish:" + rubish.id);
 		par = document.getElementById(id).parentNode;
+		alert("par:" + rubish.id);
+		cardNo = par.attributes["idvalue"].nodeValue;
+		alert("cardNo:" + cardNo);
 		granpar = document.getElementById(par.id).parentNode;
+		alert("granpar:" + granpar.id);
 		par.removeChild(rubish);
+		alert("delete rubish");
 		granpar.removeChild(par);
+		alert("delete par");
+////////////////////////////////////////////////////////////
+		$.ajax(
+		{
+	        cache: false,
+	        type: "post",
+	        dataType: "json",
+	        url: "/oa-web/card/deleteCard",
+	        data:
+	        {
+	        	cardNo:cardNo
+	        },
+	        error: function(request) 
+	        {
+	            alert("Connection error");
+	        },
+	        success: function(data) 
+	        {
+	        	alert("Connection ok:" + data["msg"]);
+	        }
+	    });		
+////////////////////////////////////////////////////////////////
 		/*var i;
 		i = new FormData*/
 		while(k != -1)
@@ -333,7 +386,7 @@ window.onload = function()
 			
 		}
 	}
-	function cForm(url, value, temp, id)
+	function cForm(url, value, temp, id,json)
 	{
 		temp--;
 		//var form;
@@ -399,20 +452,20 @@ window.onload = function()
 	}
 	function cTitleForm(url, value1, value2, temp)
 	{
-		var form;
+		//var form;
 		var input1;
 		var input2;
 		var span;
 		temp--;
 		input1 = document.createElement("input");
 		input2 = document.createElement("input");
-		form = document.createElement("form");
+		//form = document.createElement("form");
 		span = document.createElement("span");
-		form.action = url;
+		/*form.action = url;
 		form.method = "get";
 		form.className = "ListTitle";
-		form.id = "ListTitle" + temp;
-		top.appendChild(form);
+		form.id = "ListTitle" + temp;*/
+		//top.appendChild(form);
 		input1.type = "text"; 
 		input1.className = "ListTitleInput";
 		input1.id = "ListTitleInput" + temp;
@@ -424,9 +477,9 @@ window.onload = function()
 		input2.id = "ListTitleSubmit" + temp;
 		input2.className = "ListTitleSubmit";
 		input2.value = value2;
-		form.appendChild(input1);
-		form.appendChild(input2);
-		form.appendChild(span);
+		top.appendChild(input1);
+		top.appendChild(input2);
+		top.appendChild(span);
 		if(temp > 0)
 		{
 			$("#ListTitleInput" + temp).css("left",(((315 * temp) + 75) + temp * 8) + "px");
@@ -458,11 +511,13 @@ window.onload = function()
 		{
 			div = document.createElement("div");
 			div.id = "TaskList" + i + "Task" + k;
+			div.setAttribute("idvalue",jsonMin["cards"][k - 1]["cardNo"]);
+			//alert(div.attributes["idvalue"].nodeValue);
 			img = document.createElement("img");
 			img.id = "TaskList" + i + "TaskDelete" + k;
 			img.className = "rubish";
 			img.src = "../img/rubish.png";
-			h3  = document.createElement("h3");
+			h3 = document.createElement("h3");
 			h3.innerHTML = jsonMin["cards"][k - 1]["cardTitle"];
 			list.appendChild(div);
 			div.appendChild(h3);
@@ -888,7 +943,7 @@ window.onload = function()
 			},false);
 			document.getElementById("TaskList" + (j + 1) + "TaskDelete" + (i + 1)).addEventListener("click",function(event)
 			{
-				deleteBorder(event, j);
+				deleteBorder(event, j,json);
 			},false);
 		}
 	}*/
