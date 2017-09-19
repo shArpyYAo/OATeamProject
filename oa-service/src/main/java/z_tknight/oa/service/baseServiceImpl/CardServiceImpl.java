@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import z_tknight.oa.commons.util.CollectionUtil;
 import z_tknight.oa.commons.util.ExceptionUtil;
 import z_tknight.oa.commons.util.ResponeResult;
 import z_tknight.oa.commons.util.StringUtil;
@@ -18,6 +17,10 @@ import z_tknight.oa.model.entity.TBoardUserExample;
 import z_tknight.oa.model.entity.TBoardUserExample.Criteria;
 import z_tknight.oa.model.entity.TCard;
 import z_tknight.oa.model.entity.TList;
+import z_tknight.oa.model.vo.CardDetail;
+import z_tknight.oa.model.vo.CommentDetail;
+import z_tknight.oa.persist.complex.mapper.AuthorizationMapper;
+import z_tknight.oa.persist.complex.mapper.CardDetailMapper;
 import z_tknight.oa.persist.mapper.TBoardMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceMapper;
 import z_tknight.oa.persist.mapper.TBoardUserMapper;
@@ -46,6 +49,12 @@ public class CardServiceImpl implements CardService {
 	private TBoardUserMapper boardUserMapper;
 	@Autowired
 	private TBoardSpaceMapper boardSpaceMapper;
+	/** 授权持久层接口 */
+	@Autowired
+	private AuthorizationMapper authorizMapper;
+	/** 卡片详情持久层接口 */
+	@Autowired
+	private CardDetailMapper cardDetailMapper;
 	
 	/**
 	 * 根据卡片编号查询卡片详情
@@ -55,22 +64,21 @@ public class CardServiceImpl implements CardService {
 	@Override
 	public ResponeResult selectCardInfoByCardNo(Integer userNo, Integer cardNo) {
 		TCard card = cardMapper.selectByPrimaryKey(cardNo);
-		if(card != null) {
-			TBoardUserExample buexmple = new TBoardUserExample();
-			TBoardUserExample.Criteria buc = buexmple.createCriteria();
-			buc.andBoardNoEqualTo(card.getBoardNo());
-			buc.andUserNoEqualTo(userNo);
-			List<TBoardUser> tbuList = boardUserMapper.selectByExample(buexmple);
-			// 用户是看板成员
-			if(CollectionUtil.isEmpty(tbuList)) {
-				TBoard board = boardMapper.selectByPrimaryKey(card.getBoardNo());
-				if(board == null) {
-					return ResponeResult.build(400, "无权限操作卡片");
-				}
-			}
-			return null;
+		if(card == null) {
+			return ResponeResult.build(400, "卡片不存在");
 		} else {
-			return ResponeResult.build(400, "参数异常");
+			// 查询用户是否是有权限查看卡片详情
+			if(authorizMapper.canSelectBoard(userNo, card.getBoardNo()) == 0) {
+				return ResponeResult.build(403, "用户无权限操作此卡片");
+			} else {
+				// 获取卡片的所有评论
+				List<CommentDetail> commentDetails = 
+						cardDetailMapper.selectCommentsByCardNo(card.getCardNo());
+				// 创建卡片详情对象
+				CardDetail cardDetail = new CardDetail(card);
+				cardDetail.setComments(commentDetails);
+				return ResponeResult.build(200, "操作成功", cardDetail);
+			}
 		}
 	}
 	

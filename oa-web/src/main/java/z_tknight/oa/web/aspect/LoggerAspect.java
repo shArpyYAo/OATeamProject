@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -110,14 +111,18 @@ public class LoggerAspect {
 			StringBuffer buf = new StringBuffer("");
 			for (Object param : joinPoint.getArgs()) {
 				String arg = null;
-				try {
-					arg = JsonUtil.toJson(param);
-					_LOG.debug(arg);
-				} catch(Exception e) {
-					_LOG.debug("参数转换JSON数据失败！" + e.getMessage());
+				if (param instanceof HttpServletRequest || param instanceof HttpServletResponse) {
 					continue;
+				} else {
+					try {
+						arg = JsonUtil.toJson(param);
+						_LOG.debug(arg);
+					} catch (Exception e) {
+						_LOG.debug("参数转换JSON数据失败！" + e.getMessage());
+						continue;
+					}
+					buf.append("/" + arg);
 				}
-				buf.append("/" + arg);
 			}
 			log.setParams(StringUtil.isNotEmpty(buf.toString()) ? buf.toString() : "无");
 			// 执行方法
@@ -128,7 +133,7 @@ public class LoggerAspect {
 			state = false;
 			// 异常信息
 			log.setException(e + "");
-//			_LOG.debug("异常信息:" + e);
+			// _LOG.debug("异常信息:" + e);
 			throw e;
 		} finally {
 			endTime = new Date().getTime();
@@ -148,21 +153,23 @@ public class LoggerAspect {
 
 	/**
 	 * 获取客户端真实ip
-	 * @param request [HttpServletRequest]请求头
+	 * 
+	 * @param request
+	 *            [HttpServletRequest]请求头
 	 * @return [String]客户端真实ip
 	 */
 	private String getClientIP(HttpServletRequest request) {
 		String ip = request.getHeader("x-forwarded-for");
-		if(StringUtil.isEmpty(ip) || "unknown".equals(ip)) {
+		if (StringUtil.isEmpty(ip) || "unknown".equals(ip)) {
 			ip = request.getHeader("Proxy-Client-IP");
 		}
-		if(StringUtil.isEmpty(ip) || "unknown".equals(ip)) {
+		if (StringUtil.isEmpty(ip) || "unknown".equals(ip)) {
 			ip = request.getHeader("WL-Proxy-Client-IP");
 		}
-		if(StringUtil.isEmpty(ip) || "unknown".equals(ip)) {
+		if (StringUtil.isEmpty(ip) || "unknown".equals(ip)) {
 			ip = request.getRemoteAddr();
 		}
 		return ip;
 	}
-	
+
 }

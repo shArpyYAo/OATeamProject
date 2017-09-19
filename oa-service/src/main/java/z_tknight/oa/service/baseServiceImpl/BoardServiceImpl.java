@@ -24,7 +24,7 @@ import z_tknight.oa.model.vo.BoardDetail;
 import z_tknight.oa.model.vo.CardDetail;
 import z_tknight.oa.model.vo.ListDetail;
 import z_tknight.oa.model.vo.TagDetail;
-import z_tknight.oa.persist.complex.mapper.CardAndTagMapper;
+import z_tknight.oa.persist.complex.mapper.CardDetailMapper;
 import z_tknight.oa.persist.mapper.TBoardMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceUserMapper;
@@ -62,7 +62,7 @@ public class BoardServiceImpl implements BoardService {
 	private TCardMapper cardMapper;
 	/** 卡片和标签持久层接口 */
 	@Autowired
-	private CardAndTagMapper cardTagMapper;
+	private CardDetailMapper cardDetailMapper;
 
 	/**
 	 * 查询指定看板的所有列表，以及列表的所有卡片
@@ -148,7 +148,7 @@ public class BoardServiceImpl implements BoardService {
 				example.setOrderByClause(orderByNo("card_no", cardNos)); // 排序
 				// 获取有序的卡片对象
 				List<TCard> cards = cardMapper.selectByExample(example);
-				List<TagDetail> tagDetails = cardTagMapper.selectTagsByCards(cardNos);
+				List<TagDetail> tagDetails = cardDetailMapper.selectTagsByCards(cardNos);
 				List<CardDetail> cardDetails = new ArrayList<CardDetail>(cards.size());
 				// 遍历创建卡片详细信息对象并安装标签详细信息
 				CardDetail cDetail = null;

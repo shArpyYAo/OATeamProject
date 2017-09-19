@@ -44,6 +44,9 @@ public class CardDetail {
 	/** 标签对象 */
 	private List<TagDetail> tags = new ArrayList<TagDetail>();
 
+	/** 评论信息 */
+	private List<CommentDetail> comments;
+	
 	public CardDetail() {}
 	
 	public CardDetail(TCard card) {
@@ -52,6 +55,14 @@ public class CardDetail {
 		this.workLoad = card.getWorkLoad();
 		this.endTime = card.getEndTime();
 		this.listNo = card.getListNo();
+	}
+
+	public List<CommentDetail> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<CommentDetail> comments) {
+		this.comments = comments;
 	}
 
 	public Integer getCardNo() {

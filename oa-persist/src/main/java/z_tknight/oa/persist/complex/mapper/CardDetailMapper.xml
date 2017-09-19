@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="z_tknight.oa.persist.complex.mapper.CardAndTagMapper" >
+<mapper namespace="z_tknight.oa.persist.complex.mapper.CardDetailMapper" >
 
 
 	<!-- pojo类属性和对应表的结果集映射关系 -->
@@ -9,6 +9,15 @@
 		<result column="tag_name" property="tagName" jdbcType="VARCHAR" />
 		<result column="card_no" property="cardNo" jdbcType="INTEGER" />
 		<result column="board_no" property="boardNo" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<!-- 评论详情的映射关系 -->
+	<resultMap id="CommentDetailResultMap" type="z_tknight.oa.model.vo.CommentDetail">
+		<id column="comment_no" property="commentNo" jdbcType="INTEGER" />
+		<result column="comment" property="comment" jdbcType="VARCHAR" />
+		<result column="user_no" property="userNo" jdbcType="INTEGER" />
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+		<result column="comment_time" property="commentTime" jdbcType="TIMESTAMP" />
 	</resultMap>
 	
 	<!-- 查询用户可以查看的所有看板空间信息和看板信息 -->
@@ -25,6 +34,12 @@
 			close=")" separator=",">
 			#{cardNo}
 		</foreach> 
+	</select>
+	
+	<!-- 通过卡片编号查询指定卡片的评论详情 -->
+	<select id="selectCommentsByCardNo" resultMap="CommentDetailResultMap">
+		select tc.*, tu.nick_name from t_comment tc join t_user tu 
+		on tc.card_no = #{cardNo} and tc.user_no = tu.user_no
 	</select>
 	
 </mapper>

@@ -29,7 +29,7 @@ public class CardController {
 		if(cardNo == null || userNo == null) {
 			return ResponeResult.build(400, "参数不合法");
 		}
-		return null;
+		return cardService.selectCardInfoByCardNo(userNo, cardNo);
 	}
 	
 	@LogInfo("新增卡片")
