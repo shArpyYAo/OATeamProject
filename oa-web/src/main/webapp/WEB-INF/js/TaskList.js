@@ -22,7 +22,10 @@ window.onload = function()
 	var Selected;
 	var url = window.location.href;
 	var borderNo = url.substring(url.lastIndexOf('=')+1, url.length);
-	var json,first = 1,updateBor = 0,div,len,t;
+	var json,first = 1,updateBor = 0,div,len,t,NewCardOrderBefore = "";
+	var OldCardOrderBefore = "";
+	var OldCardOrderAfter = "";
+	var clientXBefore;
 	initPersonalJsonData(div,len,t);
 	
 	function findBiggest()
@@ -39,11 +42,7 @@ window.onload = function()
 	
 	function updateBorder(div,len,t,json)
 	{
-		alert(div);
-		alert(len);
-		alert(t);
-		alert(json["data"]["lists"][t]["cards"][len - 1]["cardNo"])
-		div.setAttribute("idvalue",json["data"]["lists"][t]["cards"][len - 1]["cardNo"]);
+		div.setAttribute("idvalue",json["data"]["lists"][t]["cards"][len]["cardNo"]);
 		updateBor = 0;
 	}
 	
@@ -173,7 +172,8 @@ window.onload = function()
 		var list;
 		var tt;
 		var k = 0;
-		var img,h3,listNo;
+		var img,h3,listNo,leng;
+		leng = temp;
 		listNo = json["data"]["lists"][temp]["listNo"];
 		//alert(listNo);
 		div = document.createElement("div");
@@ -190,9 +190,7 @@ window.onload = function()
 		div.appendChild(h3);
 		document.getElementById(img.id).addEventListener("click",function(event)
 		{
-			alert("temp:" + temp);
 			deleteBorder(event, temp,json);
-			alert("here1");
 		},false);
 ////////////////////////////////////////////////////////////
 		$.ajax(
@@ -216,8 +214,8 @@ window.onload = function()
 	        	var len;
 	        	first = 0;
 	        	updateBor = 1;
-	        	len = json["data"]["lists"][temp]["cards"].length;
-	        	initPersonalJsonData(div,len,temp);
+	        	len = json["data"]["lists"][leng]["cards"].length;
+	        	initPersonalJsonData(div,len,leng);
 	        }
 	    });		
 	////////////////////////////////////////////////////////////
@@ -285,21 +283,13 @@ window.onload = function()
 		var k = 0;
 		var last;
 		var temp,cardNo;
-		//cardNo = json["data"]["list"]
 		id = event.target.getAttribute("id");
-		alert(id);
 		rubish = document.getElementById(id);
-		alert("rubish:" + rubish.id);
 		par = document.getElementById(id).parentNode;
-		alert("par:" + rubish.id);
 		cardNo = par.attributes["idvalue"].nodeValue;
-		alert("cardNo:" + cardNo);
 		granpar = document.getElementById(par.id).parentNode;
-		alert("granpar:" + granpar.id);
 		par.removeChild(rubish);
-		alert("delete rubish");
 		granpar.removeChild(par);
-		alert("delete par");
 ////////////////////////////////////////////////////////////
 		$.ajax(
 		{
@@ -317,7 +307,8 @@ window.onload = function()
 	        },
 	        success: function(data) 
 	        {
-	        	alert("Connection ok:" + data["msg"]);
+	        	var div,len,leng;
+	        	initPersonalJsonData(div,len,leng);
 	        }
 	    });		
 ////////////////////////////////////////////////////////////////
@@ -389,14 +380,8 @@ window.onload = function()
 	function cForm(url, value, temp, id,json)
 	{
 		temp--;
-		//var form;
 		var input1;
 		input1 = document.createElement("input");
-		/*form = document.createElement("form");
-		form.action = url;
-		form.method = "get";
-		form.className = "List";
-		form.id = "List" + id;*/
 		top.appendChild(input1);
 		input1.type = "submit"; 
 		input1.className = "Listsubmit"; 
@@ -409,7 +394,6 @@ window.onload = function()
 			input1.id = "Listsubmit" + temp;
 		}
 		input1.value = value;
-		//form.appendChild(input1); 
 		$(".Listsubmit").css("top","40px");//40
 		if(temp == 0)
 		{	
@@ -452,20 +436,13 @@ window.onload = function()
 	}
 	function cTitleForm(url, value1, value2, temp)
 	{
-		//var form;
 		var input1;
 		var input2;
 		var span;
 		temp--;
 		input1 = document.createElement("input");
 		input2 = document.createElement("input");
-		//form = document.createElement("form");
 		span = document.createElement("span");
-		/*form.action = url;
-		form.method = "get";
-		form.className = "ListTitle";
-		form.id = "ListTitle" + temp;*/
-		//top.appendChild(form);
 		input1.type = "text"; 
 		input1.className = "ListTitleInput";
 		input1.id = "ListTitleInput" + temp;
@@ -480,6 +457,37 @@ window.onload = function()
 		top.appendChild(input1);
 		top.appendChild(input2);
 		top.appendChild(span);
+		input2.addEventListener("click",function(event)
+		{
+////////////////////////////////////////////////////////////
+			var listName,listNo,NoList,_this;
+			_this = this;
+			listName = this.previousSibling.value;
+			NoList = this.previousSibling.id;
+			NoList = NoList.replace(/[^0-9]/ig,"");
+			ListNo = json["data"]["lists"][NoList]["listNo"];
+			$.ajax(
+			{
+		        cache: false,
+		        type: "post",
+		        dataType: "json",
+		        url: "/oa-web/list/updateListName",
+		        data:
+		        {
+		        	newListName:listName,
+		        	listNo:ListNo
+		        },
+		        error: function(request) 
+		        {
+		            alert("Connection error");
+		        },
+		        success: function(data) 
+		        {
+		        	_this.nextSibling.innerHTML = listName;
+		        }
+		    });		
+	////////////////////////////////////////////////////////////////
+		},false);
 		if(temp > 0)
 		{
 			$("#ListTitleInput" + temp).css("left",(((315 * temp) + 75) + temp * 8) + "px");
@@ -851,6 +859,88 @@ window.onload = function()
 			i = i + 2;
 		}
 	}
+	
+	function changeOrder(event,listNoTo)
+	{
+		var cardNo,listNoFrom;
+		cardNo = event.target.attributes["idvalue"].nodeValue;
+		listNoFrom = event.target.parentNode.id.replace(/[^0-9]/ig,"") - 1;
+		
+		/*$.ajax(
+		{
+	        cache: false,
+	        type: "post",
+	        dataType: "json",
+	        url: "/oa-web/card/updateCardOrder",
+	        data:
+	        {
+	        	cardNo:cardNo,
+	        	listNoFrom:listNoFrom,
+	        	listNoTo:listNoTo,
+	        	cardOrderFrom:OldCardOrderBefore,
+	        	cardOrderTo:,
+	        	newcardOrderFrom:NewCardOrderBefore,
+	        	newcardOrderTo:
+	        },
+	        error: function(request) 
+	        {
+	            alert("Connection error");
+	        },
+	        success: function(data) 
+	        {
+	        	
+	        }
+	    });	*/
+	}
+	
+	function comfirmOldCardOrderBefore(start,end)
+	{
+		var oldListNo,k;
+		OldCardOrderBefore = "";
+		k = index[start];
+		while(k != -1)
+		{
+			if(k == index[end])
+			{
+				break;
+			}
+			OldCardOrderBefore = OldCardOrderBefore + document.getElementById(Task[k]).attributes["idvalue"].nodeValue + ",";
+			k = next[k];
+		}
+		OldCardOrderBefore = OldCardOrderBefore + document.getElementById(Task[k]).attributes["idvalue"].nodeValue;
+		//alert(OldCardOrderBefore);
+		//OldCardOrderAfter
+	}
+	
+	function comfirmOldCardOrderAfter()
+	{
+		
+	}
+	
+	function comfirmNewCardOrderBefore(start,end)
+	{
+		var k = index[start];
+		NewCardOrderBefore = "";
+		while(k != -1)
+		{
+			if(k == index[end])
+			{
+				break;
+			}
+			//alert("Task[k]:" + document.getElementById(Task[k]).attributes["idvalue"].nodeValue);
+			NewCardOrderBefore = NewCardOrderBefore + document.getElementById(Task[k]).attributes["idvalue"].nodeValue + ",";
+			k = next[k];
+		}
+		//alert(Task[k]);
+		NewCardOrderBefore = NewCardOrderBefore + document.getElementById(Task[k]).attributes["idvalue"].nodeValue;
+		//alert(NewCardOrderBefore);
+	}
+	
+	function comfirmNewCardOrderAfter()
+	{
+		
+	}
+	
 	function mouseMove(event)
 	{
 		var id;
@@ -859,8 +949,24 @@ window.onload = function()
 		var number;
 		if(OnOff == 1)
 		{
-			InMove = 1;
 			id = event.target.getAttribute("id");
+			if(InMove == 0)
+			{
+				clientXBefore = event.clientX;
+				if(event.clientX <= 580)
+				{
+					comfirmOldCardOrderBefore(0,1);
+				}
+				else if(event.clientX <= 900 && event.clientX >= 620)
+				{
+					comfirmOldCardOrderBefore(2,3);
+				}
+				else if(event.clientX <= 1220 && event.clientX >= 940)
+				{
+					comfirmOldCardOrderBefore(4,5);
+				}
+			}
+			InMove = 1;
 			$("#" + id).css("boxShadow","none");
 			$("#" + id).css("left",event.clientX - 430 + "px");
 			$("#" + id).css("top",event.clientY - 50 + "px");
@@ -874,6 +980,7 @@ window.onload = function()
 			{
 				number = Math.floor(event.clientY / 110);
 				$("#" + id).css("left","66px");
+				comfirmNewCardOrderBefore(0,1);
 				Paintting(0, 1, id, event.clientX, number,index[0]);
 				AllTaskListInit();
 				/*for(let i = 0;i < 6;i++)
@@ -882,15 +989,44 @@ window.onload = function()
 				}
 				for(let i = 0;i < 4;i++)
 				{
-					alert("2.index：" + index[i]);
+					alert("index：" + index[i]);
 				}*/
+				if(clientXBefore <= 580)
+				{
+					comfirmOldCardOrderAfter(0,1);
+				}
+				else if(clientXBefore <= 900 && clientXBefore >= 620)
+				{
+					comfirmOldCardOrderAfter(2,3);
+				}
+				else if(clientXBefore <= 1220 && clientXBefore >= 940)
+				{
+					comfirmOldCardOrderAfter(4,5);
+				}
+				comfirmNewCardOrderAfter();
+				changeOrder(event,0);
 			}
 			else if(event.clientX <= 900 && event.clientX >= 620)
 			{
 				$("#" + id).css("left","384px");
 				number = Math.floor(event.clientY / 110);
+				comfirmNewCardOrderBefore(2,3);
 				Paintting(2, 3, id, event.clientX, number,index[2]);
 				AllTaskListInit();
+				if(clientXBefore <= 580)
+				{
+					comfirmOldCardOrderAfter(0,1);
+				}
+				else if(clientXBefore <= 900 && clientXBefore >= 620)
+				{
+					comfirmOldCardOrderAfter(2,3);
+				}
+				else if(clientXBefore <= 1220 && clientXBefore >= 940)
+				{
+					comfirmOldCardOrderAfter(4,5);
+				}
+				comfirmNewCardOrderAfter();
+				changeOrder(event,1);
 			}
 			else if(event.clientX <= 1220 && event.clientX >= 940)
 			{
@@ -910,45 +1046,6 @@ window.onload = function()
 			InMove = 0;
 		}
 	}
-	
-	/*for(let j = 0;j < TaskList.length;j++)
-	{
-		divTask = TaskList[j].children;
-		for(let i = 0;i < divTask.length;i++)
-		{
-			divTask[i].addEventListener("mousedown", function(event)
-			{
-				OnOff = 1;
-				MousePositionX = event.clientX;
-				MousePositionY = event.clientY;
-				TaskArea.addEventListener("mousemove",mouseMove,false);
-			},false);
-			divTask[i].addEventListener("mouseup", function(event)
-			{
-				//alert("松开");
-				OnOff = 0;
-				mouseMove(event);
-				TaskArea.removeEventListener("mousemove",mouseMove,false);
-			},false);
-			
-			divTask[i].addEventListener("mouseover", function(event)
-			{
-				$("#" + this.id).css("background","cadetblue");
-				$("#" + this.id).css("boxShadow","4px 4px 2px #c0c0c0");
-			},false);
-			divTask[i].addEventListener("mouseout", function(event)
-			{
-				$("#" + this.id).css("background","lightsteelblue");
-				$("#" + this.id).css("boxShadow","none");
-			},false);
-			document.getElementById("TaskList" + (j + 1) + "TaskDelete" + (i + 1)).addEventListener("click",function(event)
-			{
-				deleteBorder(event, j,json);
-			},false);
-		}
-	}*/
-	
-	
 	
 	menuButton.addEventListener("mouseover", function(event)
 	{
