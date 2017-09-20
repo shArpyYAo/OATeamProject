@@ -31,5 +31,15 @@
 		<input type="submit" value="查询看板详情">
 	</form>
 	
+	<form action="/oa-web/comment/addComment" method="post">
+		<input type="text" name="cardNo">
+		<input type="text" name="comment">
+		<input type="submit" value="新增评论">
+	</form>
+	<form action="/oa-web/comment/deleteComment" method="post">
+		<input type="text" name="commentNo">
+		<input type="submit" value="删除评论">
+	</form>
+	
 </body>
 </html>
