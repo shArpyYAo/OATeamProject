@@ -104,28 +104,31 @@ public class ListServiceImpl implements ListService {
 		try {
 			
 			TList list = listMapper.selectByPrimaryKey(listNo);
-			
-			TBoard board = boardMapper.selectByPrimaryKey(list.getBoardNo());
-			//判断用户是否是面板的所有人
-			if(board.getUserNo() != userNo) {
-				TBoardSpace boardSpace = boardSpaceMapper.selectByPrimaryKey(board.getBoardSpaceNo());
-				TBoardUserExample boardUserExample = new TBoardUserExample();
-				Criteria criteria = boardUserExample.createCriteria();
-				criteria.andUserNoEqualTo(userNo);
-				criteria.andBoardNoEqualTo(board.getBoardNo());
-				List<TBoardUser> boardUserList = boardUserMapper.selectByExample(boardUserExample);
-				//判断用户是否是面板成员
-				if(boardUserList == null || boardUserList.size() == 0) {
-					//判断用户是否是面板空间的所有人
-					if(boardSpace.getUserNo() != userNo) {
-						return ResponeResult.build(400, "没权限修改列表名称");
+			if(list == null) {
+				return ResponeResult.build(400, "参数异常");
+			} else {
+				TBoard board = boardMapper.selectByPrimaryKey(list.getBoardNo());
+				//判断用户是否是面板的所有人
+				if(board.getUserNo() != userNo) {
+					TBoardSpace boardSpace = boardSpaceMapper.selectByPrimaryKey(board.getBoardSpaceNo());
+					TBoardUserExample boardUserExample = new TBoardUserExample();
+					Criteria criteria = boardUserExample.createCriteria();
+					criteria.andUserNoEqualTo(userNo);
+					criteria.andBoardNoEqualTo(board.getBoardNo());
+					List<TBoardUser> boardUserList = boardUserMapper.selectByExample(boardUserExample);
+					//判断用户是否是面板成员
+					if(boardUserList == null || boardUserList.size() == 0) {
+						//判断用户是否是面板空间的所有人
+						if(boardSpace.getUserNo() != userNo) {
+							return ResponeResult.build(400, "没权限修改列表名称");
+						}
 					}
 				}
+				//修改列表名称
+				list.setListName(newListName);
+				listMapper.updateByPrimaryKeySelective(list);
+				return ResponeResult.ok("修改列表名称成功");
 			}
-			//修改列表名称
-			list.setListName(newListName);
-			listMapper.updateByPrimaryKeySelective(list);
-			return ResponeResult.ok("修改列表名称成功");
 		}catch(Exception e) {
 			return ResponeResult.build(500, ExceptionUtil.getStackTrace(e));
 		}

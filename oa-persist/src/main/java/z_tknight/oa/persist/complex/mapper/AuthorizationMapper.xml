@@ -8,12 +8,14 @@
 			when 
 				<!-- 是否是看板空间所有人 -->
 				(select count(*) from t_board_space tbs join 
-				(select board_space_no from t_board where board_no = #{boardNo}) as bsNo
+				(select board_space_no from t_board 
+					where board_no = #{boardNo}) as bsNo
 				on tbs.board_space_no = bsNo.board_space_no and tbs.user_no = #{userNo}) = 1 
 			then 1
 			when 
 				<!-- 是否是看板所有人 -->
-				(select count(*) from t_board where board_no = #{boardNo} and user_no = #{userNo}) = 1 
+				(select count(*) from t_board 
+				where board_no = #{boardNo} and user_no = #{userNo}) = 1 
 			then 2
 			when 
 				<!-- 是否是看板成员 -->
