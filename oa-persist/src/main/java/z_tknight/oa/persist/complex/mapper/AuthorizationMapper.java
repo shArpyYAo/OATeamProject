@@ -29,4 +29,18 @@ public interface AuthorizationMapper {
 	 */
 	Integer canSelectBoard(@Param("userNo") Integer userNo, 
 			@Param("boardNo") Integer boardNo);
+	
+	/**
+	 * 判断用户是否是看板空间所有人或成员
+	 * @param boardSpaceNo [Integer]看板空间编号
+	 * @param userNo [Integer]用户编号
+	 * @return
+	 * 0:不是看板空间成员或所有人<br/>
+	 * 1:用户是看板空间所有人<br/>
+	 * 2:用户是看板空间成员<br/>
+	 * 3:用户不存在<br/>
+	 * 4:看板空间不存在<br/>
+	 */
+	Integer isBoardSpaceMember(@Param("boardSpaceNo") Integer boardSpaceNo, 
+			@Param("userNo") Integer userNo);
 }

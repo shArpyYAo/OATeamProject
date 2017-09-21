@@ -31,4 +31,29 @@
 		else 0 end
 	</select>
 	
+	<!-- 判断用户是否是看板空间成员或所有人 -->
+	<select id="isBoardSpaceMember" resultType="java.lang.Integer">
+		select case
+			when 
+				<!-- 看板空间是否不存在 -->
+				(select count(*) from t_board_space 
+				where board_space_no = #{boardSpaceNo} and is_delete = 0) = 0
+			then 4
+			when 
+				<!-- 用户是否不存在 -->
+				(select count(*) from t_user where user_no = #{userNo}) = 0
+			then 3
+			when 
+				<!-- 是否是看板空间所有人 -->
+				(select count(*) from t_board_space 
+				where board_space_no = #{boardSpaceNo} and user_no = #{userNo}) = 1
+			then 1
+			when
+				<!-- 是否是看板空间成员 -->
+				(select count(*) from t_board_space_user 
+				where board_space_no = #{boardSpaceNo} and user_no = #{userNo}) = 1
+			then 2
+		else 0 end
+	</select>
+	
 </mapper>

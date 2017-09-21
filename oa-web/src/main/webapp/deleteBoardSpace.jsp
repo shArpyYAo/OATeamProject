@@ -41,5 +41,17 @@
 		<input type="submit" value="删除评论">
 	</form>
 	
+	<form action="/oa-web/boardSpace/addUser" method="post">
+		<input type="text" name="boardSpaceNo">
+		<input type="text" name="targetUserNo">
+		<input type="submit" value="添加看板空间用户">
+	</form>
+	
+	<form action="/oa-web/boardSpace/deleteUser" method="post">
+		<input type="text" name="boardSpaceNo">
+		<input type="text" name="targetUserNo">
+		<input type="submit" value="移除看板空间用户">
+	</form>
+	
 </body>
 </html>

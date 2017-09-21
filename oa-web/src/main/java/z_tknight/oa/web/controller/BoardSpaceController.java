@@ -68,4 +68,28 @@ public class BoardSpaceController {
 		}
 		return boardSpaceService.updateBoardSpace(userNo, boardSpaceNo, newBoardSpaceName, newSummary);
 	}
+	
+	@LogInfo("添加看板空间成员")
+	@RequestMapping(value="/addUser", method={RequestMethod.POST})
+	@ResponseBody
+	public ResponeResult addUser(HttpServletRequest request, Integer boardSpaceNo, Integer targetUserNo) {
+		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
+		if(userNo == null || targetUserNo == null || boardSpaceNo == null) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			return boardSpaceService.addUser(userNo, targetUserNo, boardSpaceNo);
+		}
+	}
+	
+	@LogInfo("删除看板空间成员")
+	@RequestMapping(value="/deleteUser", method={RequestMethod.POST})
+	@ResponseBody
+	public ResponeResult deleteUser(HttpServletRequest request, Integer boardSpaceNo, Integer targetUserNo) {
+		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
+		if(userNo == null || targetUserNo == null || boardSpaceNo == null) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			return boardSpaceService.deleteUser(userNo, targetUserNo, boardSpaceNo);
+		}
+	}
 }
