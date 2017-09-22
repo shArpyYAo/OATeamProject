@@ -75,4 +75,29 @@ public class BoardController {
 		
 		return boardService.updateBoardOrder(boardOrder, newBoardOrder, boardSpaceNo, userNo);
 	}
+	
+	@LogInfo("添加看板成员")
+	@RequestMapping(value="/addUser", method={RequestMethod.POST})
+	@ResponseBody
+	public ResponeResult addUser(HttpServletRequest request, Integer boardNo, Integer targetUserNo) {
+		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
+		if(userNo == null || targetUserNo == null || boardNo == null) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			return boardService.addUser(userNo, targetUserNo, boardNo);
+		}
+	}
+	
+	@LogInfo("删除看板成员")
+	@RequestMapping(value="/deleteUser", method={RequestMethod.POST})
+	@ResponseBody
+	public ResponeResult deleteUser(HttpServletRequest request, Integer boardNo, Integer targetUserNo) {
+		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
+		if(userNo == null || targetUserNo == null || boardNo == null) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			return boardService.deleteUser(userNo, targetUserNo, boardNo);
+		}
+	}
+	
 }

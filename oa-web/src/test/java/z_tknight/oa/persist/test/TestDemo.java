@@ -49,9 +49,10 @@ public class TestDemo extends AbstractJUnit4SpringContextTests {
 //		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 hh点mm分ss秒");
 //		String dateStr = sdf.format(date); // 转换成指定格式的字符串
 //		System.out.println(dateStr);
-		System.out.println(new Date(1505891544197L).toString());
-		System.out.println(new Timestamp(1505891544197L).toString());
-		
-		
+//		System.out.println(new Date(1505891544197L).toString());
+//		System.out.println(new Timestamp(1505891544197L).toString());
+		String a = "15,26,615,2,256,265,8,9,25";
+		System.out.println(a);
+		System.out.println(a.replaceAll("^15,", ""));
 	}
 }

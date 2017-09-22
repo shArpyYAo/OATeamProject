@@ -11,14 +11,17 @@ import z_tknight.oa.commons.util.CollectionUtil;
 import z_tknight.oa.commons.util.ExceptionUtil;
 import z_tknight.oa.commons.util.ResponeResult;
 import z_tknight.oa.commons.util.StringUtil;
-import z_tknight.oa.model.dto.BoardSpaceAndBoardDto;
 import z_tknight.oa.model.entity.TBoard;
 import z_tknight.oa.model.entity.TBoardExample;
 import z_tknight.oa.model.entity.TBoardSpace;
+import z_tknight.oa.model.entity.TBoardSpaceUser;
+import z_tknight.oa.model.entity.TBoardSpaceUserExample;
 import z_tknight.oa.model.vo.BoardSpaceAndBoard;
+import z_tknight.oa.persist.complex.mapper.AuthorizationMapper;
 import z_tknight.oa.persist.complex.mapper.BoardSpaceAndBoardMapper;
 import z_tknight.oa.persist.mapper.TBoardMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceMapper;
+import z_tknight.oa.persist.mapper.TBoardSpaceUserMapper;
 import z_tknight.oa.persist.mapper.TUserMapper;
 import z_tknight.oa.service.baseService.BoardSpaceService;
 
@@ -39,8 +42,52 @@ public class BoardSpaceServiceImpl implements BoardSpaceService  {
 	private TBoardMapper tBoardMapper;
 	@Autowired
 	private TUserMapper userMapper;
+	/** 看板空间和看板复杂操作持久层接口 */
 	@Autowired
 	private BoardSpaceAndBoardMapper bsbmapper;
+	/** 授权认证持久层接口 */
+	@Autowired
+	private AuthorizationMapper authorizMapper;
+	/** 看板空间和用户关系持久层接口 */
+	@Autowired
+	private TBoardSpaceUserMapper boardSpaceUserMapper;
+
+	/** 删除看板空间用户 */
+	@Override
+	public ResponeResult deleteUser(Integer userNo, Integer targetUserNo, Integer boardSpaceNo) {
+		// 判断发起操作用户是否是看板所有人
+		// 判断待添加用户是否是看板成员或所有人
+		if(authorizMapper.isBoardSpaceMember(boardSpaceNo, userNo) != 1 ||
+				authorizMapper.isBoardSpaceMember(boardSpaceNo, targetUserNo) != 2) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			// 删除看板空间成员
+			TBoardSpaceUserExample example = new TBoardSpaceUserExample();
+			TBoardSpaceUserExample.Criteria criteria = example.createCriteria();
+			criteria.andBoardSpaceNoEqualTo(boardSpaceNo);
+			criteria.andUserNoEqualTo(targetUserNo);
+			boardSpaceUserMapper.deleteByExample(example);
+			return ResponeResult.build(200, "操作成功");
+		}
+	}
+	
+	/** 添加看板空间用户 */
+	@Override
+	public ResponeResult addUser(Integer userNo, Integer targetUserNo, Integer boardSpaceNo) {
+		// 判断发起操作用户是否是看板成员或所有人
+		// 判断待添加用户是否不是看板成员或所有人
+		if(authorizMapper.isBoardSpaceMember(boardSpaceNo, userNo) == 0 ||
+				authorizMapper.isBoardSpaceMember(boardSpaceNo, targetUserNo) != 0) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			// 目标用户添加为看板空间成员
+			TBoardSpaceUser bsu = new TBoardSpaceUser();
+			bsu.setBoardSpaceNo(boardSpaceNo);
+			bsu.setUserNo(targetUserNo);
+			boardSpaceUserMapper.insertSelective(bsu);
+			return ResponeResult.build(200, "操作成功");
+		}
+	}
 	
 	/**
 	 * @Description: 根据用户名查询用户相关的面板空间以及面板，再进行排序
