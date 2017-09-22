@@ -173,4 +173,18 @@ public final class StringUtil {
 		}
 	}
 	
+	/**
+	 * 判断两个字符串是否相同
+	 * @param str1 [String]字符串1
+	 * @param str2 [String]字符串2
+	 * @return
+	 */
+	public static Boolean ignoreNullEquals(String str1, String str2) {
+		if(StringUtil.isEmpty(str1)) {
+			return StringUtil.isEmpty(str2);
+		} else {
+			return str1.equals(str2);
+		}
+	}
+	
 }
