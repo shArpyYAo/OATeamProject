@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import z_tknight.oa.commons.util.CaseUtil;
 import z_tknight.oa.commons.util.ResponeResult;
 import z_tknight.oa.commons.util.StringUtil;
 import z_tknight.oa.model.entity.TUser;
 import z_tknight.oa.service.baseService.UserService;
+import z_tknight.oa.web.annotation.LogInfo;
 
 
 @Controller
@@ -22,6 +24,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@LogInfo("检测邮箱")
 	@RequestMapping(value="/checkEmail", method={RequestMethod.POST})
 	@ResponseBody
 	public ResponeResult userCheckEmail(@RequestParam("email") String email) {
@@ -30,6 +33,7 @@ public class UserController {
 		
 	}
 	
+	@LogInfo("用户注册")
 	@RequestMapping(value="/register", method={RequestMethod.POST})
 	@ResponseBody
 	public ResponeResult userRegister(HttpServletRequest request,TUser user) {
@@ -49,7 +53,7 @@ public class UserController {
 		
 	}
 	
-	
+	@LogInfo("用户登录")
 	@RequestMapping(value="/login", method={RequestMethod.POST})
 	@ResponseBody
 	public ResponeResult userLogin(String userName, String password, HttpServletRequest request) {
@@ -67,6 +71,18 @@ public class UserController {
 			return result;
 		}
 		
+	}
+	
+	@LogInfo("查询用户")
+	@RequestMapping(value="/findUser", method={RequestMethod.POST})
+	@ResponseBody
+	public ResponeResult findUser(HttpServletRequest request, String nickName) {
+		Integer userNo = CaseUtil.caseInt( request.getSession().getAttribute("userNo"), null);
+		if(userNo == null || StringUtil.isEmpty(nickName)) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			return userService.findUser(nickName);
+		}
 	}
 	
 }

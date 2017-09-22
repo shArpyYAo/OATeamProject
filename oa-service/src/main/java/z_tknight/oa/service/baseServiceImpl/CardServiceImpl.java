@@ -349,7 +349,8 @@ public class CardServiceImpl implements CardService {
 				}
 			}
 			//判断原面板顺序是否正确
-			if(!listFrom.getCardOrder().equals(cardOrderFrom) || !listTo.getCardOrder().equals(cardOrderTo)) {
+			if(!StringUtil.equals(listFrom.getCardOrder(), cardOrderFrom) || 
+					!StringUtil.equals(listTo.getCardOrder(), cardOrderTo)) {
 				return ResponeResult.build(400, "卡片顺序出错");
 			}else {
 				listFrom.setCardOrder(newcardOrderFrom);

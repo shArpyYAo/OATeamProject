@@ -159,4 +159,18 @@ public final class StringUtil {
 		}
 	}
 	
+	/**
+	 * 判断两个字符串是否相同
+	 * @param str1 [String]字符串1
+	 * @param str2 [String]字符串2
+	 * @return
+	 */
+	public static Boolean equals(String str1, String str2) {
+		if(str1 == null) {
+			return str2 == null;
+		} else {
+			return str1.equals(str2);
+		}
+	}
+	
 }
