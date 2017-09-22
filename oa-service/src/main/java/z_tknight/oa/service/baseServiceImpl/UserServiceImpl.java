@@ -1,5 +1,6 @@
 package z_tknight.oa.service.baseServiceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -7,13 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import z_tknight.oa.commons.util.CollectionUtil;
 import z_tknight.oa.commons.util.ExceptionUtil;
 import z_tknight.oa.commons.util.ResponeResult;
-import z_tknight.oa.commons.util.StreamUtil;
 import z_tknight.oa.model.entity.TBoardSpace;
 import z_tknight.oa.model.entity.TUser;
 import z_tknight.oa.model.entity.TUserExample;
 import z_tknight.oa.model.entity.TUserExample.Criteria;
+import z_tknight.oa.model.vo.UserDetail;
 import z_tknight.oa.persist.mapper.TBoardSpaceMapper;
 import z_tknight.oa.persist.mapper.TUserMapper;
 import z_tknight.oa.service.baseService.UserService;
@@ -30,6 +32,26 @@ public class UserServiceImpl implements UserService {
 	TUserMapper userMapper;
 	@Autowired
 	TBoardSpaceMapper boardSpaceMapper;
+
+	/** 查询用户 */
+	@Override
+	public ResponeResult findUser(String nickName) {
+		// 模糊查询
+		TUserExample example = new TUserExample();
+		TUserExample.Criteria criteria = example.createCriteria();
+		criteria.andNickNameLike("%" + nickName + "%");
+		List<TUser> users = userMapper.selectByExample(example);
+		if(CollectionUtil.isEmpty(users)) {
+			return ResponeResult.build(200, "操作成功");
+		} else {
+			// 转为vo对象
+			List<UserDetail> userDetails = new ArrayList<>(users.size());
+			for(TUser user : users) {
+				userDetails.add(new UserDetail(user));
+			}
+			return ResponeResult.build(200, "操作成功", userDetails);
+		}
+	}
 	
 	@Override
 	public ResponeResult userLogin(String userName, String password) {

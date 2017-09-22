@@ -74,6 +74,10 @@
 		<input type="text" name="targetUserNo">
 		<input type="submit" value="移除卡片用户">
 	</form>
+	<form action="/oa-web/user/findUser" method="post">
+		<input type="text" name="nickName">
+		<input type="submit" value="用户查询">
+	</form>
 	
 </body>
 </html>

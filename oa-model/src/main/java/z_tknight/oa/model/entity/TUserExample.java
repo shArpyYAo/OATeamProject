@@ -454,7 +454,7 @@ public class TUserExample {
 			addCriterion("user_name is null");
 			return (Criteria) this;
 		}
-
+		
 		/**
 		 * user_name字段为不为null
 		 * @return [Criteria]更新后的criteria
@@ -712,6 +712,16 @@ public class TUserExample {
 			return (Criteria) this;
 		}
 
+		/**
+		 * nick_name类似传入值
+		 * @param value [String]传入值
+		 * @return [Criteria]更新后的criteria
+		 */
+		public Criteria andNickNameLike(String value) {
+			addCriterion("nick_name like ", value, "nickName");
+			return (Criteria) this;
+		}
+		
 		/**
 		 * nick_name不等于传入值
 		 * @param value [String]传入值
