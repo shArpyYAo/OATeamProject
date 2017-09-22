@@ -53,5 +53,27 @@
 		<input type="submit" value="移除看板空间用户">
 	</form>
 	
+	<form action="/oa-web/board/addUser" method="post">
+		<input type="text" name="boardNo">
+		<input type="text" name="targetUserNo">
+		<input type="submit" value="添加看板用户">
+	</form>
+	<form action="/oa-web/board/deleteUser" method="post">
+		<input type="text" name="boardNo">
+		<input type="text" name="targetUserNo">
+		<input type="submit" value="移除看板用户">
+	</form>
+	
+	<form action="/oa-web/card/addUser" method="post">
+		<input type="text" name="cardNo">
+		<input type="text" name="targetUserNo">
+		<input type="submit" value="添加卡片用户">
+	</form>
+	<form action="/oa-web/card/deleteUser" method="post">
+		<input type="text" name="cardNo">
+		<input type="text" name="targetUserNo">
+		<input type="submit" value="移除卡片用户">
+	</form>
+	
 </body>
 </html>

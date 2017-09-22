@@ -16,6 +16,9 @@ import z_tknight.oa.model.entity.TBoardUser;
 import z_tknight.oa.model.entity.TBoardUserExample;
 import z_tknight.oa.model.entity.TBoardUserExample.Criteria;
 import z_tknight.oa.model.entity.TCard;
+import z_tknight.oa.model.entity.TCardExample;
+import z_tknight.oa.model.entity.TCardUser;
+import z_tknight.oa.model.entity.TCardUserExample;
 import z_tknight.oa.model.entity.TList;
 import z_tknight.oa.model.vo.CardDetail;
 import z_tknight.oa.model.vo.CommentDetail;
@@ -25,6 +28,7 @@ import z_tknight.oa.persist.mapper.TBoardMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceMapper;
 import z_tknight.oa.persist.mapper.TBoardUserMapper;
 import z_tknight.oa.persist.mapper.TCardMapper;
+import z_tknight.oa.persist.mapper.TCardUserMapper;
 import z_tknight.oa.persist.mapper.TListMapper;
 import z_tknight.oa.service.baseService.CardService;
 
@@ -55,6 +59,60 @@ public class CardServiceImpl implements CardService {
 	/** 卡片详情持久层接口 */
 	@Autowired
 	private CardDetailMapper cardDetailMapper;
+	/** 卡片和用户关系操作持久层接口 */
+	@Autowired
+	private TCardUserMapper cardUserMapper;
+	
+	/** 删除卡片用户 */
+	@Override
+	public ResponeResult deleteUser(Integer userNo, Integer targetUserNo, Integer cardNo) {
+		TCard card = cardMapper.selectByPrimaryKey(cardNo);
+		if(card == null) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			// 操作用户权限判断
+			int authz = authorizMapper.canSelectBoard(userNo, card.getBoardNo());
+			if(authz < 1 || authz > 3) {
+				return ResponeResult.build(403, "权限不足,请及时充值");
+			} else {
+				// 直接删除
+				TCardUserExample example = new TCardUserExample();
+				TCardUserExample.Criteria criteria = example.createCriteria();
+				criteria.andCardNoEqualTo(cardNo);
+				criteria.andUserNoEqualTo(targetUserNo);
+				cardUserMapper.deleteByExample(example);
+				return ResponeResult.build(200, "操作成功");
+			}
+		}
+	}
+	
+	/** 添加卡片用户 */
+	@Override
+	public ResponeResult addUser(Integer userNo, Integer targetUserNo, Integer cardNo) {
+		TCard card = cardMapper.selectByPrimaryKey(cardNo);
+		if(card == null) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			// 操作用户权限判断:看板空间所有人、看板所有人、看板成员
+			int authz = authorizMapper.canSelectBoard(userNo, card.getBoardNo());
+			if(authz < 1 || authz > 3) {
+				return ResponeResult.build(403, "权限不足,请及时充值");
+			} else {
+				// 被操作用户权限判断:看板所有人、看板成员
+				int tmp = authorizMapper.canSelectBoard(targetUserNo, card.getBoardNo());
+				if(tmp < 2 || tmp > 3) {
+					return ResponeResult.build(403, "权限不足,请及时充值");
+				} else {
+					// 卡片添加用户
+					TCardUser cardUser = new TCardUser();
+					cardUser.setCardNo(cardNo);
+					cardUser.setUserNo(targetUserNo);
+					cardUserMapper.insert(cardUser);
+					return ResponeResult.build(200, "操作成功");
+				}
+			}
+		}
+	}
 	
 	/**
 	 * 根据卡片编号查询卡片详情

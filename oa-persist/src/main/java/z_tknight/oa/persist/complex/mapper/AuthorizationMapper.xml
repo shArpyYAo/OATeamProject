@@ -6,12 +6,16 @@
 	<select id="canSelectBoard" resultType="java.lang.Integer">
 		select case
 			when 
-				<!-- 是否是看板空间所有人 -->
+				<!-- 看板空间是否不存在 -->
 				(select count(*) from t_board_space tbs join 
 				(select board_space_no from t_board 
 					where board_no = #{boardNo}) as bsNo
-				on tbs.board_space_no = bsNo.board_space_no and tbs.user_no = #{userNo}) = 1 
-			then 1
+				on tbs.board_space_no = bsNo.board_space_no) = 0
+			then 5
+			when 
+				<!-- 用户是否不存在 -->
+				(select count(*) from t_user where user_no = #{userNo}) = 0
+			then 6
 			when 
 				<!-- 是否是看板所有人 -->
 				(select count(*) from t_board 
@@ -22,6 +26,13 @@
 				(select count(*) from t_board tb join t_board_user tbu 
 				on tb.board_no = tbu.board_no and tbu.user_no = #{userNo} and tb.board_no = #{boardNo}) = 1 
 			then 3
+			when 
+				<!-- 是否是看板空间所有人 -->
+				(select count(*) from t_board_space tbs join 
+				(select board_space_no from t_board 
+					where board_no = #{boardNo}) as bsNo
+				on tbs.board_space_no = bsNo.board_space_no and tbs.user_no = #{userNo}) = 1 
+			then 1
 			when 
 				<!-- 可见性为2时，是否是看板空间成员 -->
 				(select count(*) from t_board tb join t_board_space_user tbsu 

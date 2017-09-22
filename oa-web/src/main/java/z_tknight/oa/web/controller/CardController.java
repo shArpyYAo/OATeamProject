@@ -80,4 +80,28 @@ public class CardController {
 		return cardService.updateCardOrder(cardNo, listNoFrom, listNoTo, cardOrderFrom, cardOrderTo, newcardOrderFrom, newcardOrderTo, userNo);
 	}
 	
+	@LogInfo("添加卡片成员")
+	@RequestMapping(value="/addUser", method={RequestMethod.POST})
+	@ResponseBody
+	public ResponeResult addUser(HttpServletRequest request, Integer cardNo, Integer targetUserNo) {
+		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
+		if(userNo == null || targetUserNo == null || cardNo == null) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			return cardService.addUser(userNo, targetUserNo, cardNo);
+		}
+	}
+	
+	@LogInfo("删除卡片成员")
+	@RequestMapping(value="/deleteUser", method={RequestMethod.POST})
+	@ResponseBody
+	public ResponeResult deleteUser(HttpServletRequest request, Integer cardNo, Integer targetUserNo) {
+		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
+		if(userNo == null || targetUserNo == null || cardNo == null) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			return cardService.deleteUser(userNo, targetUserNo, cardNo);
+		}
+	}
+	
 }

@@ -14,8 +14,11 @@ import z_tknight.oa.commons.util.ResponeResult;
 import z_tknight.oa.commons.util.StringUtil;
 import z_tknight.oa.model.entity.TBoard;
 import z_tknight.oa.model.entity.TBoardSpace;
+import z_tknight.oa.model.entity.TBoardSpaceExample;
 import z_tknight.oa.model.entity.TBoardSpaceUser;
 import z_tknight.oa.model.entity.TBoardSpaceUserExample;
+import z_tknight.oa.model.entity.TBoardUser;
+import z_tknight.oa.model.entity.TBoardUserExample;
 import z_tknight.oa.model.entity.TCard;
 import z_tknight.oa.model.entity.TCardExample;
 import z_tknight.oa.model.entity.TList;
@@ -24,10 +27,12 @@ import z_tknight.oa.model.vo.BoardDetail;
 import z_tknight.oa.model.vo.CardDetail;
 import z_tknight.oa.model.vo.ListDetail;
 import z_tknight.oa.model.vo.TagDetail;
+import z_tknight.oa.persist.complex.mapper.AuthorizationMapper;
 import z_tknight.oa.persist.complex.mapper.CardDetailMapper;
 import z_tknight.oa.persist.mapper.TBoardMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceUserMapper;
+import z_tknight.oa.persist.mapper.TBoardUserMapper;
 import z_tknight.oa.persist.mapper.TCardMapper;
 import z_tknight.oa.persist.mapper.TListMapper;
 import z_tknight.oa.service.baseService.BoardService;
@@ -63,7 +68,186 @@ public class BoardServiceImpl implements BoardService {
 	/** 卡片和标签持久层接口 */
 	@Autowired
 	private CardDetailMapper cardDetailMapper;
-
+	/** 授权持久层接口 */
+	@Autowired
+	private AuthorizationMapper authorizMapper;
+	/** 看板用户关系表操作持久层接口 */
+	@Autowired
+	private TBoardUserMapper boardUserMapper;
+	
+	/** 添加看板成员 */
+	@Override
+	public ResponeResult addUser(Integer userNo, Integer targetUserNo, Integer boardNo) {
+		// 获得看板所在看板空间
+		TBoard board = boardMapper.selectByPrimaryKey(boardNo);
+		TBoardSpace boardSpace = boardSpaceMapper.selectByPrimaryKey(board.getBoardSpaceNo());
+		if(board == null || boardSpace == null) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			// 验证操作发起用户权限
+			int tmp = authorizMapper.canSelectBoard(userNo, boardNo);
+			if(tmp < 1 || tmp > 3) {
+				return ResponeResult.build(400, "参数不合法");
+			} else {
+				// 验证被操作用户权限
+				tmp = authorizMapper.canSelectBoard(targetUserNo, boardNo);
+				if(tmp == 2 || tmp == 3 || tmp > 4) {
+					return ResponeResult.build(400, "参数不合法");
+				} else {
+					// 添加用户关系
+					TBoardUser boardUser = new TBoardUser();
+					boardUser.setBoardNo(boardNo);
+					boardUser.setUserNo(targetUserNo);
+					boardUserMapper.insertSelective(boardUser);
+					// 当前看板空间为个人空间且目标用户不是看板空间所有人
+					if(boardSpace.getCategoryNo() == 1 && boardSpace.getUserNo() != targetUserNo) {
+						// 目标用户在自己的个人空间添加该看板
+						addBoardToSpace(boardNo, targetUserNo);
+						// 目标用户同时升级为看板空间成员
+						addToBoardSpace(boardSpace.getBoardSpaceNo(), targetUserNo);
+					}
+					return ResponeResult.build(200, "操作成功");
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 用户添加为看板空间成员
+	 * @param boardSpace [Integer]看板空间编号
+	 * @param userNo [Integer]用户编号
+	 */
+	private void addToBoardSpace(Integer boardSpaceNo, Integer userNo) {
+		// 添加用户为看板空间成员
+		TBoardSpaceUser boardSpaceUser = new TBoardSpaceUser();
+		boardSpaceUser.setBoardSpaceNo(boardSpaceNo);
+		boardSpaceUser.setUserNo(userNo);
+		boardSpaceUserMapper.insert(boardSpaceUser);
+	}
+	
+	/**
+	 * 把指定看板放入指定用户的个人空间中
+	 * @param boardNo [Integer]看板编号
+	 * @param userNo [Integer]用户编号
+	 */
+	private void addBoardToSpace(Integer boardNo, Integer userNo) {
+		// 取出用户的个人空间
+		TBoardSpaceExample example = new TBoardSpaceExample();
+		TBoardSpaceExample.Criteria criteria = example.createCriteria();
+		criteria.andUserNoEqualTo(userNo);
+		criteria.andCategoryNoEqualTo(1);
+		List<TBoardSpace> boardSpaces = boardSpaceMapper.selectByExample(example);
+		if(CollectionUtil.isEmpty(boardSpaces)) {
+			return;
+		} else {
+			// 在看板顺序末尾添加上看板编号
+			TBoardSpace boardSpace = boardSpaces.get(0);
+			if(StringUtil.isEmpty(boardSpace.getBoardOrder())) {
+				boardSpace.setBoardOrder(boardNo + "");
+			} else {
+				boardSpace.setBoardOrder(
+						boardSpace.getBoardOrder() + "," + boardNo);
+			}
+			boardSpaceMapper.updateByPrimaryKeySelective(boardSpace);
+		}
+	}
+	
+	/** 删除看板成员 */
+	@Override
+	public ResponeResult deleteUser(Integer userNo, Integer targetUserNo, Integer boardNo) {
+		// 获得看板所在看板空间
+		TBoard board = boardMapper.selectByPrimaryKey(boardNo);
+		TBoardSpace boardSpace = boardSpaceMapper.selectByPrimaryKey(board.getBoardSpaceNo());
+		if(board == null || boardSpace == null) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			// 验证操作发起用户权限:用户是看板空间所有人或看板所有人或看板成员
+			int tmp = authorizMapper.canSelectBoard(userNo, boardNo);
+			if(tmp < 1 || tmp > 3) {
+				return ResponeResult.build(400, "参数不合法");
+			} else {
+				// 验证被操作用户权限:用户是看板成员
+				tmp = authorizMapper.canSelectBoard(targetUserNo, boardNo);
+				if(tmp != 3) {
+					return ResponeResult.build(400, "参数不合法");
+				} else {
+					// 删除用户关系
+					TBoardUserExample example = new TBoardUserExample();
+					TBoardUserExample.Criteria criteria = example.createCriteria();
+					criteria.andBoardNoEqualTo(boardNo);
+					criteria.andUserNoEqualTo(targetUserNo);
+					boardUserMapper.deleteByExample(example);
+					// 当前看板空间为个人空间且目标用户不是看板空间所有人
+					if(boardSpace.getCategoryNo() == 1 && boardSpace.getUserNo() != targetUserNo) {
+						// 目标用户在自己的个人空间移除该看板
+						deleteBoardToSpace(boardNo, targetUserNo);
+						// 尝试取消目标用户看板空间成员的身份
+						deleteFromBoardSpace(boardSpace.getBoardSpaceNo(), targetUserNo);
+					}
+					return ResponeResult.build(200, "操作成功");
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 取消用户看板空间成员的身份
+	 * @param boardSpace [Integer]看板空间编号
+	 * @param userNo [Integer]用户编号
+	 */
+	private void deleteFromBoardSpace(Integer boardSpaceNo, Integer userNo) {
+		// 添加用户为看板空间成员
+		TBoardSpaceUserExample example = new TBoardSpaceUserExample();
+		TBoardSpaceUserExample.Criteria criteria = example.createCriteria();
+		criteria.andBoardSpaceNoEqualTo(boardSpaceNo);
+		criteria.andUserNoEqualTo(userNo);
+		boardSpaceUserMapper.deleteByExample(example);
+	}
+	
+	/**
+	 * 把指定看板从指定用户的个人空间中删除
+	 * @param boardNo [Integer]看板编号
+	 * @param userNo [Integer]用户编号
+	 */
+	private void deleteBoardToSpace(Integer boardNo, Integer userNo) {
+		// 取出用户的个人空间
+		TBoardSpaceExample example = new TBoardSpaceExample();
+		TBoardSpaceExample.Criteria criteria = example.createCriteria();
+		criteria.andUserNoEqualTo(userNo);
+		criteria.andCategoryNoEqualTo(1);
+		List<TBoardSpace> boardSpaces = boardSpaceMapper.selectByExample(example);
+		if(CollectionUtil.isEmpty(boardSpaces)) {
+			return;
+		} else {
+			// 移除看板空间中看板顺序中的指定看板编号
+			TBoardSpace boardSpace = boardSpaces.get(0);
+			boardSpace.setBoardOrder(
+					removeNoInOrder(boardSpace.getBoardOrder(), boardNo));
+		}
+	}
+	
+	/**
+	 * 移除编号顺序中的指定编号
+	 * @param order [Stirng]编号顺序
+	 * @param boardNo [Integer]编号
+	 * @return
+	 */
+	private String removeNoInOrder(String order, Integer no) {
+		if(StringUtil.isEmpty(order)) {
+			return order;
+		} else {
+			if(order.equals(no + "")) { // 唯一编号
+				return null;
+			} else if(order.startsWith(no + ",")) { // 前缀编号
+				return order.replaceAll("^" + no + ",", "");
+			} else if(order.endsWith("," + no)) { // 后缀编号
+				return order.replaceAll("," + no + "$", "");
+			} else { // 中间编号
+				return order.replaceAll("," + no + ",", ",");
+			}
+		}
+	}
+	
 	/**
 	 * 查询指定看板的所有列表，以及列表的所有卡片
 	 * @param userNo [Integer]用户编号
