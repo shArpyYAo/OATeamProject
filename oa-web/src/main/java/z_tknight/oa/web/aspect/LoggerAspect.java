@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import z_tknight.oa.commons.util.CaseUtil;
 import z_tknight.oa.commons.util.JsonUtil;
 import z_tknight.oa.commons.util.StringUtil;
 import z_tknight.oa.model.entity.OperationLog;
@@ -95,6 +96,8 @@ public class LoggerAspect {
 			log.setIp(this.getClientIP(request));
 			_LOG.debug("ip：" + request.getRemoteAddr() + "、" + request.getHeader("x-forwarded-for") + "、"
 					+ request.getHeader("Proxy-Client-IP") + "、" + request.getHeader("WL-Proxy-Client-IP"));
+			// 用户
+			log.setUserNo(CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null));
 			// 代理方法信息
 			String methodName = joinPoint.getSignature().getName();
 			_LOG.debug("方法名：" + methodName);
