@@ -348,12 +348,9 @@ public class CardServiceImpl implements CardService {
 					}
 				}
 			}
-			// 把空字符串转换为null
-			cardOrderFrom = StringUtil.isEmpty(cardOrderFrom) ? null : cardOrderFrom;
-			cardOrderTo = StringUtil.isEmpty(cardOrderFrom) ? null : cardOrderTo;
 			//判断原面板顺序是否正确
-			if(!StringUtil.equals(listFrom.getCardOrder(), cardOrderFrom) || 
-					!StringUtil.equals(listTo.getCardOrder(), cardOrderTo)) {
+			if(!StringUtil.ignoreNullEquals(listFrom.getCardOrder(), cardOrderFrom) || 
+					!StringUtil.ignoreNullEquals(listTo.getCardOrder(), cardOrderTo)) {
 				return ResponeResult.build(400, "卡片顺序出错");
 			}else {
 				listFrom.setCardOrder(newcardOrderFrom);
