@@ -102,10 +102,22 @@ body
 	padding-right: 20px;
 	font-size: 20px;
 	background: floralwhite;
-	z-index: 4;
+	z-index: 6;
 	overflow: hidden;
 	cursor: pointer;
 }
+.topDisplayList
+{
+	width: 260px;
+	border: 1px solid #c0c0c0;
+	display: inline-block;
+	background: floralwhite;
+	border-radius:4px;
+	position: absolute;
+	top: 80px;
+	left: 55px;
+	z-index: 4;
+} 
 .ListTitleInput
 {
 	border: none;
@@ -135,7 +147,7 @@ body
 	color: white;
 	border-radius:6px;
 	cursor: pointer;
-	z-index: 4;
+	z-index: 6;
 	display: none;
 }
 #menuButton

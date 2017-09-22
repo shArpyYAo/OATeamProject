@@ -76,7 +76,6 @@ public class CardController {
 			String cardOrderTo, String newcardOrderFrom, String newcardOrderTo) {
 		
 		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
-		
 		return cardService.updateCardOrder(cardNo, listNoFrom, listNoTo, cardOrderFrom, cardOrderTo, newcardOrderFrom, newcardOrderTo, userNo);
 	}
 	

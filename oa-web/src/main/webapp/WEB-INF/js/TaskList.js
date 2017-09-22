@@ -25,6 +25,7 @@ window.onload = function()
 	var json,first = 1,updateBor = 0,div,len,t,NewCardOrderBefore = "";
 	var OldCardOrderBefore = "";
 	var OldCardOrderAfter = "";
+	var NewCardOrderAfter = "";
 	var clientXBefore;
 	initPersonalJsonData(div,len,t);
 	
@@ -84,7 +85,7 @@ window.onload = function()
 			cBorder(i, json["data"]["lists"][i - 1]["cards"].length,json["data"]["lists"][i - 1]);
 			cForm("#","添加卡片", i, temp1++,json);
 			cForm("#","删除列表", i, temp1++,json);
-			cTitleForm("#",json["data"]["lists"][i - 1]["listName"],"保存",i);
+			cTitleForm("#",json["data"]["lists"][i - 1]["listName"],"保存",i,json["data"]["lists"][i - 1]["cards"].length);
 			divTask = TaskList[i - 1].children;
 			index[StartAndEnd] = temp;
 			StartAndEnd++;
@@ -97,6 +98,7 @@ window.onload = function()
 				$("#" + divTask[j].id).css("borderRadius","4px");
 				$("#" + divTask[j].id).css("top",((j * 110) + 90) + "px");
 				$("#" + divTask[j].id).css("left",(((i - 1) * 318) + 66) + "px");
+				$("#" + divTask[j].id).css("z-index","4");
 				Task[temp] = divTask[j].id;
 				next[temp] = temp + 1;
 				if(i == TaskList.length && j == divTask.length - 1)
@@ -111,15 +113,15 @@ window.onload = function()
 			{
 				if(document.getElementById("TaskList" + i))
 				{
-					$("#TaskList" + i).css("height",(divTask.length * 110) + 20 + "px");
+					//$("#TaskList" + i).css("height",(divTask.length * 110) + 20 + "px");
 				}
 			}
 			else
 			{
 				if(document.getElementById("TaskList" + i))
 				{
-					$("#TaskList" + i).css("height",(divTask.length * 110) + 10 + "px");
-					$("#TaskList" + i).css("margin-bottom",((Biggest - divTask.length) * 110) + 10 + "px");
+					//$("#TaskList" + i).css("height",(divTask.length * 110) + 10 + "px");
+					//$("#TaskList" + i).css("margin-bottom",((Biggest - divTask.length) * 110) + 10 + "px");
 				}
 			}
 			TotalLength = TotalLength + divTask.length;
@@ -434,11 +436,11 @@ window.onload = function()
 			}
 		}
 	}
-	function cTitleForm(url, value1, value2, temp)
+	function cTitleForm(url, value1, value2, temp,num)
 	{
 		var input1;
 		var input2;
-		var span;
+		var span,div;
 		temp--;
 		input1 = document.createElement("input");
 		input2 = document.createElement("input");
@@ -457,6 +459,10 @@ window.onload = function()
 		top.appendChild(input1);
 		top.appendChild(input2);
 		top.appendChild(span);
+		div = document.createElement("div");
+		div.id = "topDisplayList" + temp;
+		div.className = "topDisplayList";
+		top.appendChild(div);
 		input2.addEventListener("click",function(event)
 		{
 ////////////////////////////////////////////////////////////
@@ -493,7 +499,9 @@ window.onload = function()
 			$("#ListTitleInput" + temp).css("left",(((315 * temp) + 75) + temp * 8) + "px");
 			$("#ListTitleInputSpan" + temp).css("left",318 * temp + "px");
 			$("#ListTitleSubmit" + temp).css("left",((315 * temp) + 120) + temp * 6 + "px");
+			$("#topDisplayList" + temp).css("left",((318 * temp) + 56) + "px");
 		}
+		$("#topDisplayList" + temp).css("height",((110 * num) + 10) + "px");
 		document.getElementById("ListTitleInputSpan" + temp).addEventListener("click", function()
 		{
 			if(document.getElementById("ListTitleInput" + temp).style.display == "block")
@@ -536,13 +544,19 @@ window.onload = function()
 	}
 	function cList(num)
 	{
-		var div;
+		var div,p;
 		for(let k = 1;k <= num;k++)
 		{
 			div = document.createElement("div");
 			div.id = "TaskList" + k;
 			TaskArea.appendChild(div);
 		}
+		/*div = document.createElement("div");
+		p = document.createElement("p");
+		p.innerHTML = "创建任务列表";
+		div.id = "createList";
+		div.appendChild(p);
+		top.appendChild(div);*/
 	}
 	
 	function ConfirmTarget(id ,Selected)
@@ -796,39 +810,17 @@ window.onload = function()
 		var list  = 1;
 		while(i != index.length)
 		{
-			if(index[i] != -1 && index[i] != index[i + 1])
-			{
-				num = 0;
-				if(num + 1 > RecordNum)
-				{
-					RecordNum = num + 1;
-				}
-			}
-			i = i + 2;
-		}
-		i = 0;
-		while(i != index.length)
-		{
 			if(index[i] == -1)
 			{
 				//alert("here1");
 				//continue;
-				if(document.getElementById("TaskList" + list))
-				{
-					$("#TaskList" + list).css("margin-bottom",((RecordNum - 1) * 110) + 10 + "px");
-					list++;
-				}
+				$("#topDisplayList" + (i / 2)).css("height",((110 * 1) + 10) + "px");
 			}
 			else if(index[i] == index[i + 1])
 			{
 				//alert("here2");
 				$("#" + Task[index[i]]).css("top", 90 + "px");
-				if(document.getElementById("TaskList" + list))
-				{
-					$("#TaskList" + list).css("height",110 + 20 + "px");
-					$("#TaskList" + list).css("margin-bottom",((RecordNum - 1) * 110) + 10 + "px");
-					list++;
-				}
+				$("#topDisplayList" + (i / 2)).css("height",((110 * 1) + 10) + "px");
 			}
 			else
 			{
@@ -843,14 +835,9 @@ window.onload = function()
 					temp = next[temp];
 					num++;
 				}
+				$("#topDisplayList" + (i / 2)).css("height",((110 * (num + 1)) + 10) + "px");
 				/*alert("RecordNum:" + RecordNum);
 				alert("num:" + num);*/
-				if(document.getElementById("TaskList" + list))
-				{
-					$("#TaskList" + list).css("height",((num + 1) * 110) + 20 + "px");
-					$("#TaskList" + list).css("margin-bottom",((RecordNum - (num + 1)) * 110) + 10 + "px");
-					list++;
-				}
 				/*for(let i = 0;i < 4;i++)
 				{
 					alert("AllTaskListInit.index：" + index[i]);
@@ -865,8 +852,9 @@ window.onload = function()
 		var cardNo,listNoFrom;
 		cardNo = event.target.attributes["idvalue"].nodeValue;
 		listNoFrom = event.target.parentNode.id.replace(/[^0-9]/ig,"") - 1;
-		
-		/*$.ajax(
+		listNoFrom = json["data"]["lists"][listNoFrom]["listNo"];
+		listNoTo = json["data"]["lists"][listNoTo]["listNo"];
+		$.ajax(
 		{
 	        cache: false,
 	        type: "post",
@@ -874,13 +862,13 @@ window.onload = function()
 	        url: "/oa-web/card/updateCardOrder",
 	        data:
 	        {
-	        	cardNo:cardNo,
-	        	listNoFrom:listNoFrom,
-	        	listNoTo:listNoTo,
-	        	cardOrderFrom:OldCardOrderBefore,
-	        	cardOrderTo:,
-	        	newcardOrderFrom:NewCardOrderBefore,
-	        	newcardOrderTo:
+	        	cardNo : cardNo,
+	        	listNoFrom : listNoFrom,
+	        	listNoTo : listNoTo,
+	        	cardOrderFrom : OldCardOrderBefore,
+	        	cardOrderTo : NewCardOrderBefore,
+	        	newcardOrderFrom : OldCardOrderAfter,
+	        	newcardOrderTo : NewCardOrderAfter
 	        },
 	        error: function(request) 
 	        {
@@ -888,14 +876,13 @@ window.onload = function()
 	        },
 	        success: function(data) 
 	        {
-	        	
 	        }
-	    });	*/
+	    });	
 	}
 	
 	function comfirmOldCardOrderBefore(start,end)
 	{
-		var oldListNo,k;
+		var k;
 		OldCardOrderBefore = "";
 		k = index[start];
 		while(k != -1)
@@ -909,12 +896,24 @@ window.onload = function()
 		}
 		OldCardOrderBefore = OldCardOrderBefore + document.getElementById(Task[k]).attributes["idvalue"].nodeValue;
 		//alert(OldCardOrderBefore);
-		//OldCardOrderAfter
 	}
 	
-	function comfirmOldCardOrderAfter()
+	function comfirmOldCardOrderAfter(start,end)
 	{
-		
+		var k;
+		OldCardOrderAfter = "";
+		k = index[start];
+		while(k != -1)
+		{
+			if(k == index[end])
+			{
+				break;
+			}
+			OldCardOrderAfter = OldCardOrderAfter + document.getElementById(Task[k]).attributes["idvalue"].nodeValue + ",";
+			k = next[k];
+		}
+		OldCardOrderAfter = OldCardOrderAfter + document.getElementById(Task[k]).attributes["idvalue"].nodeValue;
+		//alert(OldCardOrderAfter);
 	}
 	
 	function comfirmNewCardOrderBefore(start,end)
@@ -927,18 +926,28 @@ window.onload = function()
 			{
 				break;
 			}
-			//alert("Task[k]:" + document.getElementById(Task[k]).attributes["idvalue"].nodeValue);
 			NewCardOrderBefore = NewCardOrderBefore + document.getElementById(Task[k]).attributes["idvalue"].nodeValue + ",";
 			k = next[k];
 		}
-		//alert(Task[k]);
 		NewCardOrderBefore = NewCardOrderBefore + document.getElementById(Task[k]).attributes["idvalue"].nodeValue;
 		//alert(NewCardOrderBefore);
 	}
 	
-	function comfirmNewCardOrderAfter()
+	function comfirmNewCardOrderAfter(start,end)
 	{
-		
+		var k = index[start];
+		NewCardOrderAfter = "";
+		while(k != -1)
+		{
+			if(k == index[end])
+			{
+				break;
+			}
+			NewCardOrderAfter = NewCardOrderAfter + document.getElementById(Task[k]).attributes["idvalue"].nodeValue + ",";
+			k = next[k];
+		}
+		NewCardOrderAfter = NewCardOrderAfter + document.getElementById(Task[k]).attributes["idvalue"].nodeValue;
+		//alert(NewCardOrderAfter);
 	}
 	
 	function mouseMove(event)
@@ -975,7 +984,7 @@ window.onload = function()
 		else if(InMove == 1)
 		{
 			id = event.target.getAttribute("id");
-			$("#" + id).css("z-index", "1");
+			$("#" + id).css("z-index", "4");
 			if(event.clientX <= 580)
 			{
 				number = Math.floor(event.clientY / 110);
@@ -1003,7 +1012,7 @@ window.onload = function()
 				{
 					comfirmOldCardOrderAfter(4,5);
 				}
-				comfirmNewCardOrderAfter();
+				comfirmNewCardOrderAfter(0,1);
 				changeOrder(event,0);
 			}
 			else if(event.clientX <= 900 && event.clientX >= 620)
@@ -1025,7 +1034,7 @@ window.onload = function()
 				{
 					comfirmOldCardOrderAfter(4,5);
 				}
-				comfirmNewCardOrderAfter();
+				comfirmNewCardOrderAfter(2,3);
 				changeOrder(event,1);
 			}
 			else if(event.clientX <= 1220 && event.clientX >= 940)
