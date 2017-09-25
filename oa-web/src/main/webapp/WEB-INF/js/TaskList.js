@@ -13,7 +13,6 @@ window.onload = function()
 	var divTask;
 	var MousePositionX;
 	var MousePositionY;
-	var Biggest = 0;
 	var InMove = 0;
 	var Task = new Array(100);
 	var next = new Array(100);
@@ -28,18 +27,6 @@ window.onload = function()
 	var NewCardOrderAfter = "";
 	var clientXBefore;
 	initPersonalJsonData(div,len,t);
-	
-	function findBiggest()
-	{
-		for(let i = 1;i < TaskList.length + 1;i++)
-		{
-			divTask = TaskList[i - 1].children;
-			if(divTask.length >= Biggest)
-			{
-				Biggest = divTask.length;
-			}
-		}
-	}
 	
 	function updateBorder(div,len,t,json)
 	{
@@ -79,16 +66,23 @@ window.onload = function()
 		cList(json["data"]["lists"].length);
 		TaskList = TaskArea.children;
 		index = new Array(TaskList.length * 2);
-		findBiggest();
+		initTitle();
 		for(let i = 1;i < TaskList.length + 1;i++)
 		{
 			cBorder(i, json["data"]["lists"][i - 1]["cards"].length,json["data"]["lists"][i - 1]);
-			cForm("#","添加卡片", i, temp1++,json);
-			cForm("#","删除列表", i, temp1++,json);
-			cTitleForm("#",json["data"]["lists"][i - 1]["listName"],"保存",i,json["data"]["lists"][i - 1]["cards"].length);
+			cForm("添加卡片", i, temp1++,json);
+			cForm("删除列表", i, temp1++,json);
+			cTitleForm(json["data"]["lists"][i - 1]["listName"],"保存",i,json["data"]["lists"][i - 1]["cards"].length);
 			divTask = TaskList[i - 1].children;
-			index[StartAndEnd] = temp;
+			if(divTask.length == 0)
+				index[StartAndEnd] = -1;
+			else
+				index[StartAndEnd] = temp;
 			StartAndEnd++;
+			if(divTask.length == 0)
+			{
+				next[temp - 1] = 0;
+			}
 			for(let j = 0; j < divTask.length;j++)
 			{
 				$("#" + divTask[j].id).css("width","240px");
@@ -98,7 +92,7 @@ window.onload = function()
 				$("#" + divTask[j].id).css("borderRadius","4px");
 				$("#" + divTask[j].id).css("top",((j * 110) + 90) + "px");
 				$("#" + divTask[j].id).css("left",(((i - 1) * 318) + 66) + "px");
-				$("#" + divTask[j].id).css("z-index","4");
+				$("#" + divTask[j].id).css("z-index","6");
 				Task[temp] = divTask[j].id;
 				next[temp] = temp + 1;
 				if(i == TaskList.length && j == divTask.length - 1)
@@ -107,28 +101,16 @@ window.onload = function()
 				}
 				temp++;
 			}
-			index[StartAndEnd] = temp - 1;
-			StartAndEnd++;
-			if(divTask.length == Biggest)
-			{
-				if(document.getElementById("TaskList" + i))
-				{
-					//$("#TaskList" + i).css("height",(divTask.length * 110) + 20 + "px");
-				}
-			}
+			if(divTask.length == 0)
+				index[StartAndEnd] = -1;
 			else
-			{
-				if(document.getElementById("TaskList" + i))
-				{
-					//$("#TaskList" + i).css("height",(divTask.length * 110) + 10 + "px");
-					//$("#TaskList" + i).css("margin-bottom",((Biggest - divTask.length) * 110) + 10 + "px");
-				}
-			}
+				index[StartAndEnd] = temp - 1;
+			StartAndEnd++;
 			TotalLength = TotalLength + divTask.length;
 		}
-		/*for(let i = 0;i < 4;i++)
+		/*for(let j = 0;j < 6;j++)
 		{
-			alert(index[i]);
+			alert(next[j]);
 		}*/
 		for(let j = 0;j < TaskList.length;j++)
 		{
@@ -166,13 +148,20 @@ window.onload = function()
 				},false);
 			}
 		}
+		first = 0;
+	}
+	
+	function initTitle()
+	{
+		var title = document.getElementById("titleInput");
+		title.value = json["data"]["boardName"];
 	}
 	
 	function addBorder(temp, event)
 	{
 		var div;
 		var list;
-		var tt;
+		var tt,tmp,tmp1;
 		var k = 0;
 		var img,h3,listNo,leng;
 		leng = temp;
@@ -224,18 +213,36 @@ window.onload = function()
 		divTask = TaskList[temp].children;
 		//alert(divTask.length);next,//task index
 		Task[TotalLength] = div.id;
-		
-		next[TotalLength] = index[temp * 2];
-		//alert("index[" + temp * 2 +"]:" + index[temp * 2]);
+		if(index[temp * 2] == -1)
+		{
+			tmp = index.length;
+			tmp = tmp - 2;
+			if(tmp == temp * 2)
+			{
+				next[TotalLength] = 0;
+				tmp1 = 0;
+				index[(temp * 2) + 1] = TotalLength;
+			}
+			else
+			{
+				next[TotalLength] = index[temp * 2 + 2];
+				tmp1 = index[temp * 2 + 2];
+				index[(temp * 2) + 1] = TotalLength;
+			}
+		}
+		else
+		{
+			next[TotalLength] = index[temp * 2];
+			tmp1 = index[temp * 2];
+		}
 		while(k != -1)
 		{
-			if(next[k] == index[temp * 2])
+			if(next[k] == tmp1)
 			{
 				break;
 			}
 			k = next[k];
 		}
-		//alert("k:" + k);
 		next[k] = TotalLength;
 		index[temp * 2] = TotalLength;
 		/*for(let i = 0;i <= TotalLength;i++)
@@ -248,9 +255,10 @@ window.onload = function()
 		$("#" + div.id).css("position","absolute");
 		$("#" + div.id).css("background","lightsteelblue");
 		$("#" + div.id).css("borderRadius","4px");
+		$("#" + div.id).css("z-index","6");
 		$("#" + div.id).css("left",((temp * 318) + 66) + "px");
 		temp = temp * 2;
-		BeginPaintting(temp,temp + 1);
+		BeginPaintting(temp,(temp + 1));
 		AllTaskListInit();
 		div.addEventListener("mouseover", function(event)
 		{
@@ -310,12 +318,12 @@ window.onload = function()
 	        success: function(data) 
 	        {
 	        	var div,len,leng;
+	        	first = 0;
+	        	updateBor = 0;
 	        	initPersonalJsonData(div,len,leng);
 	        }
 	    });		
 ////////////////////////////////////////////////////////////////
-		/*var i;
-		i = new FormData*/
 		while(k != -1)
 		{
 			if(Task[k] == par.id)
@@ -379,7 +387,7 @@ window.onload = function()
 			
 		}
 	}
-	function cForm(url, value, temp, id,json)
+	function cForm(value, temp, id,json)
 	{
 		temp--;
 		var input1;
@@ -436,7 +444,7 @@ window.onload = function()
 			}
 		}
 	}
-	function cTitleForm(url, value1, value2, temp,num)
+	function cTitleForm(value1, value2, temp,num)
 	{
 		var input1;
 		var input2;
@@ -501,7 +509,10 @@ window.onload = function()
 			$("#ListTitleSubmit" + temp).css("left",((315 * temp) + 120) + temp * 6 + "px");
 			$("#topDisplayList" + temp).css("left",((318 * temp) + 56) + "px");
 		}
-		$("#topDisplayList" + temp).css("height",((110 * num) + 10) + "px");
+		if(num == 0)
+			$("#topDisplayList" + temp).css("height",((110 * 1) + 10) + "px");
+		else
+			$("#topDisplayList" + temp).css("height",((110 * num) + 10) + "px");
 		document.getElementById("ListTitleInputSpan" + temp).addEventListener("click", function()
 		{
 			if(document.getElementById("ListTitleInput" + temp).style.display == "block")
@@ -551,12 +562,55 @@ window.onload = function()
 			div.id = "TaskList" + k;
 			TaskArea.appendChild(div);
 		}
-		/*div = document.createElement("div");
+		div = document.createElement("div");
 		p = document.createElement("p");
 		p.innerHTML = "创建任务列表";
 		div.id = "createList";
 		div.appendChild(p);
-		top.appendChild(div);*/
+		top.appendChild(div);
+		$("#createList").css("margin-left",(320 * num) + "px");
+		div.addEventListener("click", function(event)
+		{
+			//alert("here");
+			//alert(TaskArea.children.length);
+			var div;
+			div = document.createElement("div");
+			div.id = "topDisplayList" + TaskArea.children.length;
+			div.className = "topDisplayList";
+			top.appendChild(div);
+			$("#topDisplayList" + TaskArea.children.length).css("left",((318 * TaskArea.children.length) + 56) + "px");
+			$("#topDisplayList" + TaskArea.children.length).css("height",120 + "px");
+			cForm("添加卡片", TaskArea.children.length + 1);
+			cForm("删除列表", TaskArea.children.length + 1);
+			cTitleForm("待解决","保存",TaskArea.children.length + 1,-1);
+			div = document.createElement("div");
+			div.id = "TaskList" + (TaskArea.children.length + 1);
+			alert(TaskArea.children.length);
+			index[(TaskArea.children.length * 2)] = -1;
+			index[(TaskArea.children.length * 2) + 1] = -1;
+			TaskArea.appendChild(div);
+			$("#createList").css("margin-left",(320 * TaskArea.children.length) + "px");
+			$.ajax(
+			{
+		        cache: false,
+		        type: "post",
+		        dataType: "json",
+		        url: "/oa-web/list/addList",
+		        data:
+		        {
+		        	listName:"新列表",
+		        	boardNo:borderNo
+		        },
+		        error: function(request) 
+		        {
+		            alert("Connection error");
+		        },
+		        success: function(data) 
+		        {
+		        	//alert("Connection ok " + data["msg"]);
+		        }
+		    });	
+		},false);
 	}
 	
 	function ConfirmTarget(id ,Selected)
@@ -682,6 +736,7 @@ window.onload = function()
 		var i;
 		var t;
 		ChangeHeadAndTail(sele);
+		
 		if(last > 0)//如果插入的是最后面
 		{
 			index[End] = sele;
@@ -784,7 +839,7 @@ window.onload = function()
 		}
 		else
 		{
-			$("#" + id).css("top", number * 110 + 90 + "px");
+			//$("#" + id).css("top", number * 110 + 90 + "px");
 			Insert(number, Selected, Start,End,last,indexStart);
 			while(t != -1)
 			{
@@ -876,6 +931,7 @@ window.onload = function()
 	        },
 	        success: function(data) 
 	        {
+	        	alert("Connection ok " + data["msg"]);
 	        }
 	    });	
 	}
@@ -903,34 +959,48 @@ window.onload = function()
 		var k;
 		OldCardOrderAfter = "";
 		k = index[start];
-		while(k != -1)
+		if(k == -1)
 		{
-			if(k == index[end])
-			{
-				break;
-			}
-			OldCardOrderAfter = OldCardOrderAfter + document.getElementById(Task[k]).attributes["idvalue"].nodeValue + ",";
-			k = next[k];
+			OldCardOrderAfter = "";
 		}
-		OldCardOrderAfter = OldCardOrderAfter + document.getElementById(Task[k]).attributes["idvalue"].nodeValue;
-		//alert(OldCardOrderAfter);
+		else
+		{
+			while(k != -1)
+			{
+				if(k == index[end])
+				{
+					break;
+				}
+				OldCardOrderAfter = OldCardOrderAfter + document.getElementById(Task[k]).attributes["idvalue"].nodeValue + ",";
+				k = next[k];
+			}
+			OldCardOrderAfter = OldCardOrderAfter + document.getElementById(Task[k]).attributes["idvalue"].nodeValue;
+			//alert("OldCardOrderAfter:" + OldCardOrderAfter);
+		}
 	}
 	
 	function comfirmNewCardOrderBefore(start,end)
 	{
 		var k = index[start];
 		NewCardOrderBefore = "";
-		while(k != -1)
+		if(k == -1)
 		{
-			if(k == index[end])
-			{
-				break;
-			}
-			NewCardOrderBefore = NewCardOrderBefore + document.getElementById(Task[k]).attributes["idvalue"].nodeValue + ",";
-			k = next[k];
+			NewCardOrderBefore = "";
 		}
-		NewCardOrderBefore = NewCardOrderBefore + document.getElementById(Task[k]).attributes["idvalue"].nodeValue;
-		//alert(NewCardOrderBefore);
+		else
+		{
+			while(k != -1)
+			{
+				if(k == index[end])
+				{
+					break;
+				}
+				NewCardOrderBefore = NewCardOrderBefore + document.getElementById(Task[k]).attributes["idvalue"].nodeValue + ",";
+				k = next[k];
+			}
+			NewCardOrderBefore = NewCardOrderBefore + document.getElementById(Task[k]).attributes["idvalue"].nodeValue;
+			//alert("NewCardOrderBefore:" + NewCardOrderBefore);
+		}
 	}
 	
 	function comfirmNewCardOrderAfter(start,end)
@@ -984,7 +1054,7 @@ window.onload = function()
 		else if(InMove == 1)
 		{
 			id = event.target.getAttribute("id");
-			$("#" + id).css("z-index", "4");
+			$("#" + id).css("z-index", "6");
 			if(event.clientX <= 580)
 			{
 				number = Math.floor(event.clientY / 110);
@@ -1041,15 +1111,49 @@ window.onload = function()
 			{
 				$("#" + id).css("left","702px");
 				number = Math.floor(event.clientY / 110);
+				comfirmNewCardOrderBefore(4,5);
 				Paintting(4, 5, id, event.clientX, number,index[4]);
 				AllTaskListInit();
+				if(clientXBefore <= 580)
+				{
+					comfirmOldCardOrderAfter(0,1);
+				}
+				else if(clientXBefore <= 900 && clientXBefore >= 620)
+				{
+					comfirmOldCardOrderAfter(2,3);
+				}
+				else if(clientXBefore <= 1220 && clientXBefore >= 940)
+				{
+					comfirmOldCardOrderAfter(4,5);
+				}
+				comfirmNewCardOrderAfter(4,5);
+				changeOrder(event,2);
 			}
 			else if(event.clientX > 1220)
 			{
 				$("#" + id).css("left","1020px");
 				number = Math.floor(event.clientY / 110);
+				comfirmNewCardOrderBefore(6,7);
 				Paintting(6, 7, id, event.clientX, number,index[6]);
 				AllTaskListInit();
+				if(clientXBefore <= 580)
+				{
+					comfirmOldCardOrderAfter(0,1);
+				}
+				else if(clientXBefore <= 900 && clientXBefore >= 620)
+				{
+					comfirmOldCardOrderAfter(2,3);
+				}
+				else if(clientXBefore <= 1220 && clientXBefore >= 940)
+				{
+					comfirmOldCardOrderAfter(4,5);
+				}
+				else if(clientXBefore > 1220)
+				{
+					comfirmOldCardOrderAfter(6,7);
+				}
+				comfirmNewCardOrderAfter(6,7);
+				changeOrder(event,3);
 			}
 			
 			InMove = 0;
