@@ -13,32 +13,160 @@ window.onload = function()
 	var divTask;
 	var MousePositionX;
 	var MousePositionY;
-	var Biggest = 0;
 	var InMove = 0;
 	var Task = new Array(100);
 	var next = new Array(100);
 	var index; /*= new Array(TaskList.length * 2);*/
 	var TotalLength = 0;
 	var Selected;
+	var url = window.location.href;
+	var borderNo = url.substring(url.lastIndexOf('=')+1, url.length);
+	var json,first = 1,updateBor = 0,div,len,t,NewCardOrderBefore = "";
+	var OldCardOrderBefore = "";
+	var OldCardOrderAfter = "";
+	var NewCardOrderAfter = "";
+	var clientXBefore;
+	initPersonalJsonData(div,len,t);
 	
-	function findBiggest()
+	function updateBorder(div,len,t,json)
 	{
+		div.setAttribute("idvalue",json["data"]["lists"][t]["cards"][len]["cardNo"]);
+		updateBor = 0;
+	}
+	
+	function initPersonalJsonData(div,len,t)
+	{
+		$.ajax(
+		{
+	        cache: false,
+	        type: "post",
+	        dataType: "json",
+	        url: "/oa-web/board/findBoard/" + borderNo,
+	        error: function(request) 
+	        {
+	            alert("Connection error");
+	        },
+	        success: function(data) 
+	        {
+	        	//alert("Connection ok:" + data["data"]["lists"].length);
+	        	json = data;
+	        	if(first == 1)
+	        		init();
+	        	if(updateBor == 1)
+	        		updateBorder(div,len,t,json);
+	        }
+	    });
+	}
+	
+	function init()
+	{
+		var temp = 0;
+		var StartAndEnd = 0;
+		var temp1 = 0;
+		cList(json["data"]["lists"].length);
+		TaskList = TaskArea.children;
+		index = new Array(TaskList.length * 2);
+		initTitle();
 		for(let i = 1;i < TaskList.length + 1;i++)
 		{
+			cBorder(i, json["data"]["lists"][i - 1]["cards"].length,json["data"]["lists"][i - 1]);
+			cForm("添加卡片", i, temp1++,json);
+			cForm("删除列表", i, temp1++,json);
+			cTitleForm(json["data"]["lists"][i - 1]["listName"],"保存",i,json["data"]["lists"][i - 1]["cards"].length);
 			divTask = TaskList[i - 1].children;
-			if(divTask.length >= Biggest)
+			if(divTask.length == 0)
+				index[StartAndEnd] = -1;
+			else
+				index[StartAndEnd] = temp;
+			StartAndEnd++;
+			if(divTask.length == 0)
 			{
-				Biggest = divTask.length;
+				next[temp - 1] = 0;
+			}
+			for(let j = 0; j < divTask.length;j++)
+			{
+				$("#" + divTask[j].id).css("width","240px");
+				$("#" + divTask[j].id).css("height","100px");
+				$("#" + divTask[j].id).css("position","absolute");
+				$("#" + divTask[j].id).css("background","lightsteelblue");
+				$("#" + divTask[j].id).css("borderRadius","4px");
+				$("#" + divTask[j].id).css("top",((j * 110) + 90) + "px");
+				$("#" + divTask[j].id).css("left",(((i - 1) * 318) + 66) + "px");
+				$("#" + divTask[j].id).css("z-index","6");
+				Task[temp] = divTask[j].id;
+				next[temp] = temp + 1;
+				if(i == TaskList.length && j == divTask.length - 1)
+				{
+					next[temp] = 0;
+				}
+				temp++;
+			}
+			if(divTask.length == 0)
+				index[StartAndEnd] = -1;
+			else
+				index[StartAndEnd] = temp - 1;
+			StartAndEnd++;
+			TotalLength = TotalLength + divTask.length;
+		}
+		/*for(let j = 0;j < 6;j++)
+		{
+			alert(next[j]);
+		}*/
+		for(let j = 0;j < TaskList.length;j++)
+		{
+			divTask = TaskList[j].children;
+			for(let i = 0;i < divTask.length;i++)
+			{
+				divTask[i].addEventListener("mousedown", function(event)
+				{
+					OnOff = 1;
+					MousePositionX = event.clientX;
+					MousePositionY = event.clientY;
+					TaskArea.addEventListener("mousemove",mouseMove,false);
+				},false);
+				divTask[i].addEventListener("mouseup", function(event)
+				{
+					//alert("松开");
+					OnOff = 0;
+					mouseMove(event);
+					TaskArea.removeEventListener("mousemove",mouseMove,false);
+				},false);
+				
+				divTask[i].addEventListener("mouseover", function(event)
+				{
+					$("#" + this.id).css("background","cadetblue");
+					$("#" + this.id).css("boxShadow","4px 4px 2px #c0c0c0");
+				},false);
+				divTask[i].addEventListener("mouseout", function(event)
+				{
+					$("#" + this.id).css("background","lightsteelblue");
+					$("#" + this.id).css("boxShadow","none");
+				},false);
+				document.getElementById("TaskList" + (j + 1) + "TaskDelete" + (i + 1)).addEventListener("click",function(event)
+				{
+					deleteBorder(event, j,json);
+				},false);
 			}
 		}
+		first = 0;
 	}
+	
+	function initTitle()
+	{
+		var title = document.getElementById("titleInput");
+		title.value = json["data"]["boardName"];
+	}
+	
 	function addBorder(temp, event)
 	{
 		var div;
 		var list;
-		var tt;
+		var tt,tmp,tmp1;
 		var k = 0;
-		var img;
+		var img,h3,listNo,leng;
+		leng = temp;
+		listNo = json["data"]["lists"][temp]["listNo"];
+		//alert(listNo);
 		div = document.createElement("div");
 		list = document.getElementById("TaskList" + (temp + 1));
 		div.id = "TaskList" + (temp + 1) + "Task" + (list.children.length + 1);
@@ -46,27 +174,75 @@ window.onload = function()
 		img.id = "TaskList" + (temp + 1) + "TaskDelete" + (list.children.length + 1);
 		img.className = "rubish";
 		img.src = "../img/rubish.png";
+		h3 = document.createElement("h3");
+		h3.innerHTML = "新建卡片";
 		list.appendChild(div);
 		div.appendChild(img);
+		div.appendChild(h3);
 		document.getElementById(img.id).addEventListener("click",function(event)
 		{
-			deleteBorder(event, temp);
+			deleteBorder(event, temp,json);
 		},false);
+////////////////////////////////////////////////////////////
+		$.ajax(
+		{
+	        cache: false,
+	        type: "post",
+	        dataType: "json",
+	        url: "/oa-web/card/addCard",
+	        data:
+	        {
+	        	cardName:"新建卡片",
+	        	listNo:listNo
+	        },
+	        error: function(request) 
+	        {
+	            alert("Connection error");
+	        },
+	        success: function(data) 
+	        {
+	        	//alert("Connection ok:" + data["msg"]);
+	        	var len;
+	        	first = 0;
+	        	updateBor = 1;
+	        	len = json["data"]["lists"][leng]["cards"].length;
+	        	initPersonalJsonData(div,len,leng);
+	        }
+	    });		
+	////////////////////////////////////////////////////////////
 		divTask = TaskList[temp].children;
 		//alert(divTask.length);next,//task index
 		Task[TotalLength] = div.id;
-		
-		next[TotalLength] = index[temp * 2];
-		//alert("index[" + temp * 2 +"]:" + index[temp * 2]);
+		if(index[temp * 2] == -1)
+		{
+			tmp = index.length;
+			tmp = tmp - 2;
+			if(tmp == temp * 2)
+			{
+				next[TotalLength] = 0;
+				tmp1 = 0;
+				index[(temp * 2) + 1] = TotalLength;
+			}
+			else
+			{
+				next[TotalLength] = index[temp * 2 + 2];
+				tmp1 = index[temp * 2 + 2];
+				index[(temp * 2) + 1] = TotalLength;
+			}
+		}
+		else
+		{
+			next[TotalLength] = index[temp * 2];
+			tmp1 = index[temp * 2];
+		}
 		while(k != -1)
 		{
-			if(next[k] == index[temp * 2])
+			if(next[k] == tmp1)
 			{
 				break;
 			}
 			k = next[k];
 		}
-		//alert("k:" + k);
 		next[k] = TotalLength;
 		index[temp * 2] = TotalLength;
 		/*for(let i = 0;i <= TotalLength;i++)
@@ -79,9 +255,10 @@ window.onload = function()
 		$("#" + div.id).css("position","absolute");
 		$("#" + div.id).css("background","lightsteelblue");
 		$("#" + div.id).css("borderRadius","4px");
+		$("#" + div.id).css("z-index","6");
 		$("#" + div.id).css("left",((temp * 318) + 66) + "px");
 		temp = temp * 2;
-		BeginPaintting(temp,temp + 1);
+		BeginPaintting(temp,(temp + 1));
 		AllTaskListInit();
 		div.addEventListener("mouseover", function(event)
 		{
@@ -107,7 +284,7 @@ window.onload = function()
 			TaskArea.removeEventListener("mousemove",mouseMove,false);
 		},false);
 	}
-	function deleteBorder(event, IndexJ)
+	function deleteBorder(event, IndexJ,json)
 	{
 		var id;
 		var rubish
@@ -115,15 +292,38 @@ window.onload = function()
 		var granpar;
 		var k = 0;
 		var last;
-		var temp;
+		var temp,cardNo;
 		id = event.target.getAttribute("id");
 		rubish = document.getElementById(id);
 		par = document.getElementById(id).parentNode;
+		cardNo = par.attributes["idvalue"].nodeValue;
 		granpar = document.getElementById(par.id).parentNode;
 		par.removeChild(rubish);
 		granpar.removeChild(par);
-		/*var i;
-		i = new FormData*/
+////////////////////////////////////////////////////////////
+		$.ajax(
+		{
+	        cache: false,
+	        type: "post",
+	        dataType: "json",
+	        url: "/oa-web/card/deleteCard",
+	        data:
+	        {
+	        	cardNo:cardNo
+	        },
+	        error: function(request) 
+	        {
+	            alert("Connection error");
+	        },
+	        success: function(data) 
+	        {
+	        	var div,len,leng;
+	        	first = 0;
+	        	updateBor = 0;
+	        	initPersonalJsonData(div,len,leng);
+	        }
+	    });		
+////////////////////////////////////////////////////////////////
 		while(k != -1)
 		{
 			if(Task[k] == par.id)
@@ -187,18 +387,12 @@ window.onload = function()
 			
 		}
 	}
-	function cForm(url, value, temp, id)
+	function cForm(value, temp, id,json)
 	{
 		temp--;
-		var form;
 		var input1;
 		input1 = document.createElement("input");
-		form = document.createElement("form");
-		form.action = url;
-		form.method = "get";
-		form.className = "List";
-		form.id = "List" + id;
-		top.appendChild(form);
+		top.appendChild(input1);
 		input1.type = "submit"; 
 		input1.className = "Listsubmit"; 
 		if(value == "删除列表")
@@ -210,7 +404,6 @@ window.onload = function()
 			input1.id = "Listsubmit" + temp;
 		}
 		input1.value = value;
-		form.appendChild(input1); 
 		$(".Listsubmit").css("top","40px");//40
 		if(temp == 0)
 		{	
@@ -251,22 +444,15 @@ window.onload = function()
 			}
 		}
 	}
-	function cTitleForm(url, value1, value2, temp)
+	function cTitleForm(value1, value2, temp,num)
 	{
-		var form;
 		var input1;
 		var input2;
-		var span;
+		var span,div;
 		temp--;
 		input1 = document.createElement("input");
 		input2 = document.createElement("input");
-		form = document.createElement("form");
 		span = document.createElement("span");
-		form.action = url;
-		form.method = "get";
-		form.className = "ListTitle";
-		form.id = "ListTitle" + temp;
-		top.appendChild(form);
 		input1.type = "text"; 
 		input1.className = "ListTitleInput";
 		input1.id = "ListTitleInput" + temp;
@@ -278,15 +464,55 @@ window.onload = function()
 		input2.id = "ListTitleSubmit" + temp;
 		input2.className = "ListTitleSubmit";
 		input2.value = value2;
-		form.appendChild(input1);
-		form.appendChild(input2);
-		form.appendChild(span);
+		top.appendChild(input1);
+		top.appendChild(input2);
+		top.appendChild(span);
+		div = document.createElement("div");
+		div.id = "topDisplayList" + temp;
+		div.className = "topDisplayList";
+		top.appendChild(div);
+		input2.addEventListener("click",function(event)
+		{
+////////////////////////////////////////////////////////////
+			var listName,listNo,NoList,_this;
+			_this = this;
+			listName = this.previousSibling.value;
+			NoList = this.previousSibling.id;
+			NoList = NoList.replace(/[^0-9]/ig,"");
+			ListNo = json["data"]["lists"][NoList]["listNo"];
+			$.ajax(
+			{
+		        cache: false,
+		        type: "post",
+		        dataType: "json",
+		        url: "/oa-web/list/updateListName",
+		        data:
+		        {
+		        	newListName:listName,
+		        	listNo:ListNo
+		        },
+		        error: function(request) 
+		        {
+		            alert("Connection error");
+		        },
+		        success: function(data) 
+		        {
+		        	_this.nextSibling.innerHTML = listName;
+		        }
+		    });		
+	////////////////////////////////////////////////////////////////
+		},false);
 		if(temp > 0)
 		{
 			$("#ListTitleInput" + temp).css("left",(((315 * temp) + 75) + temp * 8) + "px");
 			$("#ListTitleInputSpan" + temp).css("left",318 * temp + "px");
 			$("#ListTitleSubmit" + temp).css("left",((315 * temp) + 120) + temp * 6 + "px");
+			$("#topDisplayList" + temp).css("left",((318 * temp) + 56) + "px");
 		}
+		if(num == 0)
+			$("#topDisplayList" + temp).css("height",((110 * 1) + 10) + "px");
+		else
+			$("#topDisplayList" + temp).css("height",((110 * num) + 10) + "px");
 		document.getElementById("ListTitleInputSpan" + temp).addEventListener("click", function()
 		{
 			if(document.getElementById("ListTitleInput" + temp).style.display == "block")
@@ -302,20 +528,26 @@ window.onload = function()
 			
 		},false);
 	}
-	function cBorder(i,num)
+	function cBorder(i,num,jsonMin)
 	{
 		var div;
 		var list;
-		var img;
+		var img,h3;
 		list = document.getElementById("TaskList" + i);
 		for(let k = 1;k <= num;k++)
 		{
 			div = document.createElement("div");
 			div.id = "TaskList" + i + "Task" + k;
+			div.setAttribute("idvalue",jsonMin["cards"][k - 1]["cardNo"]);
+			//alert(div.attributes["idvalue"].nodeValue);
 			img = document.createElement("img");
 			img.id = "TaskList" + i + "TaskDelete" + k;
 			img.className = "rubish";
 			img.src = "../img/rubish.png";
+			h3 = document.createElement("h3");
+			h3.innerHTML = jsonMin["cards"][k - 1]["cardTitle"];
+			list.appendChild(div);
+			div.appendChild(h3);
 			list.appendChild(div);
 			div.appendChild(img);
 		}
@@ -323,73 +555,64 @@ window.onload = function()
 	}
 	function cList(num)
 	{
-		var div;
+		var div,p;
 		for(let k = 1;k <= num;k++)
 		{
 			div = document.createElement("div");
 			div.id = "TaskList" + k;
 			TaskArea.appendChild(div);
 		}
-	}
-	function init()
-	{
-		var temp = 0;
-		var StartAndEnd = 0;
-		var temp1 = 0;
-		cList(4);
-		TaskList = TaskArea.children;
-		index = new Array(TaskList.length * 2);
-		findBiggest();
-		for(let i = 1;i < TaskList.length + 1;i++)
+		div = document.createElement("div");
+		p = document.createElement("p");
+		p.innerHTML = "创建任务列表";
+		div.id = "createList";
+		div.appendChild(p);
+		top.appendChild(div);
+		$("#createList").css("margin-left",(320 * num) + "px");
+		div.addEventListener("click", function(event)
 		{
-			cBorder(i, 3);
-			cForm("#","添加卡片", i, temp1++);
-			cForm("#","删除列表", i, temp1++);
-			cTitleForm("#","待解决","保存",i);
-			divTask = TaskList[i - 1].children;
-			index[StartAndEnd] = temp;
-			StartAndEnd++;
-			for(let j = 0; j < divTask.length;j++)
+			//alert("here");
+			//alert(TaskArea.children.length);
+			var div;
+			div = document.createElement("div");
+			div.id = "topDisplayList" + TaskArea.children.length;
+			div.className = "topDisplayList";
+			top.appendChild(div);
+			$("#topDisplayList" + TaskArea.children.length).css("left",((318 * TaskArea.children.length) + 56) + "px");
+			$("#topDisplayList" + TaskArea.children.length).css("height",120 + "px");
+			cForm("添加卡片", TaskArea.children.length + 1);
+			cForm("删除列表", TaskArea.children.length + 1);
+			cTitleForm("待解决","保存",TaskArea.children.length + 1,-1);
+			div = document.createElement("div");
+			div.id = "TaskList" + (TaskArea.children.length + 1);
+			alert(TaskArea.children.length);
+			index[(TaskArea.children.length * 2)] = -1;
+			index[(TaskArea.children.length * 2) + 1] = -1;
+			TaskArea.appendChild(div);
+			$("#createList").css("margin-left",(320 * TaskArea.children.length) + "px");
+			$.ajax(
 			{
-				$("#" + divTask[j].id).css("width","240px");
-				$("#" + divTask[j].id).css("height","100px");
-				$("#" + divTask[j].id).css("position","absolute");
-				$("#" + divTask[j].id).css("background","lightsteelblue");
-				$("#" + divTask[j].id).css("borderRadius","4px");
-				$("#" + divTask[j].id).css("top",((j * 110) + 90) + "px");
-				$("#" + divTask[j].id).css("left",(((i - 1) * 318) + 66) + "px");
-				Task[temp] = divTask[j].id;
-				next[temp] = temp + 1;
-				if(i == TaskList.length && j == divTask.length - 1)
-				{
-					next[temp] = 0;
-				}
-				temp++;
-			}
-			index[StartAndEnd] = temp - 1;
-			StartAndEnd++;
-			if(divTask.length == Biggest)
-			{
-				if(document.getElementById("TaskList" + i))
-				{
-					$("#TaskList" + i).css("height",(divTask.length * 110) + 20 + "px");
-				}
-			}
-			else
-			{
-				if(document.getElementById("TaskList" + i))
-				{
-					$("#TaskList" + i).css("height",(divTask.length * 110) + 10 + "px");
-					$("#TaskList" + i).css("margin-bottom",((Biggest - divTask.length) * 110) + 10 + "px");
-				}
-			}
-			TotalLength = TotalLength + divTask.length;
-		}
-		/*for(let i = 0;i < 4;i++)
-		{
-			alert(index[i]);
-		}*/
+		        cache: false,
+		        type: "post",
+		        dataType: "json",
+		        url: "/oa-web/list/addList",
+		        data:
+		        {
+		        	listName:"新列表",
+		        	boardNo:borderNo
+		        },
+		        error: function(request) 
+		        {
+		            alert("Connection error");
+		        },
+		        success: function(data) 
+		        {
+		        	//alert("Connection ok " + data["msg"]);
+		        }
+		    });	
+		},false);
 	}
+	
 	function ConfirmTarget(id ,Selected)
 	{
 		for(let i = 0;i < TotalLength;i++)
@@ -513,6 +736,7 @@ window.onload = function()
 		var i;
 		var t;
 		ChangeHeadAndTail(sele);
+		
 		if(last > 0)//如果插入的是最后面
 		{
 			index[End] = sele;
@@ -615,7 +839,7 @@ window.onload = function()
 		}
 		else
 		{
-			$("#" + id).css("top", number * 110 + 90 + "px");
+			//$("#" + id).css("top", number * 110 + 90 + "px");
 			Insert(number, Selected, Start,End,last,indexStart);
 			while(t != -1)
 			{
@@ -641,39 +865,17 @@ window.onload = function()
 		var list  = 1;
 		while(i != index.length)
 		{
-			if(index[i] != -1 && index[i] != index[i + 1])
-			{
-				num = 0;
-				if(num + 1 > RecordNum)
-				{
-					RecordNum = num + 1;
-				}
-			}
-			i = i + 2;
-		}
-		i = 0;
-		while(i != index.length)
-		{
 			if(index[i] == -1)
 			{
 				//alert("here1");
 				//continue;
-				if(document.getElementById("TaskList" + list))
-				{
-					$("#TaskList" + list).css("margin-bottom",((RecordNum - 1) * 110) + 10 + "px");
-					list++;
-				}
+				$("#topDisplayList" + (i / 2)).css("height",((110 * 1) + 10) + "px");
 			}
 			else if(index[i] == index[i + 1])
 			{
 				//alert("here2");
 				$("#" + Task[index[i]]).css("top", 90 + "px");
-				if(document.getElementById("TaskList" + list))
-				{
-					$("#TaskList" + list).css("height",110 + 20 + "px");
-					$("#TaskList" + list).css("margin-bottom",((RecordNum - 1) * 110) + 10 + "px");
-					list++;
-				}
+				$("#topDisplayList" + (i / 2)).css("height",((110 * 1) + 10) + "px");
 			}
 			else
 			{
@@ -688,14 +890,9 @@ window.onload = function()
 					temp = next[temp];
 					num++;
 				}
+				$("#topDisplayList" + (i / 2)).css("height",((110 * (num + 1)) + 10) + "px");
 				/*alert("RecordNum:" + RecordNum);
 				alert("num:" + num);*/
-				if(document.getElementById("TaskList" + list))
-				{
-					$("#TaskList" + list).css("height",((num + 1) * 110) + 20 + "px");
-					$("#TaskList" + list).css("margin-bottom",((RecordNum - (num + 1)) * 110) + 10 + "px");
-					list++;
-				}
 				/*for(let i = 0;i < 4;i++)
 				{
 					alert("AllTaskListInit.index：" + index[i]);
@@ -704,6 +901,125 @@ window.onload = function()
 			i = i + 2;
 		}
 	}
+	
+	function changeOrder(event,listNoTo)
+	{
+		var cardNo,listNoFrom;
+		cardNo = event.target.attributes["idvalue"].nodeValue;
+		listNoFrom = event.target.parentNode.id.replace(/[^0-9]/ig,"") - 1;
+		listNoFrom = json["data"]["lists"][listNoFrom]["listNo"];
+		listNoTo = json["data"]["lists"][listNoTo]["listNo"];
+		$.ajax(
+		{
+	        cache: false,
+	        type: "post",
+	        dataType: "json",
+	        url: "/oa-web/card/updateCardOrder",
+	        data:
+	        {
+	        	cardNo : cardNo,
+	        	listNoFrom : listNoFrom,
+	        	listNoTo : listNoTo,
+	        	cardOrderFrom : OldCardOrderBefore,
+	        	cardOrderTo : NewCardOrderBefore,
+	        	newcardOrderFrom : OldCardOrderAfter,
+	        	newcardOrderTo : NewCardOrderAfter
+	        },
+	        error: function(request) 
+	        {
+	            alert("Connection error");
+	        },
+	        success: function(data) 
+	        {
+	        	alert("Connection ok " + data["msg"]);
+	        }
+	    });	
+	}
+	
+	function comfirmOldCardOrderBefore(start,end)
+	{
+		var k;
+		OldCardOrderBefore = "";
+		k = index[start];
+		while(k != -1)
+		{
+			if(k == index[end])
+			{
+				break;
+			}
+			OldCardOrderBefore = OldCardOrderBefore + document.getElementById(Task[k]).attributes["idvalue"].nodeValue + ",";
+			k = next[k];
+		}
+		OldCardOrderBefore = OldCardOrderBefore + document.getElementById(Task[k]).attributes["idvalue"].nodeValue;
+		//alert(OldCardOrderBefore);
+	}
+	
+	function comfirmOldCardOrderAfter(start,end)
+	{
+		var k;
+		OldCardOrderAfter = "";
+		k = index[start];
+		if(k == -1)
+		{
+			OldCardOrderAfter = "";
+		}
+		else
+		{
+			while(k != -1)
+			{
+				if(k == index[end])
+				{
+					break;
+				}
+				OldCardOrderAfter = OldCardOrderAfter + document.getElementById(Task[k]).attributes["idvalue"].nodeValue + ",";
+				k = next[k];
+			}
+			OldCardOrderAfter = OldCardOrderAfter + document.getElementById(Task[k]).attributes["idvalue"].nodeValue;
+			//alert("OldCardOrderAfter:" + OldCardOrderAfter);
+		}
+	}
+	
+	function comfirmNewCardOrderBefore(start,end)
+	{
+		var k = index[start];
+		NewCardOrderBefore = "";
+		if(k == -1)
+		{
+			NewCardOrderBefore = "";
+		}
+		else
+		{
+			while(k != -1)
+			{
+				if(k == index[end])
+				{
+					break;
+				}
+				NewCardOrderBefore = NewCardOrderBefore + document.getElementById(Task[k]).attributes["idvalue"].nodeValue + ",";
+				k = next[k];
+			}
+			NewCardOrderBefore = NewCardOrderBefore + document.getElementById(Task[k]).attributes["idvalue"].nodeValue;
+			//alert("NewCardOrderBefore:" + NewCardOrderBefore);
+		}
+	}
+	
+	function comfirmNewCardOrderAfter(start,end)
+	{
+		var k = index[start];
+		NewCardOrderAfter = "";
+		while(k != -1)
+		{
+			if(k == index[end])
+			{
+				break;
+			}
+			NewCardOrderAfter = NewCardOrderAfter + document.getElementById(Task[k]).attributes["idvalue"].nodeValue + ",";
+			k = next[k];
+		}
+		NewCardOrderAfter = NewCardOrderAfter + document.getElementById(Task[k]).attributes["idvalue"].nodeValue;
+		//alert(NewCardOrderAfter);
+	}
+	
 	function mouseMove(event)
 	{
 		var id;
@@ -712,8 +1028,24 @@ window.onload = function()
 		var number;
 		if(OnOff == 1)
 		{
-			InMove = 1;
 			id = event.target.getAttribute("id");
+			if(InMove == 0)
+			{
+				clientXBefore = event.clientX;
+				if(event.clientX <= 580)
+				{
+					comfirmOldCardOrderBefore(0,1);
+				}
+				else if(event.clientX <= 900 && event.clientX >= 620)
+				{
+					comfirmOldCardOrderBefore(2,3);
+				}
+				else if(event.clientX <= 1220 && event.clientX >= 940)
+				{
+					comfirmOldCardOrderBefore(4,5);
+				}
+			}
+			InMove = 1;
 			$("#" + id).css("boxShadow","none");
 			$("#" + id).css("left",event.clientX - 430 + "px");
 			$("#" + id).css("top",event.clientY - 50 + "px");
@@ -722,11 +1054,12 @@ window.onload = function()
 		else if(InMove == 1)
 		{
 			id = event.target.getAttribute("id");
-			$("#" + id).css("z-index", "1");
+			$("#" + id).css("z-index", "6");
 			if(event.clientX <= 580)
 			{
 				number = Math.floor(event.clientY / 110);
 				$("#" + id).css("left","66px");
+				comfirmNewCardOrderBefore(0,1);
 				Paintting(0, 1, id, event.clientX, number,index[0]);
 				AllTaskListInit();
 				/*for(let i = 0;i < 6;i++)
@@ -735,78 +1068,101 @@ window.onload = function()
 				}
 				for(let i = 0;i < 4;i++)
 				{
-					alert("2.index：" + index[i]);
+					alert("index：" + index[i]);
 				}*/
+				if(clientXBefore <= 580)
+				{
+					comfirmOldCardOrderAfter(0,1);
+				}
+				else if(clientXBefore <= 900 && clientXBefore >= 620)
+				{
+					comfirmOldCardOrderAfter(2,3);
+				}
+				else if(clientXBefore <= 1220 && clientXBefore >= 940)
+				{
+					comfirmOldCardOrderAfter(4,5);
+				}
+				comfirmNewCardOrderAfter(0,1);
+				changeOrder(event,0);
 			}
 			else if(event.clientX <= 900 && event.clientX >= 620)
 			{
 				$("#" + id).css("left","384px");
 				number = Math.floor(event.clientY / 110);
+				comfirmNewCardOrderBefore(2,3);
 				Paintting(2, 3, id, event.clientX, number,index[2]);
 				AllTaskListInit();
+				if(clientXBefore <= 580)
+				{
+					comfirmOldCardOrderAfter(0,1);
+				}
+				else if(clientXBefore <= 900 && clientXBefore >= 620)
+				{
+					comfirmOldCardOrderAfter(2,3);
+				}
+				else if(clientXBefore <= 1220 && clientXBefore >= 940)
+				{
+					comfirmOldCardOrderAfter(4,5);
+				}
+				comfirmNewCardOrderAfter(2,3);
+				changeOrder(event,1);
 			}
 			else if(event.clientX <= 1220 && event.clientX >= 940)
 			{
 				$("#" + id).css("left","702px");
 				number = Math.floor(event.clientY / 110);
+				comfirmNewCardOrderBefore(4,5);
 				Paintting(4, 5, id, event.clientX, number,index[4]);
 				AllTaskListInit();
+				if(clientXBefore <= 580)
+				{
+					comfirmOldCardOrderAfter(0,1);
+				}
+				else if(clientXBefore <= 900 && clientXBefore >= 620)
+				{
+					comfirmOldCardOrderAfter(2,3);
+				}
+				else if(clientXBefore <= 1220 && clientXBefore >= 940)
+				{
+					comfirmOldCardOrderAfter(4,5);
+				}
+				comfirmNewCardOrderAfter(4,5);
+				changeOrder(event,2);
 			}
 			else if(event.clientX > 1220)
 			{
 				$("#" + id).css("left","1020px");
 				number = Math.floor(event.clientY / 110);
+				comfirmNewCardOrderBefore(6,7);
 				Paintting(6, 7, id, event.clientX, number,index[6]);
 				AllTaskListInit();
+				if(clientXBefore <= 580)
+				{
+					comfirmOldCardOrderAfter(0,1);
+				}
+				else if(clientXBefore <= 900 && clientXBefore >= 620)
+				{
+					comfirmOldCardOrderAfter(2,3);
+				}
+				else if(clientXBefore <= 1220 && clientXBefore >= 940)
+				{
+					comfirmOldCardOrderAfter(4,5);
+				}
+				else if(clientXBefore > 1220)
+				{
+					comfirmOldCardOrderAfter(6,7);
+				}
+				comfirmNewCardOrderAfter(6,7);
+				changeOrder(event,3);
 			}
 			
 			InMove = 0;
 		}
 	}
 	
-	init();
-	for(let j = 0;j < TaskList.length;j++)
-	{
-		divTask = TaskList[j].children;
-		for(let i = 0;i < divTask.length;i++)
-		{
-			divTask[i].addEventListener("mousedown", function(event)
-			{
-				OnOff = 1;
-				MousePositionX = event.clientX;
-				MousePositionY = event.clientY;
-				TaskArea.addEventListener("mousemove",mouseMove,false);
-			},false);
-			divTask[i].addEventListener("mouseup", function(event)
-			{
-				//alert("松开");
-				OnOff = 0;
-				mouseMove(event);
-				TaskArea.removeEventListener("mousemove",mouseMove,false);
-			},false);
-			
-			divTask[i].addEventListener("mouseover", function(event)
-			{
-				$("#" + this.id).css("background","cadetblue");
-				$("#" + this.id).css("boxShadow","4px 4px 2px #c0c0c0");
-			},false);
-			divTask[i].addEventListener("mouseout", function(event)
-			{
-				$("#" + this.id).css("background","lightsteelblue");
-				$("#" + this.id).css("boxShadow","none");
-			},false);
-			document.getElementById("TaskList" + (j + 1) + "TaskDelete" + (i + 1)).addEventListener("click",function(event)
-			{
-				deleteBorder(event, j);
-			},false);
-		}
-	}
-	
-	
-	
 	menuButton.addEventListener("mouseover", function(event)
 	{
-		$(".Click").css("animation", "shakeClick 0.3s infinite");
+		$(".Click").css("animation",	 "shakeClick 0.3s infinite");
 		$(".It").css("animation", "shakeIt 0.3s infinite");
 	},false);
 	menuButton.addEventListener("mouseout", function(event)

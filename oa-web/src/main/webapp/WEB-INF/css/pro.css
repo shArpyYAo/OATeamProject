@@ -8,7 +8,7 @@
 	display: inline-block;
 	
 }
-#TaskList1,#TaskList2,#TaskList3,#TaskList4
+/* #TaskList1,#TaskList2,#TaskList3,#TaskList4
 {
 	width: 260px;
 	border: 1px solid #c0c0c0;
@@ -18,9 +18,21 @@
 	border-radius:4px;
 	margin-left: 56px;
 	margin-top: 80px;
-/*	box-shadow: #C0C0C0;
-*/	/*position: absolute;*/
-	/*overflow-y:scroll;*/
+} */
+#createList
+{
+	width: 260px;
+	height: 56px;
+	border: 1px solid #c0c0c0;
+	display: inline-block;
+	margin-top: 80px;
+}
+#createList p
+{
+	cursor: pointer;	
+	text-align: center;
+	line-height: 26px;
+	font-size: 20px;
 }
 .rubish
 {
@@ -33,5 +45,8 @@
 .rubish:hover
 {
 	cursor: pointer;
-	
+}
+h3
+{
+	cursor: default;
 }

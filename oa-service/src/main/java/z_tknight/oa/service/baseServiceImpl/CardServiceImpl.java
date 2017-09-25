@@ -328,7 +328,7 @@ public class CardServiceImpl implements CardService {
 				return ResponeResult.build(400, "数据不合法");
 			}
 			//判断两个列表是否在同一个面板里面
-			if(listFrom.getBoardNo() != listTo.getBoardNo()) {
+			if(!listFrom.getBoardNo().equals(listTo.getBoardNo())) {
 				return ResponeResult.build(400, "数据不合法");
 			}
 			//判断用户是否是面板的所有人
