@@ -50,7 +50,7 @@
 		on tu.user_no = tbu.user_no and tbu.board_no = #{boardNo}
 		union all
 		select tu.* from t_user tu join t_board tb
-		on tb.user_no = tu.user_no and tb.board_no = #{boardeNo}
+		on tb.user_no = tu.user_no and tb.board_no = #{boardNo}
 	</select>
 	
 	<!-- 查询看板空间成员 -->

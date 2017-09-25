@@ -79,5 +79,27 @@
 		<input type="submit" value="用户查询">
 	</form>
 	
+	<form action="/oa-web/user/findUserInfo" method="post">
+		<input type="submit" value="用户个人信息查询">
+	</form>
+	<form action="/oa-web/user/updateUserInfo" method="post">
+		<input type="text" name="newNickName">
+		<input type="text" name="newIntroduction">
+		<input type="submit" value="修改个人信息">
+	</form>
+	<form action="/oa-web/user/updatePassword" method="post">
+		<input type="text" name="oldPassword">
+		<input type="text" name="newPassword">
+		<input type="submit" value="修改个人密码">
+	</form>
+	<form action="/oa-web/boardSpace/findUser" method="post">
+		<input type="text" name="boardSpaceNo">
+		<input type="submit" value="查询看板空间成员">
+	</form>
+	<form action="/oa-web/board/findUser" method="post">
+		<input type="text" name="boardNo">
+		<input type="submit" value="查询看板成员">
+	</form>
+	
 </body>
 </html>

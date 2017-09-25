@@ -98,7 +98,7 @@ public class UserController {
 	}
 	
 	@LogInfo("修改昵称")
-	@RequestMapping(value="/updateNickName", method={RequestMethod.POST})
+	@RequestMapping(value="/updateUserInfo", method={RequestMethod.POST})
 	@ResponseBody
 	public ResponeResult updateNickName(HttpServletRequest request, String newNickName, String newIntroduction) {
 		Integer userNo = CaseUtil.caseInt( request.getSession().getAttribute("userNo"), null);
