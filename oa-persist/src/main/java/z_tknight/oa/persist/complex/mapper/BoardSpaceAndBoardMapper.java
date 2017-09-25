@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import z_tknight.oa.model.dto.BoardSpaceAndBoardDto;
 import z_tknight.oa.model.entity.TBoardSpace;
+import z_tknight.oa.model.entity.TUser;
 
 /**
  * 看板空间和看板复杂SQL操作
@@ -35,4 +36,18 @@ public interface BoardSpaceAndBoardMapper {
 	 * @return [List<BoardSpaceAndBoardDto>]用户可见的看板空间详细信息
 	 */
 	List<TBoardSpace> selectBoardSpaceByUserNo(@Param("userNo") Integer userNo);
+	
+	/**
+	 * 查询看板空间成员和所有人
+	 * @param boardSpaceNo [Integer]看板空间编号
+	 * @return
+	 */
+	List<TUser> selectBoardSpaceMember(@Param("boardSpaceNo") Integer boardSpaceNo);
+	
+	/**
+	 * 查询看板成员和所有人
+	 * @param boardNo [Integer]看板编号
+	 * @return
+	 */
+	List<TUser> selectBoardMember(@Param("boardNo") Integer boardNo);
 }

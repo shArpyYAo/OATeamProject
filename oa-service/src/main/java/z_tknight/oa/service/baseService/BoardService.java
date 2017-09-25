@@ -10,6 +10,15 @@ public interface BoardService {
 	public ResponeResult updateBoardOrder(String boardOrder, String newBoardOrder, Integer boardSpaceNo, Integer userNo);
 	
 	/**
+	 * 查询看板成员
+	 * @param userNo [Integer]发起操作用户编号
+	 * @param boardNo [Integer]看板编号
+	 * @return
+	 */
+	public ResponeResult findUser(Integer userNo, Integer boardNo);
+
+	
+	/**
 	 * 添加看板用户
 	 * @param userNo [Integer]发起操作用户编号
 	 * @param targetUserNo [Integer]待添加用户编号

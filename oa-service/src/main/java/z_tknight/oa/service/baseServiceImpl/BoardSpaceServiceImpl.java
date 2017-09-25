@@ -16,7 +16,9 @@ import z_tknight.oa.model.entity.TBoardExample;
 import z_tknight.oa.model.entity.TBoardSpace;
 import z_tknight.oa.model.entity.TBoardSpaceUser;
 import z_tknight.oa.model.entity.TBoardSpaceUserExample;
+import z_tknight.oa.model.entity.TUser;
 import z_tknight.oa.model.vo.BoardSpaceAndBoard;
+import z_tknight.oa.model.vo.UserDetail;
 import z_tknight.oa.persist.complex.mapper.AuthorizationMapper;
 import z_tknight.oa.persist.complex.mapper.BoardSpaceAndBoardMapper;
 import z_tknight.oa.persist.mapper.TBoardMapper;
@@ -52,6 +54,29 @@ public class BoardSpaceServiceImpl implements BoardSpaceService  {
 	@Autowired
 	private TBoardSpaceUserMapper boardSpaceUserMapper;
 
+	/** 查询看板空间成员 */
+	@Override
+	public ResponeResult findUser(Integer userNo, Integer boardSpaceNo) {
+		// 判断发起操作用户是否是看板所有人
+		int permission = authorizMapper.isBoardSpaceMember(boardSpaceNo, userNo);
+		if(permission != 1 && permission != 2) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			// 查询看板空间成员
+			List<TUser> users = bsbmapper.selectBoardSpaceMember(boardSpaceNo);
+			if(CollectionUtil.isEmpty(users)) {
+				return ResponeResult.build(400, "操作异常");
+			} else {
+				// 转换成用户详情
+				List<UserDetail> userDetails = new ArrayList<>(users.size());
+				for(TUser user : users) {
+					userDetails.add(new UserDetail(user));
+				}
+				return ResponeResult.build(200, "操作成功", userDetails);
+			}
+		}
+	}
+	
 	/** 删除看板空间用户 */
 	@Override
 	public ResponeResult deleteUser(Integer userNo, Integer targetUserNo, Integer boardSpaceNo) {

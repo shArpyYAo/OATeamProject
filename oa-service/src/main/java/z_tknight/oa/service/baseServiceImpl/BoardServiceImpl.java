@@ -23,11 +23,14 @@ import z_tknight.oa.model.entity.TCard;
 import z_tknight.oa.model.entity.TCardExample;
 import z_tknight.oa.model.entity.TList;
 import z_tknight.oa.model.entity.TListExample;
+import z_tknight.oa.model.entity.TUser;
 import z_tknight.oa.model.vo.BoardDetail;
 import z_tknight.oa.model.vo.CardDetail;
 import z_tknight.oa.model.vo.ListDetail;
 import z_tknight.oa.model.vo.TagDetail;
+import z_tknight.oa.model.vo.UserDetail;
 import z_tknight.oa.persist.complex.mapper.AuthorizationMapper;
+import z_tknight.oa.persist.complex.mapper.BoardSpaceAndBoardMapper;
 import z_tknight.oa.persist.complex.mapper.CardDetailMapper;
 import z_tknight.oa.persist.mapper.TBoardMapper;
 import z_tknight.oa.persist.mapper.TBoardSpaceMapper;
@@ -74,6 +77,35 @@ public class BoardServiceImpl implements BoardService {
 	/** 看板用户关系表操作持久层接口 */
 	@Autowired
 	private TBoardUserMapper boardUserMapper;
+	/** 看板空间和看板复杂操作持久层接口 */
+	@Autowired
+	private BoardSpaceAndBoardMapper bsbMapper;
+	
+	/** 查询看板成员 */
+	@Override
+	public ResponeResult findUser(Integer userNo, Integer boardNo) {
+		int permission = authorizMapper.canSelectBoard(userNo, boardNo);
+		if(permission < 1 || permission > 3) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			TBoard board = boardMapper.selectByPrimaryKey(boardNo);
+			if(board == null || board.isIsDelete()) {
+				return ResponeResult.build(400, "参数不合法");
+			} else {
+				// 查询看板成员
+				List<TUser> users = bsbMapper.selectBoardMember(boardNo);
+				if(CollectionUtil.isEmpty(users)) {
+					return ResponeResult.build(400, "参数异常");
+				} else {
+					List<UserDetail> userDetails = new ArrayList<>(users.size());
+					for(TUser user : users) {
+						userDetails.add(new UserDetail(user));
+					}
+					return ResponeResult.build(200, "操作成功", userDetails);
+				}
+			}
+		}
+	}
 	
 	/** 添加看板成员 */
 	@Override

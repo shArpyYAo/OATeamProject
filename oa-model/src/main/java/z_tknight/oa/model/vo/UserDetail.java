@@ -19,14 +19,28 @@ public class UserDetail {
 	 * 昵称
 	 */
 	private String nickName = null;
+	
+	/**
+	 * 介绍
+	 */
+	private String introduction = null;
 
 	public UserDetail() {}
 	
 	public UserDetail(TUser user) {
 		this.userNo = user.getUserNo();
 		this.nickName = user.getNickName();
+		this.introduction = user.getIntroduction();
 	}
 	
+	public String getIntroduction() {
+		return introduction;
+	}
+
+	public void setIntroduction(String introduction) {
+		this.introduction = introduction;
+	}
+
 	public Integer getUserNo() {
 		return userNo;
 	}

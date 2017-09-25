@@ -85,4 +85,40 @@ public class UserController {
 		}
 	}
 	
+	@LogInfo("查询个人信息")
+	@RequestMapping(value="/findUserInfo", method={RequestMethod.POST})
+	@ResponseBody
+	public ResponeResult findUserInfo(HttpServletRequest request) {
+		Integer userNo = CaseUtil.caseInt( request.getSession().getAttribute("userNo"), null);
+		if(userNo == null) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			return userService.findUserInfo(userNo);
+		}
+	}
+	
+	@LogInfo("修改昵称")
+	@RequestMapping(value="/updateNickName", method={RequestMethod.POST})
+	@ResponseBody
+	public ResponeResult updateNickName(HttpServletRequest request, String newNickName, String newIntroduction) {
+		Integer userNo = CaseUtil.caseInt( request.getSession().getAttribute("userNo"), null);
+		if(userNo == null || StringUtil.isEmpty(newNickName)) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			return userService.updateNickName(userNo, newNickName, newIntroduction);
+		}
+	}
+	
+	@LogInfo("修改密码")
+	@RequestMapping(value="/updatePassword", method={RequestMethod.POST})
+	@ResponseBody
+	public ResponeResult updatePassword(HttpServletRequest request, String oldPassword, String newPassword) {
+		Integer userNo = CaseUtil.caseInt( request.getSession().getAttribute("userNo"), null);
+		if(userNo == null || StringUtil.isEmpty(oldPassword) || StringUtil.isEmpty(newPassword)) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			return userService.updatePassword(userNo, oldPassword, newPassword);
+		}
+	}
+	
 }

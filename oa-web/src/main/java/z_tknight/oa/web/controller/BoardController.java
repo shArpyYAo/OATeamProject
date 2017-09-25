@@ -76,6 +76,18 @@ public class BoardController {
 		return boardService.updateBoardOrder(boardOrder, newBoardOrder, boardSpaceNo, userNo);
 	}
 	
+	@LogInfo("查询看板成员")
+	@RequestMapping(value="/findUser", method={RequestMethod.POST})
+	@ResponseBody
+	public ResponeResult findUser(HttpServletRequest request, Integer boardNo) {
+		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
+		if(userNo == null || boardNo == null) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			return boardService.findUser(userNo, boardNo);
+		}
+	}
+	
 	@LogInfo("添加看板成员")
 	@RequestMapping(value="/addUser", method={RequestMethod.POST})
 	@ResponseBody

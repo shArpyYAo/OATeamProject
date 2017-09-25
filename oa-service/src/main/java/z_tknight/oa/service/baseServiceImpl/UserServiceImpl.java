@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import z_tknight.oa.commons.util.CollectionUtil;
 import z_tknight.oa.commons.util.ExceptionUtil;
 import z_tknight.oa.commons.util.ResponeResult;
+import z_tknight.oa.commons.util.StringUtil;
 import z_tknight.oa.model.entity.TBoardSpace;
 import z_tknight.oa.model.entity.TUser;
 import z_tknight.oa.model.entity.TUserExample;
@@ -33,6 +34,50 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	TBoardSpaceMapper boardSpaceMapper;
 
+	/** 修改用户密码 */
+	@Override
+	public ResponeResult updatePassword(Integer userNo, String oldPassword, String newPassword) {
+		TUser user = userMapper.selectByPrimaryKey(userNo);
+		// 用户存在且用户旧密码正确
+		if(user == null || !user.getPassword().equals(oldPassword)) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			// 修改密码
+			user.setPassword(newPassword);
+			userMapper.updateByPrimaryKeySelective(user);
+			return ResponeResult.build(200, "操作成功");
+		}
+	}
+	
+	/** 修改用户昵称 */
+	@Override
+	public ResponeResult updateNickName(Integer userNo, String newNickName, String newIntroduction) {
+		TUser user = userMapper.selectByPrimaryKey(userNo);
+		if(user == null) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			// 昵称不为空才能修改
+			if(StringUtil.isNotEmpty(newNickName)) {
+				user.setNickName(newNickName);
+			}
+			// 个人简介可以为空
+			user.setIntroduction(newIntroduction);
+			userMapper.updateByPrimaryKeySelective(user);
+			return ResponeResult.build(200, "操作成功", new UserDetail(user));
+		}
+	}
+	
+	/** 查询个人信息 */
+	@Override
+	public ResponeResult findUserInfo(Integer userNo) {
+		TUser user = userMapper.selectByPrimaryKey(userNo);
+		if(user == null) {
+			return ResponeResult.build(400, "数据不合法");
+		} else {
+			return ResponeResult.build(200, "操作成功", new UserDetail(user));
+		}
+	}
+	
 	/** 查询用户 */
 	@Override
 	public ResponeResult findUser(String nickName) {

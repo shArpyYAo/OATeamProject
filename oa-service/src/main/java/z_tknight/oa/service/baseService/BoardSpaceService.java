@@ -11,6 +11,16 @@ public interface BoardSpaceService {
 	public ResponeResult deleteBoardSpace(Integer userNo,Integer boardSpaceNo);
 	public ResponeResult addBoardSpace(Integer userNo, String boardSpaceName);
 	public ResponeResult updateBoardSpace(Integer userNo, Integer boardSpaceNo, String newBoardSpaceName, String newSummary);
+
+	/**
+	 * 查询看板空间用户
+	 * @param userNo [Integer]发起操作用户编号
+	 * @param boardSpaceNo [Integer]看板空间编号
+	 * @return
+	 */
+	public ResponeResult findUser(Integer userNo, Integer boardSpaceNo);
+
+	
 	/**
 	 * 添加指定看板空间用户
 	 * @param userNo [Integer]发起操作用户编号

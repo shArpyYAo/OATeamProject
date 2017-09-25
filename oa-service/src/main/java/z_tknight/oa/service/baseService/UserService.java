@@ -14,4 +14,29 @@ public interface UserService {
 	 * @return
 	 */
 	public ResponeResult findUser(String nickName);
+	/**
+	 * 根据用户编号,查询用户信息
+	 * @param userNo [Integer]用户编号
+	 * @return
+	 */
+	public ResponeResult findUserInfo(Integer userNo);
+	/**
+	 * 修改用户昵称
+	 * @param userNo [Integer]用户编号
+	 * @param newNickName [String]新的用户昵称
+	 * @param newIntroduction [String]新的用户简介
+	 * @return
+	 */
+	public ResponeResult updateNickName(Integer userNo, String newNickName, String newIntroduction);
+	
+	/**
+	 * 修改用户昵称
+	 * @param userNo [Integer]用户编号
+	 * @param oldPassword [String]旧密码
+	 * @param newPassword [String]新密码
+	 * @return
+	 */
+	public ResponeResult updatePassword(Integer userNo, String oldPassword, String newPassword);
+
+	
 }

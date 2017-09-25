@@ -32,6 +32,35 @@
 		<result column="is_delete" property="isDelete" jdbcType="BIT" />
 		<result column="board_order" property="boardOrder" jdbcType="CLOB" />
 	</resultMap>
+	
+	<!-- 用户表映射关系 -->
+	<resultMap id="UserResultMap" type="z_tknight.oa.model.entity.TUser">
+		<id column="user_no" property="userNo" jdbcType="INTEGER" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+		<result column="introduction" property="introduction" jdbcType="VARCHAR" />
+		<result column="dept_no" property="deptNo" jdbcType="INTEGER" />
+		<result column="back_up" property="backUp" jdbcType="INTEGER" />
+	</resultMap>
+	
+		<!-- 查询看板空间成员 -->
+	<select id="selectBoardMember" resultMap="UserResultMap">
+		select tu.* from t_user tu join t_board_user tbu 
+		on tu.user_no = tbu.user_no and tbu.board_no = #{boardNo}
+		union all
+		select tu.* from t_user tu join t_board tb
+		on tb.user_no = tu.user_no and tb.board_no = #{boardeNo}
+	</select>
+	
+	<!-- 查询看板空间成员 -->
+	<select id="selectBoardSpaceMember" resultMap="UserResultMap">
+		select tu.* from t_user tu join t_board_space_user tbsu 
+		on tu.user_no = tbsu.user_no and tbsu.board_space_no = #{boardSpaceNo}
+		union all
+		select tu.* from t_user tu join t_board_space tbs 
+		on tbs.user_no = tu.user_no and tbs.board_space_no = #{boardSpaceNo}
+	</select>
 
 	<!-- 查询用户可以查看的所有看板空间信息和看板信息 -->
 	<select id="selectBoardSpaceAndBoardDetail" resultMap="BaseResultMap">
