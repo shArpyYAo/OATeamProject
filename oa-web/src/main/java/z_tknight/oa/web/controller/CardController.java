@@ -79,6 +79,18 @@ public class CardController {
 		return cardService.updateCardOrder(cardNo, listNoFrom, listNoTo, cardOrderFrom, cardOrderTo, newcardOrderFrom, newcardOrderTo, userNo);
 	}
 	
+	@LogInfo("查询卡片成员")
+	@RequestMapping(value="/findUser", method={RequestMethod.POST})
+	@ResponseBody
+	public ResponeResult findUser(HttpServletRequest request, Integer cardNo) {
+		Integer userNo = CaseUtil.caseInt(request.getSession().getAttribute("userNo"), null);
+		if(userNo == null || cardNo == null) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			return cardService.findUser(userNo, cardNo);
+		}
+	}
+	
 	@LogInfo("添加卡片成员")
 	@RequestMapping(value="/addUser", method={RequestMethod.POST})
 	@ResponseBody

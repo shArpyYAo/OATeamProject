@@ -14,6 +14,15 @@ public interface CardService {
 			String newcardOrderFrom, String newcardOrderTo, Integer userNo);
 	
 	/**
+	 * 查询卡片用户
+	 * @param userNo [Integer]发起操作用户编号
+	 * @param cardNo [Integer]卡片编号
+	 * @return
+	 */
+	public ResponeResult findUser(Integer userNo, Integer cardNo);
+
+	
+	/**
 	 * 添加卡片用户
 	 * @param userNo [Integer]发起操作用户编号
 	 * @param targetUserNo [Integer]待添加用户编号

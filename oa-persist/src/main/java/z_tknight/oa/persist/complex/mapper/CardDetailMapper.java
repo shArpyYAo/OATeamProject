@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import z_tknight.oa.model.entity.TUser;
 import z_tknight.oa.model.vo.CommentDetail;
 import z_tknight.oa.model.vo.TagDetail;
 
@@ -28,4 +29,12 @@ public interface CardDetailMapper {
 	 * @return
 	 */
 	List<CommentDetail> selectCommentsByCardNo(@Param("cardNo") Integer cardNo);
+	
+	/**
+	 * 查询卡片
+	 * @param cardNo [Integer]看板编号
+	 * @return
+	 */
+	List<TUser> selectCardMember(@Param("cardNo") Integer cardNo);
+	
 }

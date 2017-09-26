@@ -44,7 +44,7 @@
 		<result column="back_up" property="backUp" jdbcType="INTEGER" />
 	</resultMap>
 	
-		<!-- 查询看板空间成员 -->
+	<!-- 查询看板成员 -->
 	<select id="selectBoardMember" resultMap="UserResultMap">
 		select tu.* from t_user tu join t_board_user tbu 
 		on tu.user_no = tbu.user_no and tbu.board_no = #{boardNo}

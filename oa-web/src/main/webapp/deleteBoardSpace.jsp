@@ -100,6 +100,9 @@
 		<input type="text" name="boardNo">
 		<input type="submit" value="查询看板成员">
 	</form>
-	
+	<form action="/oa-web/card/findUser" method="post">
+		<input type="text" name="cardNo">
+		<input type="submit" value="查询卡片成员">
+	</form>
 </body>
 </html>

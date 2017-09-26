@@ -2,11 +2,13 @@ package z_tknight.oa.service.baseServiceImpl;
 
 	
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import z_tknight.oa.commons.util.CollectionUtil;
 import z_tknight.oa.commons.util.ExceptionUtil;
 import z_tknight.oa.commons.util.ResponeResult;
 import z_tknight.oa.commons.util.StringUtil;
@@ -20,8 +22,10 @@ import z_tknight.oa.model.entity.TCardExample;
 import z_tknight.oa.model.entity.TCardUser;
 import z_tknight.oa.model.entity.TCardUserExample;
 import z_tknight.oa.model.entity.TList;
+import z_tknight.oa.model.entity.TUser;
 import z_tknight.oa.model.vo.CardDetail;
 import z_tknight.oa.model.vo.CommentDetail;
+import z_tknight.oa.model.vo.UserDetail;
 import z_tknight.oa.persist.complex.mapper.AuthorizationMapper;
 import z_tknight.oa.persist.complex.mapper.CardDetailMapper;
 import z_tknight.oa.persist.mapper.TBoardMapper;
@@ -62,6 +66,38 @@ public class CardServiceImpl implements CardService {
 	/** 卡片和用户关系操作持久层接口 */
 	@Autowired
 	private TCardUserMapper cardUserMapper;
+	
+	/** 查询卡片成员 */
+	@Override
+	public ResponeResult findUser(Integer userNo, Integer cardNo) {
+		TCard card = cardMapper.selectByPrimaryKey(cardNo);
+		if(card == null) {
+			return ResponeResult.build(400, "参数不合法");
+		} else {
+			int permission = authorizMapper.canSelectBoard(userNo, card.getBoardNo());
+			if(permission < 1 || permission > 3) {
+				return ResponeResult.build(400, "参数不合法");
+			} else {
+				// 判断看板是否被删除
+				TBoard board = boardMapper.selectByPrimaryKey(card.getBoardNo());
+				if(board == null || board.isIsDelete()) {
+					return ResponeResult.build(400, "参数不合法");
+				} else {
+					// 查询卡片成员
+					List<TUser> users = cardDetailMapper.selectCardMember(cardNo);
+					if(CollectionUtil.isEmpty(users)) {
+						return ResponeResult.build(400, "参数异常");
+					} else {
+						List<UserDetail> userDetails = new ArrayList<>(users.size());
+						for(TUser user : users) {
+							userDetails.add(new UserDetail(user));
+						}
+						return ResponeResult.build(200, "操作成功", userDetails);
+					}
+				}
+			}
+		}
+	}
 	
 	/** 删除卡片用户 */
 	@Override
