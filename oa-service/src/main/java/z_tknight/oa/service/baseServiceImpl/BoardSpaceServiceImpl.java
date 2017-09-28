@@ -125,6 +125,7 @@ public class BoardSpaceServiceImpl implements BoardSpaceService  {
 		List<Integer> boardNos = new ArrayList<Integer>();
 		
 		for(TBoardSpace tbs : tbsList) {
+			// 根据看板编号获得有序的看板对象
 			getBoardNoByOrder(boardNos, tbs.getBoardOrder());
 		}
 		// 查询看板信息
@@ -135,17 +136,18 @@ public class BoardSpaceServiceImpl implements BoardSpaceService  {
 		}
 		List<TBoard> boards = tBoardMapper.selectByExample(example);
 		// 获取有序的看板空间及看板信息
-		return getOrderlyBoardSpaceAndBoard(tbsList, boards);
+		return getOrderlyBoardSpaceAndBoard(tbsList, boards, userId);
 	}
 	
 	/**
 	 * 获取一个有序的看板空间及其看板信息对象集合
 	 * @param tbsList [List<TBoardSpace>]看板空间集合
 	 * @param boards [List<TBoard>]看板集合
+	 * @param userNo [Integer]用户编号
 	 * @return
 	 */
 	private static List<BoardSpaceAndBoard> getOrderlyBoardSpaceAndBoard(
-			List<TBoardSpace> tbsList, List<TBoard> boards) {
+			List<TBoardSpace> tbsList, List<TBoard> boards, Integer userNo) {
 		// 返回结果集
 		List<BoardSpaceAndBoard> tbsbList = new ArrayList<BoardSpaceAndBoard>(tbsList.size());
 		BoardSpaceAndBoard tbsb;
@@ -168,8 +170,20 @@ public class BoardSpaceServiceImpl implements BoardSpaceService  {
 			tbsb = new BoardSpaceAndBoard();
 			setAttributes(tbsb, tbsList.get(i));
 			String[] boardNos = StringUtil.split(tbsList.get(i).getBoardOrder(), ",");
+			// 遍历看板空间中所有的看板编号
 			for(String boardNo : boardNos) {
-				tbsb.gettBoard().add(remove(boards, CaseUtil.caseInt(boardNo)));
+				// FIXBUG 修复了看板空间成员可以看见所有看板（即便看板设置了仅看板成员可见）
+				// 把看板从看板集合中删除并取出
+				TBoard board = remove(boards, CaseUtil.caseInt(boardNo));
+				// 看板为空或用户不是看板空间所有人、不是看板所有人、看板仅允许看板成员观看的看板
+				if(board == null || 
+						(userNo != tbsb.getUserNo() && userNo != board.getUserNo() && 
+						board.getDisplayNo() == 1)) {
+					continue;
+				} else {
+					// 然后添加到看板空间的对象属性中
+					tbsb.gettBoard().add(board);
+				}
 			}
 			tbsbList.add(tbsb);
 		}
