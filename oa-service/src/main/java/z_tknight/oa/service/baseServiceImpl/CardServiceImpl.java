@@ -86,7 +86,7 @@ public class CardServiceImpl implements CardService {
 					// 查询卡片成员
 					List<TUser> users = cardDetailMapper.selectCardMember(cardNo);
 					if(CollectionUtil.isEmpty(users)) {
-						return ResponeResult.build(400, "参数异常");
+						return ResponeResult.build(200, "操作成功");
 					} else {
 						List<UserDetail> userDetails = new ArrayList<>(users.size());
 						for(TUser user : users) {
