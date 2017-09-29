@@ -180,9 +180,143 @@ body
 	height: 100%;
 	right: 0;
 	bottom: 0;
-	background-color: rgba(0,0,0,0.1);
+	background-color: rgba(0,0,0,0.2);
 	display: none;
-	z-index: 2;
+	z-index: 8;
+}
+#TaskMessage
+{
+	position: absolute;
+	width: 600px;
+	height: 400px;
+	top: 100px;
+	left: 400px;
+	background: white;
+	z-index: 9;
+	border-radius:6px;
+	padding: 10px;
+	display: none;
+}
+#TaskTitleInput
+{
+	border: 1px solid black;
+	width: 180px;
+	height: 40px;
+	position: absolute;
+	top: 20px;
+	padding: none;
+	padding-left: 20px;
+	font-size: 26px;
+	background: floralwhite;
+	border-radius:6px;
+	display: none;
+}
+#TaskMemberInput
+{
+	border: 1px solid black;
+	width: 180px;
+	height: 40px;
+	position: absolute;
+	top:76px;
+	left:220px;
+	padding: none;
+	padding-left: 20px;
+	font-size: 26px;
+	background: floralwhite;
+	border-radius:6px;
+	display: none;
+}
+#TaskTopTitle
+{
+	width: 100%;
+	border-bottom: 1px solid black;
+	position: relative;
+}
+#comment
+{
+	width: 70%;
+	margin-top: 10px;
+	display: inline-block;
+	float: left;
+}
+#comment p
+{
+	position: relative;
+	cursor: default;
+}
+#comment .memberDisplay
+{
+	border-radius: 30px;
+	border:1px solid blue;
+	padding: 4px;
+	overflow: hidden;
+	width: 30px;
+	cursor: default;
+}
+.commentX
+{
+	position: absolute;
+	right: 0;
+	top: 0;
+	border-radius: 30px;
+	width: 30px;
+	cursor: pointer;
+	border:1px solid #5F9EA0;
+	text-align: center;
+}
+#member
+{
+	width: 20%;
+	display: inline-block;
+	padding: 6px;
+	float: left;
+}
+#addCardMember,#addComment
+{
+	width: 90%;
+	border:2px solid #a1a1a1;
+	border-radius: 20px;
+	text-align: center;
+	padding: 6px;
+	font-size: 26px;
+	cursor: pointer;
+	margin-bottom: 4px;
+}
+#TaskTopTitle div
+{
+	border-radius: 30px;
+	border:1px solid #AFEEEE;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: 4px;
+	overflow: hidden;
+	width: 30px;
+	cursor: pointer;
+}
+/* #member2,#member3
+{
+	right: 42px;
+}
+#member3
+{
+	right: 84px;
+} */
+#TaskCommentInput
+{
+	position: absolute;
+	top: 100px;
+	left: 20px;
+	width: 300px;
+	height: 60px;
+	padding: none;
+	border-radius: 2px;
+	font-size: 30px;
+	display: none;
+}
+h4
+{
+	cursor: default;
 }
 #menu
 {
@@ -194,6 +328,36 @@ body
 	transition: 0.4s;
 	left: -300px;
 	z-index: 10;
+}
+#memberMessage
+{
+	width:120px;
+	position: absolute;
+	left:160px;
+	top:260px;
+	background-color: ivory;
+	border-radius:10px;
+	display:none;
+	border-top:1px solid #c0c0c0;
+	border-left:1px solid #c0c0c0;
+	padding:2px;
+}
+#memberMessage div
+{
+	padding:8px;
+	border-radius:30px;
+	border:1px solid blue;
+	width:30px;
+}
+#memberMessage span
+{
+	cursor:pointer;
+}
+#memberMessage span input
+{
+	width:100px;
+	background:white;
+	display:none;
 }
 nav ul li
 {
@@ -219,6 +383,7 @@ a
 	text-decoration: none;
 	color: dimgrey;
 	font-size: 22px;
+	cursor: pointer;
 }
 nav ul
 {

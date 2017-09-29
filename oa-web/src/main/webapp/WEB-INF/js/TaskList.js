@@ -8,6 +8,12 @@ window.onload = function()
 	var li = menu.getElementsByTagName("li");
 	var overLay = document.getElementById("overLay");
 	var top = document.getElementById("top");
+	var TaskMessage = document.getElementById("TaskMessage");
+	var TaskTitleInput = document.getElementById("TaskTitleInput");
+	var addComment = document.getElementById("addComment");
+	var comment = document.getElementById("comment");
+	var memberList = document.getElementById("memberList");
+	var addCardMember = document.getElementById("addCardMember");
 	
 	var TaskList;/* = TaskArea.children;*/
 	var divTask;
@@ -21,11 +27,12 @@ window.onload = function()
 	var Selected;
 	var url = window.location.href;
 	var borderNo = url.substring(url.lastIndexOf('=')+1, url.length);
-	var json,first = 1,updateBor = 0,div,len,t,NewCardOrderBefore = "";
+	var json,comments,first = 1,updateBor = 0,div,len,t,NewCardOrderBefore = "";
 	var OldCardOrderBefore = "";
 	var OldCardOrderAfter = "";
 	var NewCardOrderAfter = "";
-	var clientXBefore;
+	var clientXBefore,clickTaskNo;
+	var TaskTitleFlag = 0,cardflag = 0;
 	initPersonalJsonData(div,len,t);
 	
 	function updateBorder(div,len,t,json)
@@ -63,6 +70,8 @@ window.onload = function()
 		var temp = 0;
 		var StartAndEnd = 0;
 		var temp1 = 0;
+		var h4 = document.getElementsByTagName("h4");
+		var h3,p,span;
 		cList(json["data"]["lists"].length);
 		TaskList = TaskArea.children;
 		index = new Array(TaskList.length * 2);
@@ -126,7 +135,19 @@ window.onload = function()
 				},false);
 				divTask[i].addEventListener("mouseup", function(event)
 				{
-					//alert("松开");
+					if(InMove == 0)
+					{
+						overLay.style.display = "block";
+						TaskMessage.style.display = "block";
+						h3 = document.getElementById(event.target.getAttribute("id"));
+						clickTaskNo = h3.attributes["idvalue"].nodeValue;
+						initComments(clickTaskNo);
+						h3 = h3.children;
+						h4[0].innerHTML = h3[0].innerHTML;
+						h4[0].addEventListener("click",clickTaskTitle,false);
+						addComment.addEventListener("click",clickTaskAddComment,false);
+						initCardMember(clickTaskNo);
+					}
 					OnOff = 0;
 					mouseMove(event);
 					TaskArea.removeEventListener("mousemove",mouseMove,false);
@@ -148,7 +169,169 @@ window.onload = function()
 				},false);
 			}
 		}
+		document.onkeydown = function(event)
+		{
+			if(event && event.keyCode==13)
+			{ 
+			 	if(TaskCommentInput.value != "")
+			 	{
+////////////////////////////////////////////////////////////
+					$.ajax(
+					{
+				        cache: false,
+				        type: "post",
+				        dataType: "json",
+				        url: "/oa-web/comment/addComment",
+				        data:
+				        {
+				        	cardNo:clickTaskNo,
+				        	comment:TaskCommentInput.value
+				        },
+				        error: function(request) 
+				        {
+				            alert("Connection error");
+				        },
+				        success: function(data) 
+				        {
+				        	alert("Connection ok:" + data["msg"]);
+				        	initComments(clickTaskNo);
+				        }
+				    });		
+////////////////////////////////////////////////////////////
+			 	}
+			 	else if(TaskTitleInput.value != "")
+			 	{
+////////////////////////////////////////////////////////////
+					$.ajax(
+					{
+				        cache: false,
+				        type: "post",
+				        dataType: "json",
+				        url: "/oa-web/card/updateCardInfo",
+				        data:
+				        {
+				        	newCardName:TaskTitleInput.value,
+				        	cardNo:clickTaskNo,
+				        	workLoad:null,
+				        	endTime:null
+				        },
+				        error: function(request) 
+				        {
+				            alert("Connection error");
+				        },
+				        success: function(data) 
+				        {
+				        	//alert("Connection ok:" + data["msg"]);
+				        }
+				    });		
+////////////////////////////////////////////////////////////
+			 		$("#TaskTitleInput").css("display","none");
+					TaskTitleFlag = 0;
+					h3[0].innerHTML = TaskTitleInput.value;
+					TaskTitleInput.value = "";
+			 	}
+			 	$("#TaskCommentInput").css("display","none");
+			}
+		}
 		first = 0;
+	}
+	
+	function clickTaskAddComment()
+	{
+		var TaskCommentInput = document.getElementById("TaskCommentInput");
+		TaskCommentInput.focus();
+		TaskCommentInput.style.display = "block";
+	}
+	
+	function clickTaskTitle()
+	{
+		if(TaskTitleFlag == 0)
+		{
+			$("#TaskTitleInput").css("display","block");
+			TaskTitleInput.focus();
+			TaskTitleFlag = 1;
+		}
+		else if(TaskTitleFlag == 1)
+		{
+			$("#TaskTitleInput").css("display","none");
+			TaskTitleFlag = 0;
+		}
+		TaskTitleInput.value = "";
+	}
+	
+	function initComments(clickTaskNo)
+	{
+//////////////////////////////////////////////////////////////////////
+		$.ajax(
+		{
+	        cache: false,
+	        type: "post",
+	        dataType: "json",
+	        url: "/oa-web/card/selectCard",
+	        data:
+	        {
+	        	cardNo:clickTaskNo
+	        },
+	        error: function(request) 
+	        {
+	            alert("Connection error");
+	        },
+	        success: function(data) 
+	        {
+	        	//alert("Connection ok:" + data["data"]["comments"].length);
+	        	comments = data;
+	        	while(comment.hasChildNodes()) //当div下还存在子节点时 循环继续  
+	    	    {  
+	    			comment.removeChild(comment.firstChild);  
+	    	    }  
+	        	for(let i = 0;i < comments["data"]["comments"].length;i++)
+	        	{
+	        		p = document.createElement("p");
+	        		span = document.createElement("span");
+	        		span.innerHTML = comments["data"]["comments"][i]["nickName"];
+	        		span.className = "memberDisplay";
+	        		comment.appendChild(span);
+	        		p.innerHTML = comments["data"]["comments"][i]["comment"];
+	        		span = document.createElement("span");
+	        		span.innerHTML = "X";
+	        		span.className = "commentX";
+	        		span.id = comments["data"]["comments"][i]["commentNo"];
+	        		p.appendChild(span);
+	        		deleteComment(span,clickTaskNo);
+	        		comment.appendChild(p);
+	        	}
+	        }
+	    });		
+////////////////////////////////////////////////////////////////////
+	}
+	
+	function deleteComment(span,clickTaskNo)
+	{
+		span.addEventListener("click",function()
+		{
+////////////////////////////////////////////////////////////
+			$.ajax(
+			{
+		        cache: false,
+		        type: "post",
+		        dataType: "json",
+		        url: "/oa-web/comment/deleteComment",
+		        data:
+		        {
+		        	commentNo:span.id
+		        },
+		        error: function(request) 
+		        {
+		            alert("Connection error");
+		        },
+		        success: function(data) 
+		        {
+		        	//alert("Connection ok:" + data["msg"]);
+		        	initComments(clickTaskNo);
+		        }
+		    });		
+	////////////////////////////////////////////////////////////
+		},false);
 	}
 	
 	function initTitle()
@@ -1044,6 +1227,10 @@ window.onload = function()
 				{
 					comfirmOldCardOrderBefore(4,5);
 				}
+				else if(event.clientX > 1220)
+				{
+					comfirmOldCardOrderBefore(6,7);
+				}
 			}
 			InMove = 1;
 			$("#" + id).css("boxShadow","none");
@@ -1082,6 +1269,10 @@ window.onload = function()
 				{
 					comfirmOldCardOrderAfter(4,5);
 				}
+				else if(clientXBefore > 1220)
+				{
+					comfirmOldCardOrderAfter(6,7);
+				}
 				comfirmNewCardOrderAfter(0,1);
 				changeOrder(event,0);
 			}
@@ -1104,6 +1295,10 @@ window.onload = function()
 				{
 					comfirmOldCardOrderAfter(4,5);
 				}
+				else if(clientXBefore > 1220)
+				{
+					comfirmOldCardOrderAfter(6,7);
+				}
 				comfirmNewCardOrderAfter(2,3);
 				changeOrder(event,1);
 			}
@@ -1125,6 +1320,10 @@ window.onload = function()
 				else if(clientXBefore <= 1220 && clientXBefore >= 940)
 				{
 					comfirmOldCardOrderAfter(4,5);
+				}
+				else if(clientXBefore > 1220)
+				{
+					comfirmOldCardOrderAfter(6,7);
 				}
 				comfirmNewCardOrderAfter(4,5);
 				changeOrder(event,2);
@@ -1190,15 +1389,237 @@ window.onload = function()
 	},false);
 	overLay.addEventListener("click", function(event)
 	{
+		var memberMessage;
 		$("#main").css("-webkit-transform", "none");
 		$("#main").css("-moz-transform", "none");
 		$("#main").css("-ms-transform", "none");
 		$("#main").css("transform", "none");
 		$("#menu").css("left", "-300px");
 		overLay.style.display = "none";
+		TaskMessage.style.display = "none";
+		memberMessage = document.getElementById("memberMessage");
+		memberMessage.style.display = "none";
+		while(memberMessage.hasChildNodes()) //当div下还存在子节点时 循环继续  
+	    {  
+			memberMessage.removeChild(memberMessage.firstChild);  
+	    }  
+		while(comment.hasChildNodes()) //当div下还存在子节点时 循环继续  
+	    {  
+			comment.removeChild(comment.firstChild);  
+	    }  
 		for(let i = 0;i < li.length;i++)
 		{
 			li[i].style.animation = "none";
 		}
 	},false);
+	memberList.addEventListener("click", function(event)
+	{
+		var memberMessage = document.getElementById("memberMessage");
+		$.ajax(
+		{
+	        cache: false,
+	        type: "post",
+	        dataType: "json",
+	        data:{
+	        	boardNo : borderNo
+	        },
+	        url: "/oa-web/board/findUser",
+	        error: function(request) 
+	        {
+	            alert("Connection error");
+	        },
+	        success: function(data) 
+	        {
+	        	while(memberMessage.hasChildNodes()) //当div下还存在子节点时 循环继续  
+	    	    {  
+	    			memberMessage.removeChild(memberMessage.firstChild);  
+	    	    }  
+	        	span = document.createElement("span");
+	        	input = document.createElement("input");
+	        	input.style.display = "none";
+	        	input.style.width = "100px";
+	        	input.style.background = "white";
+	        	input.value = "请输入用户编号";
+	        	span.innerHTML = "邀请成员";
+	        	span.style.cursor = "pointer";
+	        	span.appendChild(input);
+	        	for(let i = 0;i < data["data"].length;i++)
+	        	{
+	        		div = document.createElement("div");
+	        		div.innerHTML = data["data"][i]["nickName"];
+	        		div.id = data["data"][i]["userNo"];
+	        		div.style.cursor = "pointer";
+	        		div.addEventListener("click",function(event)
+	        		{
+	        			deleteMember(borderNo,this.id);
+	        			memberMessage.removeChild(this); 
+	        		},false);
+	        		memberMessage.appendChild(div);
+	        	}
+	        	memberMessage.appendChild(span);
+	        	memberMessage.style.display = "block";
+	        	span.addEventListener("click",function(event)
+	        	{
+	        		input.style.display = "block";
+	        		document.onkeydown = function(event)
+	        		{
+	        			if(event && event.keyCode==13)
+	        			{
+	        				if(input.value != "请输入用户编号" || input.value != "")
+	        				{
+	        					addMember(borderNo,input.value,memberMessage);
+	        				}	
+	        			}
+	        		}
+	        	},false);
+	        }
+	    });
+	},false);
+	
+	addCardMember.addEventListener("click", function(event)
+	{
+		var TaskMemberInput = document.getElementById("TaskMemberInput");
+		if(cardflag == 0)
+		{
+			TaskMemberInput.style.display = "block";
+			document.onkeydown = function(event)
+    		{
+    			if(event && event.keyCode==13)
+    			{
+    				if(TaskMemberInput.value != "请输入用户编号" || TaskMemberInput.value != "")
+    				{
+    					$.ajax(
+						{
+					        cache: false,
+					        type: "post",
+					        dataType: "json",
+					        data:{
+					        	cardNo : clickTaskNo,
+					        	targetUserNo : TaskMemberInput.value
+					        },
+					        url: "/oa-web/card/addUser",
+					        error: function(request) 
+					        {
+					            alert("Connection error");
+					        },
+					        success: function(data) 
+					        {
+					        	alert("Connection ok " + data["msg"]);
+					        	//updateMember(borderSpaceNo);
+					        }
+					    });
+    				}	
+    			}
+    		}
+			cardflag = 1;
+		}
+		else if(cardflag == 1)
+		{
+			TaskMemberInput.style.display = "none";
+			cardflag = 0;
+		}	
+	},false);
+	
+	function addMember(borderNo,inputValue,memberMessage)
+	{
+		$.ajax(
+		{
+	        cache: false,
+	        type: "post",
+	        dataType: "json",
+	        data:{
+	        	boardNo : borderNo,
+	        	targetUserNo : inputValue
+	        },
+	        url: "/oa-web/board/addUser",
+	        error: function(request) 
+	        {
+	            alert("Connection error");
+	        },
+	        success: function(data) 
+	        {
+	        	alert("Connection ok " + data["msg"]);
+	        	//updateMember(borderSpaceNo);
+	        }
+	    });
+	}
+	
+	function deleteMember(borderNo,userNo)
+	{
+		$.ajax(
+		{
+	        cache: false,
+	        type: "post",
+	        dataType: "json",
+	        data:{
+	        	boardNo : borderNo,
+	        	targetUserNo : userNo
+	        },
+	        url: "/oa-web/board/deleteUser",
+	        error: function(request) 
+	        {
+	            alert("Connection error");
+	        },
+	        success: function(data) 
+	        {
+	        	alert("Connection ok " + data["msg"]);
+	        	//updateMember(borderSpaceNo);
+	        }
+	    });
+	}
+	function initCardMember(cardNo)
+	{
+		$.ajax(
+		{
+	        cache: false,
+	        type: "post",
+	        dataType: "json",
+	        data:{
+	        	cardNo : cardNo
+	        },
+	        url: "/oa-web/card/findUser",
+	        error: function(request) 
+	        {
+	            alert("Connection error");
+	        },
+	        success: function(data) 
+	        {
+	        	//alert("Connection ok " + data["msg"]);
+	        	var div,TaskTopTitle;
+	        	TaskTopTitle = document.getElementById("TaskTopTitle");
+	        	for(let i = 0;i < data["data"].length;i++)
+	        	{
+	        		div = document.createElement("div");
+	        		div.innerHTML = data["data"][i]["nickName"];
+	        		TaskTopTitle.appendChild(div);
+	        		div.style.right = i * 42 + "px";
+	        		div.id = data["data"][i]["userNo"];
+	        		div.addEventListener("click",function(event)
+	        		{
+	        			$.ajax(
+    					{
+    				        cache: false,
+    				        type: "post",
+    				        dataType: "json",
+    				        data:{
+    				        	cardNo : cardNo,
+    				        	targetUserNo : this.id
+    				        },
+    				        url: "/oa-web/card/deleteUser",
+    				        error: function(request) 
+    				        {
+    				            alert("Connection error");
+    				        },
+    				        success: function(data) 
+    				        {
+    				        	alert("Connection ok " + data["msg"]);
+    				        	//updateMember(borderSpaceNo);
+    				        	
+    				        }
+    				    });
+	        		},false);
+	        	}
+	        }
+	    });
+	}
 }

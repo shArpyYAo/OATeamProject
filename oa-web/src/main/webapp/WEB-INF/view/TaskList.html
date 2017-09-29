@@ -9,15 +9,34 @@
 	<body>
 		<nav id="menu">
 			<ul> <!--role="navigation" class="hidden"-->
-				<li><a href="#">用户中心</a></li>
-				<li><a href="#">最近访问</a></li>
-				<li><a href="#">通知</a></li>
-				<li><a href="#">教学管理系统</a></li>
-				<li><a href="#">OA</a></li>
-				<li><a href="#">退出</a></li>
+				<li><a>用户中心</a></li>
+				<li><a id = memberList>成员</a></li>
+				<li><a>退出</a></li>
 			</ul>
+			<div id="memberMessage">
+				
+			</div>
 		</nav>
 		<div id="main">
+			<div id="TaskMessage">
+				<div id="TaskTopTitle">
+					<h4></h4>
+					<input type="text" id="TaskTitleInput" value=""/>
+					
+				</div>
+				<div id="comment">
+				</div>
+				<div id="member">
+					<div id="addCardMember">
+						<span>添加成员</span>
+					</div>
+					<input type="text" id="TaskMemberInput" value="请输入用户编号"/>
+					<div id="addComment">
+						<span>添加评论</span>
+						<input type="text" id="TaskCommentInput" value=""/>
+					</div>
+				</div>
+			</div>
 			<div id="left">
 				<input type="text" id="titleInput" value=""/>
 				<input type="submit" id="titleSubmit" value="保存"/>			

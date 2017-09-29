@@ -3,14 +3,13 @@ window.onload = function()
 	var main = document.getElementById("main");
 	var menuButton = document.getElementById("menuButton");
 	var menu = document.getElementById("menu");
-	var li = menu.getElementsByTagName("li");
 	var overLay = document.getElementById("overLay");
 	var borderList = document.getElementById("boardList");
 	var title = document.getElementById("title");
 	var ul = document.getElementById("proUl");
-	var input1,input2,cls,first = 0,borderLength = 0,where;
+	var input1,input2,cls,first = 0,borderLength = 0,where,firstClickMenu = 0;
 	//where : 0.是addBorder函数,1.是initProAndBorder函数
-	var boardSpaceNo,json;
+	var boardSpaceNo,json,boardSpaceName,member;
 	function fomatFloat(src,pos)
 	{   
        return Math.round(src*Math.pow(10, pos))/Math.pow(10, pos);   
@@ -61,9 +60,11 @@ window.onload = function()
 	function initData()
 	{
 		boardSpaceNo = new Array(json["data"].length);
+		boardSpaceName = new Array(json["data"].length);
 		for(let i = 0;i < json["data"].length;i++)
 		{
 			boardSpaceNo[i] = json["data"][i]["boardSpaceNo"];
+			boardSpaceName[i] = json["data"][i]["boardSpaceName"];
 		}
 	}
 	
@@ -352,7 +353,7 @@ window.onload = function()
 	        type: "post",
 	        dataType: "json",
 	        data:{
-	        	boardNo : No,
+	        	boardNo : No
 	        },
 	        url: "/oa-web/board/deleteBoard",
 	        error: function(request) 
@@ -368,6 +369,77 @@ window.onload = function()
 		rubish = document.getElementById(id).parentNode;
 		granPar = rubish.parentNode;
 		granPar.removeChild(rubish);
+	}
+	
+	function updateMember(borderSpaceNo)
+	{
+		$.ajax(
+		{
+	        cache: false,
+	        type: "post",
+	        dataType: "json",
+	        data:
+	        {
+	        	boardSpaceNo : borderSpaceNo
+	        },
+	        url: "/oa-web/boardSpace/findUser",
+	        error: function(request) 
+	        {
+	            alert("Connection error");
+	        },
+	        success: function(data) 
+	        {
+	        	member = data;
+	        }
+		});
+	}
+	
+	function addMember(borderSpaceNo,userNo,memberMessage)
+	{
+		$.ajax(
+		{
+	        cache: false,
+	        type: "post",
+	        dataType: "json",
+	        data:{
+	        	boardSpaceNo : borderSpaceNo,
+	        	targetUserNo : userNo
+	        },
+	        url: "/oa-web/boardSpace/addUser",
+	        error: function(request) 
+	        {
+	            alert("Connection error");
+	        },
+	        success: function(data) 
+	        {
+	        	alert("Connection ok " + data["msg"]);
+	        	updateMember(borderSpaceNo);
+	        }
+	    });
+	}
+	
+	function deleteMember(borderSpaceNo,userNo)
+	{
+		$.ajax(
+		{
+	        cache: false,
+	        type: "post",
+	        dataType: "json",
+	        data:{
+	        	boardSpaceNo : borderSpaceNo,
+	        	targetUserNo : userNo
+	        },
+	        url: "/oa-web/boardSpace/deleteUser",
+	        error: function(request) 
+	        {
+	            alert("Connection error");
+	        },
+	        success: function(data) 
+	        {
+	        	alert("Connection ok " + data["msg"]);
+	        	updateMember(borderSpaceNo);
+	        }
+	    });
 	}
 	
 	menuButton.addEventListener("mouseover", function(event)
@@ -390,6 +462,86 @@ window.onload = function()
 		$(".Click").css("animation", "none");
 		$(".It").css("animation", "none");
 		overLay.style.display = "block";
+		var ul = menu.getElementsByTagName("ul");
+		if(firstClickMenu == 0)
+		{
+			var newLi,a;
+			for(let i = 0;i < boardSpaceName.length;i++)
+			{
+				newLi = document.createElement("li");
+				a = document.createElement("a");
+				a.innerHTML = boardSpaceName[i];
+				a.id = i;
+				a.addEventListener("click",function(event)
+				{
+					var div,input,span,memberMessage = document.getElementById("memberMessage");
+					var borderSpaceNo = boardSpaceNo[this.id];
+					$.ajax(
+					{
+				        cache: false,
+				        type: "post",
+				        dataType: "json",
+				        data:{
+				        	boardSpaceNo : borderSpaceNo
+				        },
+				        url: "/oa-web/boardSpace/findUser",
+				        error: function(request) 
+				        {
+				            alert("Connection error");
+				        },
+				        success: function(data) 
+				        {
+				        	while(memberMessage.hasChildNodes()) //当div下还存在子节点时 循环继续  
+				    	    {  
+				    			memberMessage.removeChild(memberMessage.firstChild);  
+				    	    }  
+				        	span = document.createElement("span");
+				        	input = document.createElement("input");
+				        	input.style.display = "none";
+				        	input.style.width = "100px";
+				        	input.style.background = "white";
+				        	input.value = "请输入用户编号";
+				        	span.innerHTML = "邀请成员";
+				        	span.style.cursor = "pointer";
+				        	span.appendChild(input);
+				        	for(let i = 0;i < data["data"].length;i++)
+				        	{
+				        		div = document.createElement("div");
+				        		div.innerHTML = data["data"][i]["nickName"];
+				        		div.id = data["data"][i]["userNo"];
+				        		div.style.cursor = "pointer";
+				        		div.addEventListener("click",function(event)
+				        		{
+				        			deleteMember(borderSpaceNo,this.id);
+				        			memberMessage.removeChild(this); 
+				        		},false);
+				        		memberMessage.appendChild(div);
+				        	}
+				        	memberMessage.appendChild(span);
+				        	memberMessage.style.display = "block";
+				        	span.addEventListener("click",function(event)
+				        	{
+				        		input.style.display = "block";
+				        		document.onkeydown = function(event)
+				        		{
+				        			if(event && event.keyCode==13)
+				        			{
+				        				if(input.value != "请输入用户编号" || input.value != "")
+				        				{
+				        					addMember(borderSpaceNo,input.value,memberMessage);
+				        					
+				        				}	
+				        			}
+				        		}
+				        	},false);
+				        }
+				    });
+				},false);
+				newLi.appendChild(a);
+				ul[0].insertBefore(newLi,ul[0].children[1]);
+			}
+		}
+		var li = menu.getElementsByTagName("li");
 		for(let i = 0;i < li.length;i++)
 		{
 			if(i % 2 == 0)
@@ -400,15 +552,36 @@ window.onload = function()
 	},false);
 	overLay.addEventListener("click", function(event)
 	{
+		var memberMessage;
 		$("#main").css("-webkit-transform", "none");
 		$("#main").css("-moz-transform", "none");
 		$("#main").css("-ms-transform", "none");
 		$("#main").css("transform", "none");
 		$("#menu").css("left", "-300px");
 		overLay.style.display = "none";
+		memberMessage = document.getElementById("memberMessage");
+		memberMessage.style.display = "none";
+		while(memberMessage.hasChildNodes()) //当div下还存在子节点时 循环继续  
+	    {  
+			memberMessage.removeChild(memberMessage.firstChild);  
+	    }  
+		var li = menu.getElementsByTagName("li");
 		for(let i = 0;i < li.length;i++)
 		{
 			li[i].style.animation = "none";
 		}
+		firstClickMenu = 1;
+	},false);
+	
+	document.getElementById("user").addEventListener("click", function(event)
+	{
+		
 	},false);
 }
+
+
+/*span.addEventListener("click",function(event)
+    	{
+    		input.style.display = "block";
+    		
+    	},false);*/
